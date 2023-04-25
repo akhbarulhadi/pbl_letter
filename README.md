@@ -1,6 +1,6 @@
-<p align="center"><img src="https://github.com/akhbarulhadi/pbl_letter/blob/main/public/img/LetteR2.png" width="100" alt="Laravel Logo"></a></p>
+<p align="center"><img src="https://github.com/akhbarulhadi/pbl_letter/blob/main/public/img/LetteR2.png" width="150" alt="Laravel Logo"></a></p>
 
-<p align="center">
+<p style="font-size: 20px;" align="center">
 LetteR
 </p>
 
@@ -13,10 +13,7 @@ Keuntungan menggunakan aplikasi permintaan surat menyurat (LetteR) adalah memuda
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-"# pbl_letter"
-
+PBL_LetteR
 
 ## Cara pakai Git
 
