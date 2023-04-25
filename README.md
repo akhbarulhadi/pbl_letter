@@ -1,7 +1,7 @@
-<p align="center"><img src="https://github.com/akhbarulhadi/pbl_letter/blob/main/public/img/LetteR2.png" width="40" alt="Laravel Logo"></a></p>
+<p align="center"><img src="https://github.com/akhbarulhadi/pbl_letter/blob/main/public/img/LetteR2.png" width="100" alt="Laravel Logo"></a></p>
 
 <p align="center">
-LetteRR
+LetteR
 </p>
 
 ## Information
