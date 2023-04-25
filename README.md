@@ -22,6 +22,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 git init
 git add nama_file/*
-git commit -m "percobaan"	(untuk comment/deskripsi)
-git push -u origin	(untuk dorong file dari directory lokal laptop ke repository github)
-git pull origin main	(untuk ambil dari repo github ke directory lokal)
+git commit -m "percobaan" (untuk comment/deskripsi)
+git push -u origin (untuk dorong file dari directory lokal laptop ke repository github)
+git pull origin main (untuk ambil dari repo github ke directory lokal)
