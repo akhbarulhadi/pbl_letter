@@ -52,17 +52,17 @@
                                                   <h2>Ubah Password</h2>
                                                   <div class="form-group">
                                                     <label for="password_lama">Password Lama:</label>
-                                                    <input type="password" class="form-control" id="password_lama" placeholder="" name="password_lama">
+                                                    <input type="password" class="form-control" id="password_lama" placeholder="" name="password_lama" required>
                                                   </div>
                                                   <div class="form-group">
                                                     <label for="password_baru">Password Baru:</label>
-                                                    <input type="password" class="form-control" id="password_baru" placeholder="Masukkan Password Baru" name="password_baru">
+                                                    <input type="password" class="form-control" id="password_baru" placeholder="Masukkan Password Baru" name="password_baru" required>
                                                   </div>
                                                   <div class="form-group">
                                                     <label for="konfirmasi_password_baru">Konfirmasi Password Baru:</label>
-                                                    <input type="password" class="form-control" id="konfirmasi_password_baru" placeholder="Konfirmasi Password Baru" name="konfirmasi_password_baru">
+                                                    <input type="password" class="form-control" id="konfirmasi_password_baru" placeholder="Konfirmasi Password Baru" name="konfirmasi_password_baru" required>
                                                   </div>
-                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
+                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah</button>
                                                 </form>
                                         </div>
                                     </div>

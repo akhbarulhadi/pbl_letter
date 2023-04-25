@@ -31,3 +31,16 @@ function toggleInputText() {
   }
 }
 </script>
+<script>
+  var password_baru = document.getElementById("password_baru");
+  var konfirmasi_password_baru = document.getElementById("konfirmasi_password_baru");
+function validatePassword(){
+  if(password_baru.value != konfirmasi_password_baru.value) {
+    konfirmasi_password_baru.setCustomValidity("Password tidak sesuai");
+  } else {
+    konfirmasi_password_baru.setCustomValidity('');
+  }
+}
+password_baru.onchange = validatePassword;
+konfirmasi_password_baru.onkeyup = validatePassword;
+</script>
