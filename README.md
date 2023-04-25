@@ -15,4 +15,13 @@ Keuntungan menggunakan aplikasi permintaan surat menyurat (LetteR) adalah memuda
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-"# pbl_letter" 
+"# pbl_letter"
+
+
+## Cara pakai Git
+
+git init
+git add nama_file/*
+git commit -m "percobaan"	(untuk comment/deskripsi)
+git push -u origin	(untuk dorong file dari directory lokal laptop ke repository github)
+git pull origin main	(untuk ambil dari repo github ke directory lokal)
