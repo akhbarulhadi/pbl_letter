@@ -44,3 +44,32 @@ function validatePassword(){
 password_baru.onchange = validatePassword;
 konfirmasi_password_baru.onkeyup = validatePassword;
 </script>
+
+<script>
+  function hanyaAngka(event) {
+  var angka = (event.which) ? event.which : event.keyCode;
+  if (angka > 31 && (angka < 48 || angka > 57)) {
+    return false;
+  }
+  return true;
+}
+</script>
+
+<script>
+  var buttonScrollToTop = document.getElementById("scroll-to-top");
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    buttonScrollToTop.style.display = "block";
+  } else {
+    buttonScrollToTop.style.display = "none";
+  }
+}
+
+buttonScrollToTop.addEventListener("click", function() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});
+</script>

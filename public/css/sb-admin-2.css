@@ -11483,5 +11483,31 @@ p {
 
 }
 
+/*untuk text area lebih panjang*/
+#alamat {
+  height: 150px; /* Menentukan tinggi textarea */
+  resize: none; /* Mencegah pengguna untuk mengubah ukuran textarea */
+}
+
+/*untuk tombol scroll auto keatas*/
+#scroll-to-top {
+  display: none; /* Sembunyikan tombol scroll to top secara default */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 18px;
+  background: #B0B0B0;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+}
+#scroll-to-top:hover {
+	background-color: #808080;
+}
+
 
 

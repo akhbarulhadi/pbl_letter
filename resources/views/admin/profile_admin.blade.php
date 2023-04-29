@@ -22,7 +22,7 @@
                                                   </div>
                                                   <div class="form-group">
                                                     <label for="hp">Nomor HP:</label>
-                                                    <input type="text" class="form-control" id="hp" placeholder="" name="hp" required>
+                                                    <input type="text" class="form-control" id="hp" placeholder="" name="hp" onkeypress="return hanyaAngka(event)" required>
                                                   </div>
                                                   <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
                                                   <hr>
@@ -41,7 +41,7 @@
                                                     <label for="konfirmasi_password_baru">Konfirmasi Password Baru:</label>
                                                     <input type="password" class="form-control" id="konfirmasi_password_baru" placeholder="Konfirmasi Password Baru" name="konfirmasi_password_baru" required>
                                                   </div>
-                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
+                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah</button>
                                                 </form>
                                         </div>
                                     </div>

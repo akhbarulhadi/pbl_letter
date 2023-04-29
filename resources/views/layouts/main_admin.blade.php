@@ -30,6 +30,9 @@
         <!-- End of Topbar -->
 
                         @yield('isi_admin')
+                        <button id="scroll-to-top">
+                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        </button>
             </div><br>
                 <!-- Footer -->
                 @include('profile.partials.footer')

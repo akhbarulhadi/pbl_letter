@@ -35,15 +35,15 @@
                                                   </div>
                                                   <div class="form-group">
                                                     <label for="email">Email:</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="" name="email">
+                                                    <input type="email" class="form-control" id="email" placeholder="" name="email" required>
                                                   </div>
                                                   <div class="form-group">
                                                     <label for="hp">Nomor HP:</label>
-                                                    <input type="text" class="form-control" id="hp" placeholder="" name="hp">
+                                                    <input type="text" class="form-control" id="hp" placeholder="" name="hp" onkeypress="return hanyaAngka(event)" required>
                                                   </div>
                                                   <div class="form-group">
                                                     <label for="alamat">Alamat:</label>
-                                                    <textarea class="form-control" id="alamat" placeholder="" name="alamat"></textarea>
+                                                    <textarea class="form-control" id="alamat" placeholder="" name="alamat" required></textarea>
                                                   </div>
                                                   <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
                                                   <hr>
