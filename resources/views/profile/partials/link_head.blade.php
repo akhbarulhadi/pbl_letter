@@ -6,4 +6,4 @@
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
 <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
-
+<link rel="icon" type="image/png" href="img/LetteR2.png">

@@ -24,6 +24,56 @@
 
   <!-- Template Main CSS File -->
   <link href="assets_home/css/style.css" rel="stylesheet">
+
+  <!-- logo di tab web-->
+  <link rel="icon" type="image/png" href="img/LetteR2.png">
+
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4a4e58;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #206bfb;
+}
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form .message a {
+  color: #206bfb;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -34,7 +84,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" href="dashboard_new">Dashboard</a></li>
+          <li><a class="nav-link scrollto" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Dashboard</a></li>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">Information</a></li>
           <li><a class="nav-link scrollto " href="#contact">Contact</a></li>
@@ -53,7 +103,46 @@
           <h1>LetteR</h1>
           <h2>Permintaan Surat Menyurat</h2>
           <div class="d-flex">
-            <a href="dashboard_new" class="btn-get-started scrollto">Go To Dashboard</a>
+            <!-- Button trigger modal -->
+            <a type="button" title="Or Press Alt+s" class="btn-get-started scrollto" accesskey="s" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              Sign In
+            </a>
+
+            <!-- modal login -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form">
+                        <form class="register-form">
+                          <input type="text" placeholder="NIM" onkeypress="return hanyaAngka(event)" required/>
+                          <input type="text" placeholder="Nama Lengkap" required/>
+                          <input type="text" placeholder="Program Studi" required/>
+                          <input type="text" placeholder="Kelas" required/>
+                          <input type="text" placeholder="Wali Dosen" required/>
+                          <input type="email" placeholder="Email" required/>
+                          <input type="text" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required/>
+                          <input type="password" id="password" placeholder="Password" required/>
+                          <input type="password" id="konfirmasi_password" placeholder="Konfirmasi Password" required/>
+
+                          <button>create</button>
+                          <p class="message">Already registered? <a href="#">Sign In</a></p>
+                        </form>
+                        <form class="login-form">
+                          <input type="text" placeholder="username" required/>
+                          <input type="password" placeholder="password" required/>
+                          <button>login</button>
+                          <p class="message">Not registered? <a href="#">Create an account</a></p>
+                        </form>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img">
@@ -117,32 +206,28 @@
 
         <div class="section-title">
           <h2>Contact</h2>
-          <p>Jika ada keluhan dan saran silahkan menghubungi kami!</p>
         </div>
 
         <div class="row">
-
           <div class="col-lg-5 d-flex align-items-stretch">
             <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>Batam Centre, Jl. Ahmad Yani, Tlk. Tering, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29461</p>
-              </div>
 
-              <div class="email">
+              <div class="email" onclick="copyEmail()">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>letter@gmail.com</p>
+                <p id="copy-email">letter@gmail.com</p>
               </div>
-
-              <div class="phone">
+              <div class="phone" onclick="copyCall()">
                 <i class="bi bi-phone"></i>
                 <h4>Call:</h4>
-                <p>+62 812 4789 1234</p>
+                <p id="copy-call">+62 812 4789 1234</p>
               </div>
-
-              <iframe src="https://maps.google.com/maps?q=politeknik batam&t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+              <div class="address" onclick="copyLocation()">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p id="copy-location">Batam Centre, Jl. Ahmad Yani, Tlk. Tering, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29461</p>
+              </div>
+              <iframe src="https://maps.google.com/maps?q=Politeknik+Negeri+Batam,+Jalan+Ahmad+Yani,+Teluk+Tering,+Kota+Batam,+Kepulauan+Riau,+Indonesia&t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
             </div>
 
           </div>
@@ -195,6 +280,108 @@
 
   <!-- Template Main JS File -->
   <script src="assets_home/js/main.js"></script>
+<script>
+  function copyEmail() {
+  // Mendapatkan teks yang ada di dalam div
+  var text = document.getElementById("copy-email").innerText;
+
+  // Membuat sebuah textarea sementara
+  var temp = document.createElement("textarea");
+  temp.value = text;
+
+  // Menambahkan textarea ke dalam dokumen
+  document.body.appendChild(temp);
+
+  // Memilih teks di dalam textarea
+  temp.select();
+
+  // Menyalin teks yang sudah dipilih
+  document.execCommand("copy");
+
+  // Menghapus textarea sementara
+  document.body.removeChild(temp);
+
+  // Menampilkan pesan bahwa teks berhasil disalin
+  alert("Teks berhasil disalin: " + text);
+}
+
+function copyCall() {
+  // Mendapatkan teks yang ada di dalam div
+  var text = document.getElementById("copy-call").innerText;
+
+  // Membuat sebuah textarea sementara
+  var temp = document.createElement("textarea");
+  temp.value = text;
+
+  // Menambahkan textarea ke dalam dokumen
+  document.body.appendChild(temp);
+
+  // Memilih teks di dalam textarea
+  temp.select();
+
+  // Menyalin teks yang sudah dipilih
+  document.execCommand("copy");
+
+  // Menghapus textarea sementara
+  document.body.removeChild(temp);
+
+  // Menampilkan pesan bahwa teks berhasil disalin
+  alert("Teks berhasil disalin: " + text);
+}
+
+function copyLocation() {
+  // Mendapatkan teks yang ada di dalam div
+  var text = document.getElementById("copy-location").innerText;
+
+  // Membuat sebuah textarea sementara
+  var temp = document.createElement("textarea");
+  temp.value = text;
+
+  // Menambahkan textarea ke dalam dokumen
+  document.body.appendChild(temp);
+
+  // Memilih teks di dalam textarea
+  temp.select();
+
+  // Menyalin teks yang sudah dipilih
+  document.execCommand("copy");
+
+  // Menghapus textarea sementara
+  document.body.removeChild(temp);
+
+  // Menampilkan pesan bahwa teks berhasil disalin
+  alert("Teks berhasil disalin: " + text);
+}
+</script>
+<script>
+    $('.message a').click(function(){
+      $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+    });
+  </script>
+
+<script>
+  function hanyaAngka(event) {
+  var angka = (event.which) ? event.which : event.keyCode;
+  if (angka > 31 && (angka < 48 || angka > 57)) {
+    return false;
+  }
+  return true;
+}
+</script>
+
+<script>
+  var password = document.getElementById("password");
+  var konfirmasi_password = document.getElementById("konfirmasi_password");
+function validatePassword(){
+  if(password.value != konfirmasi_password.value) {
+    konfirmasi_password.setCustomValidity("Password tidak sesuai");
+  } else {
+    konfirmasi_password.setCustomValidity('');
+  }
+}
+password.onchange = validatePassword;
+konfirmasi_password.onkeyup = validatePassword;
+</script>
 
 </body>
 

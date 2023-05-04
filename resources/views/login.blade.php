@@ -16,11 +16,16 @@
 
     <!--mdb-->      
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
+
+    <!--logo tab-->
+    <link rel="icon" type="image/png" href="img/LetteR2.png">
+
 <style>
 body{
   background-image: url("img/poltek.jpg");
   background-size: cover;
 }
+
 .card{
   background-color: white;
   opacity: 0.9;
