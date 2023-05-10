@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\RegisterController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/', function () {
     return view('home');
@@ -108,4 +110,7 @@ Route::get('/laporan/cetak_izin', function () {
 Route::get('/profile-admin', function () {
     return view('admin.profile_admin');
 })->name('profile_admin');
+
+Route::get('/register', [RegisterController::class, 'index']);
+Route::POST('/', [RegisterController::class, 'store']);
 

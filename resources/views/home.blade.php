@@ -118,24 +118,25 @@
                   </div>
                   <div class="modal-body">
                       <div class="form">
-                        <form class="register-form">
-                          <input type="text" placeholder="NIM" onkeypress="return hanyaAngka(event)" required/>
-                          <input type="text" placeholder="Nama Lengkap" required/>
-                          <input type="text" placeholder="Program Studi" required/>
-                          <input type="text" placeholder="Kelas" required/>
-                          <input type="text" placeholder="Wali Dosen" required/>
-                          <input type="email" placeholder="Email" required/>
-                          <input type="text" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required/>
-                          <input type="password" id="password" placeholder="Password" required/>
-                          <input type="password" id="konfirmasi_password" placeholder="Konfirmasi Password" required/>
+                      <form class="register-form" action="/register" method="POST">
+                        @csrf
+                          <input type="number" name="nim" id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}"/>
+                          <input type="text" name="name" id="name"placeholder="Nama Lengkap" required value="{{ old('name') }}"/>
+                          <input type="text" name="prodi" id="prodi" placeholder="Program Studi" required value="{{ old('prodi') }}"/>
+                          <input type="text" name="kelas" id="kelas" placeholder="Kelas" required value="{{ old('kelas') }}"/>
+                          <input type="text" name="nama_dosen" id="nama_dosen" placeholder="Wali Dosen" required value="{{ old('nama_dosen') }}"/>
+                          <input type="number" name="nomor_hp" id="nomor_hp" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required value="{{ old('nomor_hp') }}"/>
+                          <input type="email" name="email" id="email" placeholder="Email" required value="{{ old('email') }}"/>
+                          <input type="password" name="password" id="password" placeholder="Password" required/>
 
-                          <button>create</button>
+                          <button type="submit">create</button>
                           <p class="message">Already registered? <a href="#">Sign In</a></p>
                         </form>
-                        <form class="login-form">
-                          <input type="text" placeholder="username" required/>
-                          <input type="password" placeholder="password" required/>
-                          <button>login</button>
+                        <form class="login-form" action="/login" method="GET">
+                          @csrf
+                          <input type="email" name="email" placeholder="Email" id="email" required/>
+                          <input type="password" name="password" placeholder="Password" id="password" required/>
+                          <button name="submit" type="submit">login</button>
                           <p class="message">Not registered? <a href="#">Create an account</a></p>
                         </form>
                       </div>
