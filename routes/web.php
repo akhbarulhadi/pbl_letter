@@ -112,5 +112,5 @@ Route::get('/profile-admin', function () {
 })->name('profile_admin');
 
 Route::get('/register', [RegisterController::class, 'index']);
-Route::POST('/', [RegisterController::class, 'store']);
+Route::POST('/register', [RegisterController::class, 'store']);
 
