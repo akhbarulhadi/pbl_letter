@@ -12,6 +12,10 @@
                                         <div class="container">
                                                 <h2>Informasi Akun</h2>
                                                 <form>
+                                                <div class="form-group">
+                                                    <label for="nik">NIK</label>
+                                                    <input type="text" class="form-control" id="nik" placeholder="" name="nik" onkeypress="return hanyaAngka(event)" required>
+                                                  </div>
                                                   <div class="form-group">
                                                     <label for="nama">Nama Lengkap:</label>
                                                     <input type="text" class="form-control" id="nama" placeholder="" name="nama" required>
