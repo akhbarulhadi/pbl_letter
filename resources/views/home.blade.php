@@ -96,7 +96,7 @@
   </header>
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
-
+  
     <div class="container">
       <div class="row">
         <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
@@ -120,7 +120,13 @@
                       <div class="form">
                       <form class="register-form" action="/register" method="POST">
                         @csrf
-                          <input type="number" name="nim" id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}"/>
+                          <input type="number" name="nim" class="form-control rounded-top @error('nim') is-invalid @enderror" 
+                          id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}"/>
+                          @error('nim')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
                           <input type="text" name="name" id="name"placeholder="Nama Lengkap" required value="{{ old('name') }}"/>
                           <input type="text" name="prodi" id="prodi" placeholder="Program Studi" required value="{{ old('prodi') }}"/>
                           <input type="text" name="kelas" id="kelas" placeholder="Kelas" required value="{{ old('kelas') }}"/>
@@ -132,7 +138,7 @@
                           <button type="submit">create</button>
                           <p class="message">Already registered? <a href="#">Sign In</a></p>
                         </form>
-                        <form class="login-form" action="/login" method="GET">
+                        <form class="login-form" action="/login" method="POST">
                           @csrf
                           <input type="email" name="email" placeholder="Email" id="email" required/>
                           <input type="password" name="password" placeholder="Password" id="password" required/>
