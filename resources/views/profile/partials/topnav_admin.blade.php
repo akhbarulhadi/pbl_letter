@@ -6,7 +6,11 @@
                 <i class="fa fa-bars"></i>
             </button>
 
-            <h2>WELCOME ADMIN</h2>
+            @auth
+            <h2>Welcome, <b>{{ Auth::user()->name }}</b></h2>
+            @else
+            <p></br>Nothing User/Admin are identify..</p>
+            @endauth
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -48,7 +52,7 @@
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin, @auth<b>{{ Auth::user()->name }}</b> @else <b>Unknown</b></span>@endauth
                         <img class="img-profile rounded-circle"
                             src="img/user.png">
                     </a>
@@ -60,7 +64,7 @@
                             Profile
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/">
+                        <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
                         </a>

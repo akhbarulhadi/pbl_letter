@@ -15,40 +15,64 @@
                                                 <form>
                                                   <div class="form-group">
                                                     <label for="nim">NIM:</label>
-                                                    <input type="text" class="form-control" id="nim" placeholder="" name="nim" disabled>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="nim" placeholder="{{ Auth::user()->nim }}" name="nim" disabled>
+                                                    @else <input type="text" class="form-control" id="nim" placeholder="NIM tidak terdeteksi! Silahkan Login!!" name="nim" disabled>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="nama">Nama Lengkap:</label>
-                                                    <input type="text" class="form-control" id="nama" placeholder="" name="nama" disabled>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="nama" placeholder="{{ Auth::user()->name }}" name="nama" disabled>
+                                                    @else <input type="text" class="form-control" id="nama" placeholder="Nama tidak terdeteksi! Silahkan Login!!" name="nama" disabled>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="prodi">Program Studi:</label>
-                                                    <input type="text" class="form-control" id="prodi" placeholder="" name="prodi" disabled>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="prodi" placeholder="{{ Auth::user()->prodi }}" name="prodi" disabled>
+                                                    @else <input type="text" class="form-control" id="prodi" placeholder="Prodi tidak terdeteksi! Silahkan Login!!" name="prodi" disabled>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="kelas">Kelas:</label>
-                                                    <input type="text" class="form-control" id="kelas" placeholder="" name="kelas" disabled>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="kelas" placeholder="{{ Auth::user()->kelas }}" name="kelas" disabled>
+                                                    @else <input type="text" class="form-control" id="kelas" placeholder="Kelas tidak terdeteksi! Silahkan Login!!" name="kelas" disabled>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="dosen">Wali Dosen:</label>
-                                                    <input type="text" class="form-control" id="dosen" placeholder="" name="dosen" disabled>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="dosen" placeholder="{{ Auth::user()->nama_dosen }}" name="dosen" disabled>
+                                                    @else <input type="text" class="form-control" id="dosen" placeholder="Wali Dosen tidak terdeteksi! Silahkan Login!!" name="dosen" disabled>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="email">Email:</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="" name="email" required>
+                                                    @auth
+                                                    <input type="email" class="form-control" id="email" placeholder="{{ Auth::user()->email }}" name="email" required>
+                                                    @else <input type="email" class="form-control" id="email" placeholder="Email tidak terdeteksi! Silahkan Login!!" name="email" required>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="hp">Nomor HP:</label>
-                                                    <input type="text" class="form-control" id="hp" placeholder="" name="hp" onkeypress="return hanyaAngka(event)" required>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="hp" placeholder="{{ Auth::user()->nomor_hp }}" name="hp" onkeypress="return hanyaAngka(event)" required>
+                                                    @else <input type="text" class="form-control" id="hp" placeholder="Nomor HP tidak terdeteksi! Silahkan Login!!" name="hp" onkeypress="return hanyaAngka(event)" required>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="alamat">Alamat:</label>
-                                                    <textarea class="form-control" id="alamat" placeholder="" name="alamat" required></textarea>
+                                                    @auth
+                                                    <textarea class="form-control" id="alamat" placeholder="{{ Auth::user()->alamat }}" name="alamat" required></textarea>
+                                                    @else <textarea class="form-control" id="alamat" placeholder="Alamat tidak terdeteksi! Silahkan Login!!" name="alamat" required></textarea>
                                                   </div>
+                                                  @endauth
                                                   <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
                                                   <hr>
                                                 </form>
-                                                <form>
+                                                <form action="/password.action" method="POST">
                                                   <h2>Ubah Password</h2>
                                                   <div class="form-group">
                                                     <label for="password_lama">Password Lama:</label>

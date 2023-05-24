@@ -132,7 +132,7 @@ body{
                     </div>
                   </div>
                     <!-- Submit button -->
-                    <a href="{{ route('dashboard') }}" class="btn btn-primary btn-block mb-4">Sign in</a>
+                    <a class="btn btn-primary btn-block mb-4">Sign in</a>
                 </form>
             </div>
             <div class="tab-pane fade" id="login-admin" role="tabpanel" aria-labelledby="tab-register">
@@ -142,7 +142,7 @@ body{
                 </div>
                  <!-- Email input -->
                  <div class="form-outline mb-4">
-                    <input type="email" id="loginName" class="form-control" />
+                    <input type="email" name="email" id="loginName" class="form-control" required value="{{ old('email') }}"/>
                     <label class="form-label" for="loginName">Email or username</label>
                   </div>
                   <!-- Password input -->

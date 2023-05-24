@@ -13,21 +13,34 @@
                                                 <h2>Informasi Akun</h2>
                                                 <form>
                                                 <div class="form-group">
-                                                    <label for="nik">NIK</label>
-                                                    <input type="text" class="form-control" id="nik" placeholder="" name="nik" onkeypress="return hanyaAngka(event)" required>
+                                                    <label for="nik">NIK:</label>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="nim" placeholder="{{ Auth::user()->nim }}" name="nik" onkeypress="return hanyaAngka(event)" required>
+                                                    @else <input type="text" class="form-control" id="nim" placeholder="NIK tidak terdeteksi! Silahkan Login!!" name="nim" onkeypress="return hanyaAngka(event)" required>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="nama">Nama Lengkap:</label>
-                                                    <input type="text" class="form-control" id="nama" placeholder="" name="nama" required>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="nama" placeholder="{{ Auth::user()->name }}" name="nama" required>
+                                                    @else <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap tidak terdeteksi! Silahkan Login!!" name="nama" required>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="email">Email:</label>
-                                                    <input type="email" class="form-control" id="email" placeholder="" name="email" required>
+                                                    @auth
+                                                    <input type="email" class="form-control" id="email" placeholder="{{ Auth::user()->email }}" name="email" required>
+                                                    @else <input type="email" class="form-control" id="email" placeholder="Email tidak terdeteksi! Silahkan Login!!" name="email" required>
                                                   </div>
+                                                  @endauth
                                                   <div class="form-group">
                                                     <label for="hp">Nomor HP:</label>
-                                                    <input type="text" class="form-control" id="hp" placeholder="" name="hp" onkeypress="return hanyaAngka(event)" required>
+                                                    @auth
+                                                    <input type="text" class="form-control" id="hp" placeholder="{{ Auth::user()->nomor_hp }}" name="hp" onkeypress="return hanyaAngka(event)" required>
+                                                    @else <input type="text" class="form-control" id="hp" placeholder="Nomor HP tidak terdeteksi! Silahkan Login!!" name="hp" onkeypress="return hanyaAngka(event)" required>
                                                   </div>
+                                                  @endauth
+                                                  </br>
                                                   <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
                                                   <hr>
                                                 </form>

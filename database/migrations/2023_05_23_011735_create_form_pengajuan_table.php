@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('form_pengajuan', function (Blueprint $table) {
             $table->id();
 
             $table->string('nim')->unique();
             $table->string('name');
-            $table->string('prodi');
-            $table->string('kelas');
-            $table->string('nama_dosen');
-            $table->string('nomor_hp');
-            $table->string('email');
-            $table->string('password');
-            $table->string('role')->default('user');
-            
+            $table->string('ditujukan');
+            $table->string('alamat');
+            $table->string('tugas_matkul');
+            $table->string('keperluan');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+
             $table->timestamps();
+
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('form_pengajuan');
     }
 };

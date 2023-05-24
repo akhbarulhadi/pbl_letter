@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormPengajuanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,23 +18,19 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-
-Route::get('/', function () {
-    return view('home');
-});
-
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
 /*user*/
 
 /*dashboard user*/
-Route::get('/dashboard', function () {
-    return view('user.dashboard');
-})->name('dashboard');
 
 /*formulir*/
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 Route::get('/form-izin', function () {
     return view('user.form_izin');
 })->name('form_izin');
@@ -111,12 +111,16 @@ Route::get('/profile-admin', function () {
     return view('admin.profile_admin');
 })->name('profile_admin');
 
-Route::get('/register', [RegisterController::class, 'index']);
+Route::get('/', [RegisterController::class, 'index']);
 Route::POST('/register', [RegisterController::class, 'store']);
 
+Route::POST('/login', [LoginController::class, 'actionlogin'])->name('actionlogin');
 
-Route::get('/login', [LoginController::class, 'index']);
-Route::POST('/', [LoginController::class, 'authenticate']);
+Route::get('/dashboard', [DashboardController::class, 'index']);
 
+Route::post('/password.action', [LoginController::class, 'password_action'])->name('password.action');
 
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/form_pengajuan/create', [FormPengajuanController::class, 'create'])->name('form_pengajuan.create');
+Route::post('/form_pengajuan', [FormPengajuanController::class, 'store'])->name('form_pengajuan');

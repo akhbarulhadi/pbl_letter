@@ -96,16 +96,35 @@
   </header>
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
-  
     <div class="container">
       <div class="row">
         <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+        @if(session()->has('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ session('success') }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+@if(session()->has('LoginError'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{ session('LoginError') }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+@if(session()->has('Failed'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{ session('Failed') }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
           <h1>LetteR</h1>
           <h2>Permintaan Surat Menyurat</h2>
           <div class="d-flex">
             <!-- Button trigger modal -->
             <a type="button" title="Or Press Alt+s" class="btn-get-started scrollto" accesskey="s" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              Sign In
+              Sign Up
             </a>
 
             <!-- modal login -->
@@ -116,9 +135,22 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
+          
                   <div class="modal-body">
                       <div class="form">
-                      <form class="register-form" action="/register" method="POST">
+                        <form class="login-form" action="/login" method="POST">
+                          @csrf
+                          <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" placeholder="Email" id="email" required value="{{ old('email') }}"/>
+                          @error('email')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="password" name="password" placeholder="Password" id="password" required />
+                          <button type="submit">login</button>
+                          <p class="message">Not registered? <a href="#">Create an account</a></p>
+                        </form>
+                        <form class="register-form" action="/register" method="POST">
                         @csrf
                           <input type="number" name="nim" class="form-control rounded-top @error('nim') is-invalid @enderror" 
                           id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}"/>
@@ -127,24 +159,59 @@
                             {{ $message }}
                           </div>
                           @enderror
-                          <input type="text" name="name" id="name"placeholder="Nama Lengkap" required value="{{ old('name') }}"/>
-                          <input type="text" name="prodi" id="prodi" placeholder="Program Studi" required value="{{ old('prodi') }}"/>
-                          <input type="text" name="kelas" id="kelas" placeholder="Kelas" required value="{{ old('kelas') }}"/>
-                          <input type="text" name="nama_dosen" id="nama_dosen" placeholder="Wali Dosen" required value="{{ old('nama_dosen') }}"/>
-                          <input type="number" name="nomor_hp" id="nomor_hp" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required value="{{ old('nomor_hp') }}"/>
-                          <input type="email" name="email" id="email" placeholder="Email" required value="{{ old('email') }}"/>
-                          <input type="password" name="password" id="password" placeholder="Password" required/>
+                          <input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" 
+                          id="name"placeholder="Nama Lengkap" required value="{{ old('name') }}"/>
+                          @error('name')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="text" name="prodi" class="form-control rounded-top @error('prodi') is-invalid @enderror"  
+                          id="prodi" placeholder="Program Studi" required value="{{ old('prodi') }}"/>
+                          @error('prodi')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="text" name="kelas" class="form-control rounded-top @error('kelas') is-invalid @enderror" 
+                          id="kelas" placeholder="Kelas" required value="{{ old('kelas') }}"/>
+                          @error('kelas')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="text" name="nama_dosen" class="form-control rounded-top @error('nama_dosen') is-invalid @enderror" 
+                          id="nama_dosen" placeholder="Wali Dosen" required value="{{ old('nama_dosen') }}"/>
+                          @error('nama_dosen')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="number" name="nomor_hp" class="form-control rounded-top @error('nomor_hp') is-invalid @enderror" 
+                          id="nomor_hp" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required value="{{ old('nomor_hp') }}"/>
+                          @error('nomor_hp')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" 
+                          id="email" placeholder="Email" required value="{{ old('email') }}"/>
+                          @error('email')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
+                          <input type="password" name="password" class="form-control rounded-top @error('password') is-invalid @enderror" 
+                          id="password" placeholder="Password" required/>
+                          @error('password')
+                          <div class="invalid-feedback">
+                            {{ $message }}
+                          </div>
+                          @enderror
 
                           <button type="submit">create</button>
                           <p class="message">Already registered? <a href="#">Sign In</a></p>
-                        </form>
-                        <form class="login-form" action="/login" method="POST">
-                          @csrf
-                          <input type="email" name="email" placeholder="Email" id="email" required/>
-                          <input type="password" name="password" placeholder="Password" id="password" required/>
-                          <button name="submit" type="submit">login</button>
-                          <p class="message">Not registered? <a href="#">Create an account</a></p>
-                        </form>
+</form>
                       </div>
                   </div>
                 </div>

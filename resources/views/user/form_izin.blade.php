@@ -17,15 +17,15 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="nama">Nama Lengkap</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="nama" name="nama" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="nim">NIM</label>
-                                                <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="kelas">Kelas</label>
-                                                <input type="text" class="form-control" id="kelas" name="kelas" disabled>
+                                                <input type="text" class="form-control" placeholder="{{ Auth::user()->kelas }}" id="kelas" name="kelas" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="jenis_izin">Jenis Izin</label>

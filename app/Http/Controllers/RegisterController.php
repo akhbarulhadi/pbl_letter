@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Session;
+
 
 class RegisterController extends Controller
 {
@@ -14,7 +17,7 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        return view('/');
+        return view('home');
     }
 
     /**
@@ -38,7 +41,7 @@ class RegisterController extends Controller
             'nama_dosen' => 'required',
             'nomor_hp' => 'required',
             'email' => 'required|email:dns|unique:students',
-            'password' => 'required'
+            'password' => 'required',
         ], [
             'nim.required' => 'NIM harus diisi.',
             'nim.unique' => 'NIM sudah digunakan.',
@@ -62,9 +65,8 @@ class RegisterController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
  
         User::create($validatedData);
-        return redirect('/')->with('success', 'Registration Succesfull! Please Login');
+        return redirect('/')->with('success', 'Registration Succesfull!');
     }
-
 
     /**
      * Display the specified resource.

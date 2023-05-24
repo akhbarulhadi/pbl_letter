@@ -14,7 +14,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ Request::path() === 'dashboard' ? 'active' : ''}}">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>

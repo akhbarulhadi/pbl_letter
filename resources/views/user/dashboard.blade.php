@@ -3,7 +3,12 @@
 @section('isi')
     <div class="container-fluid">   
         <!-- Begin Page Content -->
-        <h1 id="judul">Dashboard</h1><br><br><br>
+        <h1 id="judul">Dashboard</h1><br>@if(session()->has('FormSuccess'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ session('success') }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif<br><br>
                        <div class="container-fluid">
                            <!--card dashboard-->
                            <div class="row">
@@ -32,11 +37,11 @@
                                                                         <p class="text-center"><b>Identitas:</b></p>
                                                                         <div class="form-group">
                                                                           <label for="nama">Nama Lengkap</label>
-                                                                          <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                          <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="nama" name="nama" disabled>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="nim">NIM</label>
-                                                                          <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                                          <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
                                                                         </div>
                                                                       </div>
                                                                       <div class="col-md-6">
@@ -47,7 +52,7 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="alamat">Alamat Lengkap</label>
-                                                                          <input type="text" class="form-control" id="alamat" name="alamat" required>
+                                                                          <input type="textarea" class="form-control" id="alamat" name="alamat" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="matkul">Tugas Mata Kuliah</label>
@@ -98,15 +103,15 @@
                                                                           <div class="col-md-6">
                                                                               <div class="form-group">
                                                                                   <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="nama" name="nama" disabled>
                                                                               </div>
                                                                               <div class="form-group">
                                                                                   <label for="nim">NIM</label>
-                                                                                  <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
                                                                               </div>
                                                                               <div class="form-group">
                                                                                   <label for="kelas">Kelas</label>
-                                                                                  <input type="text" class="form-control" id="kelas" name="kelas" disabled>
+                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->kelas }}" id="kelas" name="kelas" disabled>
                                                                               </div>
                                                                               <div class="form-group">
                                                                                   <label for="jenis_izin">Jenis Izin</label>

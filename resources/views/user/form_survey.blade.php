@@ -10,19 +10,26 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Formulir Pengajuan Survey</h5>
-                                                    <form>
+                                                    <form action="/form_pengajuan" method="POST">
+                                                    @csrf
                                                       <div class="container-fluid">
                                                         <div class="row">
                                                           <div class="col-md-6">
                                                             <p class="text-center"><b>Identitas:</b></p>
                                                             <div class="form-group">
                                                               <label for="nama">Nama Lengkap</label>
-                                                              <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                              @auth
+                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="name" name="name" disabled>
+                                                              @else <input type="text" class="form-control" placeholder="Nama tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="name" name="name" disabled>
                                                             </div>
+                                                            @endauth
                                                             <div class="form-group">
                                                               <label for="nim">NIM</label>
-                                                              <input type="text" class="form-control" id="nim" name="nim" disabled>
-                                                            </div>
+                                                              @auth
+                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
+                                                              @else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                                                              </div>
+                                                            @endauth
                                                           </div>
                                                           <div class="col-md-6">
                                                             <p class="text-center"><b>Tujuan Surat:</b></p>
@@ -36,7 +43,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                               <label for="matkul">Tugas Mata Kuliah</label>
-                                                              <input type="text" class="form-control" id="matkul" name="matkul" required>
+                                                              <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" required>
                                                             </div>
                                                             <div class="form-group">
                                                               <label for="keperluan">Keperluan</label>
@@ -46,7 +53,7 @@
                                                         </div>
                                                       </div>
                                                       <div class="text-center">
-                                                        <button id="btn-f" type="submit" class="btn btn-outline-primary">Ajukan</button>
+                                                        <button type="submit" class="btn btn-outline-primary">Ajukan</button>
                                                       </div>
                                                     </form>
                                     </div>
