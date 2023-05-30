@@ -41,9 +41,9 @@ class FormPengajuanController extends Controller
 
     public function index()
     {
-        $survei = FormPengajuan::all();
+        $survey = FormPengajuan::all();
 
-        return view('index')->with('suratPengajuan', $survei);
+        return view('user.status_survey', ['survey' => $survey]);
     }
 
     public function show(FormPengajuan $formPengajuan)

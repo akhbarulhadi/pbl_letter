@@ -42,9 +42,9 @@ Route::get('/form-survey', function () {
 Route::get('/status-izin', function () {
     return view('user.status_izin');
 })->name('status_izin');
-Route::get('/status-survey', function () {
-    return view('user.status_survey');
-})->name('status_survey');
+// Route::get('/status-survey', function () {
+//     return view('user.status_survey');
+// })->name('status_survey');
 
 /*history*/
 Route::get('/history-survey', function () {
@@ -125,4 +125,4 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/form_pengajuan/create', [FormPengajuanController::class, 'create'])->name('form_pengajuan.create');
 Route::post('/form_pengajuan', [FormPengajuanController::class, 'store'])->name('form_pengajuan');
 
-Route::get('/survei', 'FormPengajuanController@index');
+Route::get('/status-survey', [FormPengajuanController::class, 'index'])->name('status_survey');

@@ -16,35 +16,35 @@
                                                   <div class="form-group">
                                                     <label for="nim">NIM:</label>
                                                     @auth
-                                                    <input type="text" class="form-control" id="nim" placeholder="{{ Auth::user()->nim }}" name="nim" disabled>
+                                                    <input type="text" class="form-control" id="nim" placeholder="{{ Auth::user()->nim }}" name="nim" readonly>
                                                     @else <input type="text" class="form-control" id="nim" placeholder="NIM tidak terdeteksi! Silahkan Login!!" name="nim" disabled>
                                                   </div>
                                                   @endauth
                                                   <div class="form-group">
                                                     <label for="nama">Nama Lengkap:</label>
                                                     @auth
-                                                    <input type="text" class="form-control" id="nama" placeholder="{{ Auth::user()->name }}" name="nama" disabled>
+                                                    <input type="text" class="form-control" id="nama" placeholder="{{ Auth::user()->name }}" name="nama" readonly>
                                                     @else <input type="text" class="form-control" id="nama" placeholder="Nama tidak terdeteksi! Silahkan Login!!" name="nama" disabled>
                                                   </div>
                                                   @endauth
                                                   <div class="form-group">
                                                     <label for="prodi">Program Studi:</label>
                                                     @auth
-                                                    <input type="text" class="form-control" id="prodi" placeholder="{{ Auth::user()->prodi }}" name="prodi" disabled>
+                                                    <input type="text" class="form-control" id="prodi" placeholder="{{ Auth::user()->prodi }}" name="prodi" readonly>
                                                     @else <input type="text" class="form-control" id="prodi" placeholder="Prodi tidak terdeteksi! Silahkan Login!!" name="prodi" disabled>
                                                   </div>
                                                   @endauth
                                                   <div class="form-group">
                                                     <label for="kelas">Kelas:</label>
                                                     @auth
-                                                    <input type="text" class="form-control" id="kelas" placeholder="{{ Auth::user()->kelas }}" name="kelas" disabled>
+                                                    <input type="text" class="form-control" id="kelas" placeholder="{{ Auth::user()->kelas }}" name="kelas" readonly>
                                                     @else <input type="text" class="form-control" id="kelas" placeholder="Kelas tidak terdeteksi! Silahkan Login!!" name="kelas" disabled>
                                                   </div>
                                                   @endauth
                                                   <div class="form-group">
                                                     <label for="dosen">Wali Dosen:</label>
                                                     @auth
-                                                    <input type="text" class="form-control" id="dosen" placeholder="{{ Auth::user()->nama_dosen }}" name="dosen" disabled>
+                                                    <input type="text" class="form-control" id="dosen" placeholder="{{ Auth::user()->nama_dosen }}" name="dosen" readonly>
                                                     @else <input type="text" class="form-control" id="dosen" placeholder="Wali Dosen tidak terdeteksi! Silahkan Login!!" name="dosen" disabled>
                                                   </div>
                                                   @endauth

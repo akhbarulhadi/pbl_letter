@@ -17,7 +17,6 @@
                                  <div class="card">
                                    <div class="card-body">
                                      <h5 class="card-title">Pengajuan Survey</h5>
-                                     <p class="card-text">Detail</p>
                                        <!--button modal-->
                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#form-survey">
                                            <i class="fa fa-plus" id="logo-button" aria-hidden="true"></i>
@@ -85,7 +84,6 @@
                                  <div class="card">
                                    <div class="card-body">
                                      <h5 class="card-title">Pengajuan Surat Izin</h5>
-                                     <p class="card-text">Detail</p>
                                      <!--modal button-->
                                      <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#form-surat-izin">
                                        <i class="fa fa-plus" id="logo-button" aria-hidden="true"></i>

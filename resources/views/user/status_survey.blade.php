@@ -12,7 +12,7 @@
                                                         <h5 class="card-title">Status Pengajuan Survey</h5>
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
-                                                              @foreach ($survei as $form1)
+                                                              
                                                               <thead class="table-secondary">
                                                                 <tr>
                                                                   <th scope="col">No</th>
@@ -25,11 +25,12 @@
                                                                 </tr>
                                                               </thead>
                                                               <tbody>
+                                                              @foreach ($survey as $index => $data1)
                                                                 <tr>
-                                                                  <th scope="row">1</th>
-                                                                  <td>{{ $form1->ditujukan}}</td>
-                                                                  <td>Alamat</td>
-                                                                  <td>Matkul 1</td>
+                                                                  <th>{{ $data1->id }}</th>
+                                                                  <td>{{ $data1->ditujukan}}</td>
+                                                                  <td>{{ $data1->alamat}}</td>
+                                                                  <td>{{ $data1->tugas_matkul}}</td>
                                                                   <!-- button modal -->
                                                                   <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-survey">Detail</button></td>
                                                                   <td>
@@ -38,23 +39,9 @@
                                                                       <button id="btn-f" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-survey">Edit</button>
                                                                     </div>
                                                                   </td>
-                                                                  <td>Sedang Diajukan</td>
+                                                                  <td>{{ $data1->status}}</td>
                                                                 </tr>
                                                                 @endforeach
-                                                                <tr>
-                                                                  <th scope="row">2</th>
-                                                                  <td>Contoh 2</td>
-                                                                  <td>Alamat</td>
-                                                                  <td>Matkul</td>
-                                                                  <td><button id="btn-f" class="btn btn-outline-primary">Detail</button></td>
-                                                                  <td>
-                                                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                                      <button id="btn-f" type="button" class="btn btn-danger">Del</button>
-                                                                      <button id="btn-f" type="button" class="btn btn-warning">Edit</button>
-                                                                    </div>
-                                                                  </td>
-                                                                  <td class="text-warning">Sedang Diproses</td>
-                                                                </tr>
                                                               </tbody>
                                                             </table>
                                                         </div>
@@ -76,7 +63,7 @@
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                                  <input type="text" class="form-control" id="nama" name="nama" value="{{ $data1->name }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
@@ -91,7 +78,7 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="alamat">Alamat Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="alamat" name="alamat" disabled>
+                                                                                  <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $data1->alamat }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="matkul">Tugas Mata Kuliah</label>

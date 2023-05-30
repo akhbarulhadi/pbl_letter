@@ -152,7 +152,7 @@
                         </form>
                         <form class="register-form" action="/register" method="POST">
                         @csrf
-                          <input type="number" name="nim" class="form-control rounded-top @error('nim') is-invalid @enderror" 
+                          <input type="text" name="nim" class="form-control rounded-top @error('nim') is-invalid @enderror" 
                           id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}"/>
                           @error('nim')
                           <div class="invalid-feedback">
@@ -187,7 +187,7 @@
                             {{ $message }}
                           </div>
                           @enderror
-                          <input type="number" name="nomor_hp" class="form-control rounded-top @error('nomor_hp') is-invalid @enderror" 
+                          <input type="text" name="nomor_hp" class="form-control rounded-top @error('nomor_hp') is-invalid @enderror" 
                           id="nomor_hp" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required value="{{ old('nomor_hp') }}"/>
                           @error('nomor_hp')
                           <div class="invalid-feedback">

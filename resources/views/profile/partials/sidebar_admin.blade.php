@@ -47,14 +47,14 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa fa-history" aria-hidden="true"></i>
-                    <span>History Pengajuan</span>
+                    <span>History Verifikasi</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">History Components:</h6>
-                        <a class="collapse-item {{ Request::path() === 'history-survey-admin' ? 'active' : ''}}" href="{{ route('history_survey_admin') }}">Pengajuan Survey</a>
-                        <a class="collapse-item {{ Request::path() === 'history-izin-admin' ? 'active' : ''}}" href="{{ route('history_izin_admin') }}">Pengajuan Surat Izin</a>
+                        <a class="collapse-item {{ Request::path() === 'history-survey-admin' ? 'active' : ''}}" href="{{ route('history_survey_admin') }}">History Survey</a>
+                        <a class="collapse-item {{ Request::path() === 'history-izin-admin' ? 'active' : ''}}" href="{{ route('history_izin_admin') }}">History Surat Izin</a>
                     </div>
                 </div>
             </li>
