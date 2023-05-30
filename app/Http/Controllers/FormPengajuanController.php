@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\FormPengajuan;
 use App\Models\User;
 use Session;
+use Illuminate\Support\Facades\DB;
 
 class FormPengajuanController extends Controller
 {
@@ -15,13 +16,14 @@ class FormPengajuanController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nim' => 'required',
             'name' => 'required',
             'ditujukan' => 'required',
             'alamat' => 'required',
             'tugas_matkul' => 'required',
-            'keperluan' => 'required'
+            'keperluan' => 'required',
+            'status' => 'pending',
         ]);
 
         $form = new FormPengajuan;
@@ -31,17 +33,17 @@ class FormPengajuanController extends Controller
         $form->alamat = $request->alamat;
         $form->tugas_matkul = $request->tugas_matkul;
         $form->keperluan = $request->keperluan;
+        $form->status = $request->status;
 
-        $form->save();
-        User::created($form);
+        FormPengajuan::create($validatedData);
         return redirect('dashboard')->with('FormSuccess', 'Form pengajuan berhasil diajukan.');
     }
 
     public function index()
     {
-        $forms = FormPengajuan::where('nim', auth()->user()->nim)->get();
+        $survei = FormPengajuan::all();
 
-        return view('dashboard', compact('forms'));
+        return view('index')->with('suratPengajuan', $survei);
     }
 
     public function show(FormPengajuan $formPengajuan)

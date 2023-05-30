@@ -12,6 +12,7 @@
                                                         <h5 class="card-title">Status Pengajuan Survey</h5>
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
+                                                              @foreach ($survei as $form1)
                                                               <thead class="table-secondary">
                                                                 <tr>
                                                                   <th scope="col">No</th>
@@ -26,7 +27,7 @@
                                                               <tbody>
                                                                 <tr>
                                                                   <th scope="row">1</th>
-                                                                  <td>Contoh 1</td>
+                                                                  <td>{{ $form1->ditujukan}}</td>
                                                                   <td>Alamat</td>
                                                                   <td>Matkul 1</td>
                                                                   <!-- button modal -->
@@ -39,6 +40,7 @@
                                                                   </td>
                                                                   <td>Sedang Diajukan</td>
                                                                 </tr>
+                                                                @endforeach
                                                                 <tr>
                                                                   <th scope="row">2</th>
                                                                   <td>Contoh 2</td>

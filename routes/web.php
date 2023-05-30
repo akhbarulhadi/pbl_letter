@@ -124,3 +124,5 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/form_pengajuan/create', [FormPengajuanController::class, 'create'])->name('form_pengajuan.create');
 Route::post('/form_pengajuan', [FormPengajuanController::class, 'store'])->name('form_pengajuan');
+
+Route::get('/survei', 'FormPengajuanController@index');

@@ -124,7 +124,7 @@
           <div class="d-flex">
             <!-- Button trigger modal -->
             <a type="button" title="Or Press Alt+s" class="btn-get-started scrollto" accesskey="s" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              Sign Up
+              Sign In
             </a>
 
             <!-- modal login -->

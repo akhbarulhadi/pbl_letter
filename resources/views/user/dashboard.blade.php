@@ -5,10 +5,11 @@
         <!-- Begin Page Content -->
         <h1 id="judul">Dashboard</h1><br>@if(session()->has('FormSuccess'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ session('success') }}
+  {{ session('FormSuccess') }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-@endif<br><br>
+@endif
+       <br><br>
                        <div class="container-fluid">
                            <!--card dashboard-->
                            <div class="row">
@@ -30,18 +31,19 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                   </div>
                                                               <div class="modal-body">
-                                                                <form>
+                                                              <form action="/form_pengajuan" method="POST">
+                                                              @csrf
                                                                   <div class="container-fluid">
                                                                     <div class="row">
                                                                       <div class="col-md-6">
                                                                         <p class="text-center"><b>Identitas:</b></p>
                                                                         <div class="form-group">
                                                                           <label for="nama">Nama Lengkap</label>
-                                                                          <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="nama" name="nama" disabled>
+                                                                          <input type="text" class="form-control" value="{{ Auth::user()->name }}" id="nama" name="name" readonly>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="nim">NIM</label>
-                                                                          <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
+                                                                          <input type="text" class="form-control" value="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
                                                                         </div>
                                                                       </div>
                                                                       <div class="col-md-6">
@@ -56,7 +58,7 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="matkul">Tugas Mata Kuliah</label>
-                                                                          <input type="text" class="form-control" id="matkul" name="matkul" required>
+                                                                          <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="keperluan">Keperluan</label>
@@ -68,8 +70,8 @@
                                                                 
                                                               </div>
                                                                       <div class="modal-footer">
-                                                                        <button id="btn-f" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                        <button id="btn-f" type="submit" class="btn btn-primary">Ajukan</button>
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary">Ajukan</button>
                                                                       </div>
                                                                 </form>
                                                     
@@ -103,26 +105,22 @@
                                                                           <div class="col-md-6">
                                                                               <div class="form-group">
                                                                                   <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="nama" name="nama" disabled>
+                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="nama" name="nama" readonly>
                                                                               </div>
                                                                               <div class="form-group">
                                                                                   <label for="nim">NIM</label>
-                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
+                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
                                                                               </div>
                                                                               <div class="form-group">
                                                                                   <label for="kelas">Kelas</label>
-                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->kelas }}" id="kelas" name="kelas" disabled>
+                                                                                  <input type="text" class="form-control" placeholder="{{ Auth::user()->kelas }}" id="kelas" name="kelas" readonly>
                                                                               </div>
                                                                               <div class="form-group">
-                                                                                  <label for="jenis_izin">Jenis Izin</label>
-                                                                                  <select class="form-select" id="jenis_izin1" name="jenis_izin" onchange="toggleInputText()" required>
-                                                                                      <option value="">Pilih Jenis Izin</option>
-                                                                                      <option value="sakit">Sakit</option>
-                                                                                      <option value="keluarga">Keluarga</option>
-                                                                                      <option value="lainnya">Lainnya</option>
-                                                                                  </select>
-                                                                                      <input type="text" class="form-control d-none" id="jenis_izin_lainnya" name="jenis_izin_lainnya" placeholder="Jenis Izin Lainnya" required>
-                                                                              </div>
+                                                                                  <label for="nama_wali_dosen">Nama Wali Dosen</label>
+                                                                                  @auth
+                                                                                  <input type="text" class="form-control" id="nama_wali_dosen" name="nama_wali_dosen" value="{{ Auth::user()->nama_dosen }}"required>
+                                                                              </div>@endauth
+                                                                              
                                                                               <div class="form-group">
                                                                                           <label for="tanggal_mulai">Tanggal Mulai</label>
                                                                                           <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" required>
@@ -133,9 +131,16 @@
                                                                               </div>
                                                                           </div>
                                                                           <div class="col-md-6">
-                                                                              <div class="form-group">
-                                                                                  <label for="nama_wali_dosen">Nama Wali Dosen</label>
-                                                                                  <input type="text" class="form-control" id="nama_wali_dosen" name="nama_wali_dosen" required>
+                                                                          <div class="form-group">
+                                                                                  <label for="jenis_izin">Keperluan</label>
+                                                                                  <select class="form-select" id="jenis_izin1" name="jenis_izin" onchange="toggleInputText()" required>
+                                                                                      <option value="">Pilih Izin</option>
+                                                                                      <option value="sakit">Sakit</option>
+                                                                                      <option value="keluarga">Keluarga</option>
+                                                                                      <option value="keluarga">Kerja</option>
+                                                                                      <option value="lainnya">Lainnya</option>
+                                                                                  </select>
+                                                                                      <input type="text" class="form-control d-none" id="jenis_izin_lainnya" name="jenis_izin_lainnya" placeholder="Jenis Izin Lainnya" required>
                                                                               </div>
                                                                               <div class="form-group">
                                                                                   <label for="nama_orang_tua">Nama Orang Tua</label>

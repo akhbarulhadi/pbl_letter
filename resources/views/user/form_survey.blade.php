@@ -19,16 +19,16 @@
                                                             <div class="form-group">
                                                               <label for="nama">Nama Lengkap</label>
                                                               @auth
-                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="name" name="name" disabled>
-                                                              @else <input type="text" class="form-control" placeholder="Nama tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="name" name="name" disabled>
-                                                            </div>
+                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="name" name="name" readonly>
+                                                              
+                                                            </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                                                             @endauth
                                                             <div class="form-group">
                                                               <label for="nim">NIM</label>
                                                               @auth
-                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" disabled>
-                                                              @else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
-                                                              </div>
+                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
+                                                              
+                                                              </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                                                             @endauth
                                                           </div>
                                                           <div class="col-md-6">
