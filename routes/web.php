@@ -126,3 +126,11 @@ Route::get('/form_pengajuan/create', [FormPengajuanController::class, 'create'])
 Route::post('/form_pengajuan', [FormPengajuanController::class, 'store'])->name('form_pengajuan');
 
 Route::get('/status-survey', [FormPengajuanController::class, 'index'])->name('status_survey');
+Route::get('/verifikasi-survey-admin', [FormPengajuanController::class, 'index_admin'])->name('verifikasi_survey');
+
+Route::get('/data_urut', [FormPengajuanController::class, 'data_urut'])->name('data_urut');
+
+Route::get('/data/{id}', [FormPengajuanController::class, 'show']);
+Route::post('/survey/admin/{formpengajuan}/approved', [FormPengajuanController::class, 'approved'])->name('formpengajuan.approved');
+Route::post('/survey/admin/{formpengajuan}/rejected', [FormPengajuanController::class, 'rejected'])->name('formpengajuan.rejected');
+Route::post('/survey/admin/{formpengajuan}/inprogress', [FormPengajuanController::class, 'inprogress'])->name('formpengajuan.inprogress');

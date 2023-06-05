@@ -51,7 +51,7 @@
                                                   <div class="form-group">
                                                     <label for="email">Email:</label>
                                                     @auth
-                                                    <input type="email" class="form-control" id="email" placeholder="{{ Auth::user()->email }}" name="email" required>
+                                                    <input type="email" class="form-control" id="email" placeholder="{{ Auth::user()->email }}" name="email" readonly>
                                                     @else <input type="email" class="form-control" id="email" placeholder="Email tidak terdeteksi! Silahkan Login!!" name="email" required>
                                                   </div>
                                                   @endauth

@@ -19,14 +19,14 @@
                                                             <div class="form-group">
                                                               <label for="nama">Nama Lengkap</label>
                                                               @auth
-                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->name }}" id="name" name="name" readonly>
+                                                              <input type="text" class="form-control" value="{{ Auth::user()->name }}" id="name" name="name" readonly>
                                                               
                                                             </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                                                             @endauth
                                                             <div class="form-group">
                                                               <label for="nim">NIM</label>
                                                               @auth
-                                                              <input type="text" class="form-control" placeholder="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
+                                                              <input type="text" class="form-control" value="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
                                                               
                                                               </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                                                             @endauth

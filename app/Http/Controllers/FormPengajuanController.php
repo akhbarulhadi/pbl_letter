@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FormPengajuan;
-use App\Models\User;
-use Session;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class FormPengajuanController extends Controller
 {
@@ -23,7 +21,7 @@ class FormPengajuanController extends Controller
             'alamat' => 'required',
             'tugas_matkul' => 'required',
             'keperluan' => 'required',
-            'status' => 'pending',
+            'status' => 'Sedang Diajukan',
         ]);
 
         $form = new FormPengajuan;
@@ -41,15 +39,57 @@ class FormPengajuanController extends Controller
 
     public function index()
     {
-        $survey = FormPengajuan::all();
+        $user = Auth::user();
+        $survey = FormPengajuan::where('name', $user->name)->get();
 
         return view('user.status_survey', ['survey' => $survey]);
     }
 
-    public function show(FormPengajuan $formPengajuan)
+    public function show($id)
     {
-        // Menggunakan kebijakan akses untuk memeriksa apakah pengguna dapat melihat form pengajuan ini
+        $data1 = FormPengajuan::find($id);
 
-        return view('form_pengajuan.show', compact('formPengajuan'));
+        return view('user.status_survei', ['data' => $data1]);
     }
+
+    public function index_admin()
+    {
+        $survey_ad = FormPengajuan::all();
+
+        return view('admin.verifikasi_survey', ['survey_ad' => $survey_ad]);
+    }
+    public function urut_data(Request $request)
+    {
+    $sort = $request->query('sort');
+    
+    // Lakukan validasi jika perlu
+    
+    $data_urut = FormPengajuan::orderBy($sort)->get();
+    
+    return view('admin.verifikasi_survey', ['data_urut' => $data_urut]);
+    }
+    public function approved(FormPengajuan $formpengajuan)
+{
+    $formpengajuan->status = 'Disetujui';
+    $formpengajuan->save();
+
+    return redirect('verifikasi-survey-admin')->with('success', 'Survey berhasil disetujui.');
+}
+
+public function rejected(FormPengajuan $formpengajuan)
+{
+    $formpengajuan->status = 'Ditolak';
+    $formpengajuan->save();
+
+    return redirect('verifikasi-survey-admin')->with('success', 'Survey berhasil ditolak.');
+}
+public function inprogress(FormPengajuan $formpengajuan)
+{
+    $formpengajuan->status = 'Sedang Diprogres';
+    $formpengajuan->save();
+
+    return redirect('verifikasi-survey-admin')->with('success', 'Survey berhasil ditolak.');
+}
+
+
 }

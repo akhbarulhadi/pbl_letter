@@ -7,7 +7,7 @@
             </button>
 
             @auth
-            <h2>Welcome, <b>{{ Auth::user()->name }}</b></h2>
+            <h2>Welcome Admin, <b>{{ Auth::user()->name }}</b></h2>
             @else
             <p></br>Nothing User/Admin are identify..</p>
             @endauth

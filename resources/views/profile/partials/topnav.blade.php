@@ -6,7 +6,7 @@
                 <i class="fa fa-bars"></i>
             </button>
             @auth
-            <h2>Welcome, <b>{{ Auth::user()->name }}</b></h2>
+            <h2>Welcome User, <b>{{ Auth::user()->name }}</b></h2>
             @else
             <p></br>Nothing User/Admin are identify..</p>
             @endauth

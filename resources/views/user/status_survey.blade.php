@@ -12,9 +12,8 @@
                                                         <h5 class="card-title">Status Pengajuan Survey</h5>
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
-                                                              
                                                               <thead class="table-secondary">
-                                                                <tr>
+                                                                <tr style="text-align: center;">
                                                                   <th scope="col">No</th>
                                                                   <th scope="col">Ditujukan Ke</th>
                                                                   <th scope="col">Alamat</th>
@@ -24,22 +23,23 @@
                                                                   <th scope="col">Status</th>
                                                                 </tr>
                                                               </thead>
-                                                              <tbody>
                                                               @foreach ($survey as $index => $data1)
-                                                                <tr>
-                                                                  <th>{{ $data1->id }}</th>
+                                                              <tbody>
+                                                                <tr style="text-align: center;">
+                                                                  <th>{{ $index+1 }}</th>
+                                                                  <th hidden>{{ $data1->id }}</th>
                                                                   <td>{{ $data1->ditujukan}}</td>
                                                                   <td>{{ $data1->alamat}}</td>
                                                                   <td>{{ $data1->tugas_matkul}}</td>
                                                                   <!-- button modal -->
-                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-survey">Detail</button></td>
+                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey{{ $data1->id }}" data-id="{{ $data1->id }}">Detail</button></td>
                                                                   <td>
                                                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                                                       <button id="btn-f" type="button" class="btn btn-danger">Del</button>
                                                                       <button id="btn-f" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-survey">Edit</button>
                                                                     </div>
                                                                   </td>
-                                                                  <td>{{ $data1->status}}</td>
+                                                                  <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); color: <?php echo ($data1->status == 'Disetujui') ? 'blue; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;' ); ?>">{{ $data1->status}}</td>
                                                                 </tr>
                                                                 @endforeach
                                                               </tbody>
@@ -48,14 +48,15 @@
 
 
                                                                 <!-- Modal detail -->
-                                                                <div class="modal fade" id="detail-survey" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal fade" id="detail-survey{{ $data1->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                                     <div class="modal-content">
                                                                       <div class="modal-header">
                                                                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Pengajuan Survey</h1>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                       </div>
-                                                                      <div class="modal-body">
+                                                                      <div class="modal-body" id="detailContainer">
+                                                                      <div class="modal-body" id="detailContainer">
                                                                         <form>
                                                                           <div class="container-fluid">
                                                                             <div class="row">
@@ -92,6 +93,7 @@
                                                                             </div>
                                                                           </div>
                                                                         </form>
+                                                                      </div>
                                                                       </div>
                                                                       <div class="modal-footer">
                                                                         <button id="btn-f" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -157,5 +159,31 @@
                                                      </div>
                                                 </div>
                                            </div>
-                                           
 @endsection
+<script>
+  $(document).ready(function() {
+    $('.btn-detail').click(function() {
+      var id = $(this).data('id');
+      // Lakukan permintaan AJAX atau ambil data detail menggunakan ID yang diterima
+      $.ajax({
+        url: '/data/' + id, // Ganti dengan URL atau rute yang sesuai untuk mendapatkan data detail
+        type: 'GET',
+        success: function(response) {
+          // Tampilkan data detail dalam modal
+          $('#detail-survey').find('#nama').val(response.name);
+          $('#detail-survey').find('#nim').val(response.nim);
+          $('#detail-survey').find('#ditujukan').val(response.ditujukan);
+          $('#detail-survey').find('#alamat').val(response.alamat);
+          $('#detail-survey').find('#matkul').val(response.matkul);
+          $('#detail-survey').find('#keperluan').val(response.keperluan);
+          $('#detail-survey'+id).modal('show');
+        },
+        error: function(xhr, status, error) {
+          // Tangani kesalahan jika terjadi
+          console.log(error);
+        }
+      });
+    });
+  });
+</script>
+
