@@ -28,7 +28,7 @@
                                                               <tbody>
                                                                 <tr style="text-align: center;">
                                                                   <th>{{ $index+1 }}</th>
-                                                                  <th hidden>{{ $data1->id }}</th>
+                                                                  <td hidden>{{ $data1->id }}</td>
                                                                   <td>{{ $data1->ditujukan}}</td>
                                                                   <td>{{ $data1->alamat}}</td>
                                                                   <td>{{ $data1->tugas_matkul}}</td>

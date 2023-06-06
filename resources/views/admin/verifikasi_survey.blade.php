@@ -14,13 +14,7 @@
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
-                @endif 
-                <form action="" method="GET">
-                    <div class="input-group mb-3">
-                        <input type="search" name="search" class="form-control" placeholder="Cari data..." value="{{ old('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </form>                                                      
+                @endif                                          
                 <div class="table-responsive">
                     <table class="table table-hover datatab">
                         <thead class="table-secondary">
@@ -38,8 +32,7 @@
                             @foreach ($survey_ad as $index_ad => $data_ad)
                                 @if ($data_ad->status != 'Disetujui' && $data_ad->status != 'Ditolak')
                                     <tr style="text-align: center;">
-                                        <td>{{ $index_ad + 1 }}</td>
-                                        <th hidden>{{ $data_ad->id }}</th>
+                                        <th>{{ $data_ad->id }}</th>
                                         <td>{{ $data_ad->nim }}</td>
                                         <td>{{ $data_ad->ditujukan }}</td>
                                         <td>{{ $data_ad->tugas_matkul }}</td>
