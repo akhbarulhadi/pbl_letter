@@ -10,7 +10,7 @@ use Session;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function showLoginForm()
     {
         if (Auth::check()) {
             return redirect('login');

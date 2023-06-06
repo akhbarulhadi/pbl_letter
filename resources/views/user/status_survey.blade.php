@@ -24,6 +24,7 @@
                                                                 </tr>
                                                               </thead>
                                                               @foreach ($survey as $index => $data1)
+                                                              @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
                                                               <tbody>
                                                                 <tr style="text-align: center;">
                                                                   <th>{{ $index+1 }}</th>
@@ -41,6 +42,7 @@
                                                                   </td>
                                                                   <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); color: <?php echo ($data1->status == 'Disetujui') ? 'blue; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;' ); ?>">{{ $data1->status}}</td>
                                                                 </tr>
+                                                                @endif
                                                                 @endforeach
                                                               </tbody>
                                                             </table>
@@ -68,14 +70,14 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
-                                                                                  <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                                                  <input type="text" class="form-control" id="nim" name="nim" value="{{ $data1->nim }}" disabled>
                                                                                 </div>
                                                                               </div>
                                                                               <div class="col-md-6">
                                                                                 <p class="text-center"><b>Tujuan Surat:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="ditujukan">Ditujukan Ke</label>
-                                                                                  <input type="text" class="form-control" id="ditujukan" name="ditujukan"disabled>
+                                                                                  <input type="text" class="form-control" id="ditujukan" name="ditujukan" value="{{ $data1->ditujukan }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="alamat">Alamat Lengkap</label>
@@ -83,11 +85,11 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="matkul">Tugas Mata Kuliah</label>
-                                                                                  <input type="text" class="form-control" id="matkul" name="matkul" disabled>
+                                                                                  <input type="text" class="form-control" id="matkul" name="matkul" value="{{ $data1->tugas_matkul }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="keperluan">Keperluan</label>
-                                                                                  <textarea class="form-control" id="keperluan" name="keperluan" disabled></textarea>
+                                                                                  <textarea class="form-control" id="keperluan" name="keperluan" value="{{ $data1->keperluan }}" disabled></textarea>
                                                                                 </div>
                                                                               </div>
                                                                             </div>

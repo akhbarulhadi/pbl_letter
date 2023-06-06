@@ -13,8 +13,7 @@
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
-                                                                <tr>
-                                                                  <th scope="col">No</th>
+                                                                <tr style="text-align: center;">
                                                                   <th scope="col">NIM</th>
                                                                   <th scope="col">Ditujukan Ke</th>
                                                                   <th scope="col">Tugas Mata Kuliah</th>
@@ -22,25 +21,21 @@
                                                                   <th scope="col">Status</th>
                                                                 </tr>
                                                               </thead>
+                                                              @foreach ($history_ad as $index => $data_ad)
                                                               <tbody>
-                                                                <tr>
-                                                                  <th scope="row">1</th>
-                                                                  <td>4342211023</td>
-                                                                  <td>Contoh 1</td>
-                                                                  <td>Matkul 1</td>
+                                                              <?php if($data_ad['status'] != 'Sedang Diproses' && $data_ad['status'] != 'Sedang Diajukan'): ?>
+                                                                <tr style="text-align: center;">
+                                                                  <th hidden>{{ $data_ad->id }}</th>
+                                                                  <td>{{ $data_ad->nim}}</td>
+                                                                  <td>{{ $data_ad->ditujukan}}</td>
+                                                                  <td>{{ $data_ad->tugas_matkul}}</td>
                                                                   <!-- button modal -->
-                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-survey">Detail</button></td>
-                                                                  <td class="text-success">Disetujui</td>
+                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}">Detail</button></td>
+                                                                  <td style="background-color: #D3D3D3; text-shadow: 0px 0px 1px rgba(0, 0, 0, 5); color: <?php echo ($data_ad->status == 'Disetujui') ? '#00FF00; font-weight: bold;' : (($data_ad->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;'); ?>">{{ $data_ad->status}}</td>
                                                                 </tr>
-                                                                <tr>
-                                                                  <th scope="row">2</th>
-                                                                  <td>4342211021</td>
-                                                                  <td>Contoh 2</td>
-                                                                  <td>Matkul 2</td>
-                                                                  <td><button id="btn-f" class="btn btn-outline-primary">Detail</button></td>
-                                                                  <td class="text-success">Disetujui</td>
-                                                                </tr>
+                                                              <?php endif; ?>
                                                               </tbody>
+                                                              @endforeach
                                                             </table>
                                                         </div>
 
@@ -50,7 +45,7 @@
                                                                   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                                     <div class="modal-content">
                                                                       <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail</h1>
+                                                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Pengajuan</h1>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                       </div>
                                                                       <div class="modal-body">
@@ -61,7 +56,7 @@
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                                  <input type="text" class="form-control" id="name" name="name" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
@@ -79,8 +74,8 @@
                                                                                   <input type="text" class="form-control" id="alamat" name="alamat" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                  <label for="matkul">Tugas Mata Kuliah</label>
-                                                                                  <input type="text" class="form-control" id="matkul" name="matkul" disabled>
+                                                                                  <label for="tugas_matkul">Tugas Mata Kuliah</label>
+                                                                                  <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="keperluan">Keperluan</label>
@@ -100,5 +95,45 @@
                                                      </div>
                                                 </div>
                                            </div>
+
+                                           <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol detail
+        var detailButtons = document.querySelectorAll(".btn-detail");
+
+        // Tambahkan event listener ke setiap tombol detail
+        detailButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                var id = button.getAttribute("data-id");
+
+                // Ambil data dari API atau sumber data lainnya
+                fetch("/data/detail/" + id)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        // Tampilkan data dalam modal
+                        var name = document.getElementById("name");
+                        var nim = document.getElementById("nim");
+                        var ditujukan = document.getElementById("ditujukan");
+                        var alamat = document.getElementById("alamat");
+                        var tugas_matkul = document.getElementById("tugas_matkul");
+                        var keperluan = document.getElementById("keperluan");
+
+                        name.value = data.name;
+                        nim.value = data.nim;
+                        ditujukan.value = data.ditujukan;
+                        alamat.value = data.alamat;
+                        tugas_matkul.value = data.tugas_matkul;
+                        keperluan.value = data.keperluan;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+        });
+    });
+    
+</script>
                                            
 @endsection

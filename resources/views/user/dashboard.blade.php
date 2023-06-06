@@ -49,19 +49,19 @@
                                                                         <p class="text-center"><b>Tujuan Surat:</b></p>
                                                                         <div class="form-group">
                                                                           <label for="ditujukan">Ditujukan Ke</label>
-                                                                          <input type="text" class="form-control" id="ditujukan" name="ditujukan" required>
+                                                                          <input type="text" autocomplete="off" class="form-control" id="ditujukan" name="ditujukan" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="alamat">Alamat Lengkap</label>
-                                                                          <input type="textarea" class="form-control" id="alamat" name="alamat" required>
+                                                                          <textarea class="form-control" autocomplete="off" id="alamat" name="alamat" required></textarea>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="matkul">Tugas Mata Kuliah</label>
-                                                                          <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" required>
+                                                                          <input type="text" autocomplete="off" class="form-control" id="tugas_matkul" name="tugas_matkul" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                           <label for="keperluan">Keperluan</label>
-                                                                          <textarea class="form-control" id="keperluan" name="keperluan" required></textarea>
+                                                                          <textarea class="form-control" autocomplete="off" id="keperluan" name="keperluan" required></textarea>
                                                                         </div>
                                                                       </div>
                                                                     </div>
