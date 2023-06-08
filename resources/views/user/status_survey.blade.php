@@ -27,7 +27,12 @@
                                                               @foreach ($survey as $index => $data1)
                                                               @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
                                                                 <tr style="text-align: center;">
+<<<<<<< HEAD
                                                                   <th>{{ $data1->id }}</th>
+=======
+                                                                  <th>{{ $index+1 }}</th>
+                                                                  <td hidden>{{ $data1->id }}</td>
+>>>>>>> 6b8a3a0986d98ef764a5ab7a853023c6401839d7
                                                                   <td>{{ $data1->ditujukan}}</td>
                                                                   <td>{{ $data1->alamat}}</td>
                                                                   <td>{{ $data1->tugas_matkul}}</td>
