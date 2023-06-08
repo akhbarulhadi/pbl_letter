@@ -6,6 +6,12 @@
                             <h1 id="judul">Profile</h1>
                             <br>
                         </div>
+                        <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                             <div class="container">
                                 <div class="card">
                                     <div class="card-body">
@@ -65,28 +71,29 @@
                                                   <div class="form-group">
                                                     <label for="alamat">Alamat:</label>
                                                     @auth
-                                                    <textarea class="form-control" id="alamat" placeholder="{{ Auth::user()->alamat }}" name="alamat" required></textarea>
+                                                    <input class="form-control" id="alamat" placeholder="{{ Auth::user()->alamat }}" name="alamat" required>
                                                     @else <textarea class="form-control" id="alamat" placeholder="Alamat tidak terdeteksi! Silahkan Login!!" name="alamat" required></textarea>
                                                   </div>
                                                   @endauth
                                                   <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
                                                   <hr>
                                                 </form>
-                                                <form action="/password.action" method="POST">
-                                                  <h2>Ubah Password</h2>
+                                                <form action="{{ route('password.update') }}" method="POST">
+                                                @csrf  
+                                                <h2>{{ __('Ubah Password') }}</div></h2>
                                                   <div class="form-group">
-                                                    <label for="password_lama">Password Lama:</label>
-                                                    <input type="password" class="form-control" id="password_lama" placeholder="" name="password_lama" required>
+                                                    <label for="current_password">Password Lama:</label>
+                                                    <input type="password" class="form-control" id="current_password" placeholder="Masukkan Password Lama" name="current_password" required>
                                                   </div>
                                                   <div class="form-group">
-                                                    <label for="password_baru">Password Baru:</label>
-                                                    <input type="password" class="form-control" id="password_baru" placeholder="Masukkan Password Baru" name="password_baru" required>
+                                                    <label for="new_password">Password Baru:</label>
+                                                    <input type="password" class="form-control" id="new_password" placeholder="Masukkan Password Baru" name="new_password" required>
                                                   </div>
                                                   <div class="form-group">
-                                                    <label for="konfirmasi_password_baru">Konfirmasi Password Baru:</label>
-                                                    <input type="password" class="form-control" id="konfirmasi_password_baru" placeholder="Konfirmasi Password Baru" name="konfirmasi_password_baru" required>
+                                                    <label for="new_password_confirmation">Konfirmasi Password Baru:</label>
+                                                    <input type="password" class="form-control" id="new_password_confirmation" placeholder="Konfirmasi Password Baru" name="new_password_confirmation" required>
                                                   </div>
-                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ubah</button>
+                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary">Ubah</button>
                                                 </form>
                                         </div>
                                     </div>

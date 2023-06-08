@@ -16,7 +16,6 @@ class FormPengajuanController extends Controller
     {
         $validatedData = $request->validate([
             'nim' => 'required',
-            'name' => 'required',
             'ditujukan' => 'required',
             'alamat' => 'required',
             'tugas_matkul' => 'required',
@@ -26,7 +25,6 @@ class FormPengajuanController extends Controller
 
         $form = new FormPengajuan;
         $form->nim = $request->nim;
-        $form->name = $request->name;
         $form->ditujukan = $request->ditujukan;
         $form->alamat = $request->alamat;
         $form->tugas_matkul = $request->tugas_matkul;
@@ -40,7 +38,7 @@ class FormPengajuanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $survey = FormPengajuan::where('name', $user->name)->get();
+        $survey = FormPengajuan::where('name', $user->name)->orderBy('id', 'desc')->get();
 
         return view('user.status_survey', ['survey' => $survey]);
     }
@@ -51,13 +49,6 @@ class FormPengajuanController extends Controller
         $history = FormPengajuan::where('name', $user->name)->get();
 
         return view('user.history_survey', ['history' => $history]);
-    }
-
-    public function show($id)
-    {
-        $data1 = FormPengajuan::find($id);
-
-        return view('user.status_survei', ['data' => $data1]);
     }
 
     public function show_admin($id)
@@ -88,23 +79,9 @@ public function getDataDetail_2($id)
     return response()->json($survey);
 }
 
-public function updateStatus(Request $request, $id)
-{
-    $pengajuan = FormPengajuan::find($id);
-    if ($pengajuan) {
-        $status = $request->input('status');
-        $pengajuan->status = $status;
-        $pengajuan->save();
-
-        return response()->json(['message' => 'Status berhasil diperbarui'], 200);
-    }
-
-    return response()->json(['message' => 'Pengajuan tidak ditemukan'], 404);
-}
-
     public function index_admin()
     {
-        $survey_ad = FormPengajuan::all();
+        $survey_ad = FormPengajuan::orderBy('id','desc')->get();
 
         return view('admin.verifikasi_survey', ['survey_ad' => $survey_ad]);
     }
@@ -114,16 +91,6 @@ public function updateStatus(Request $request, $id)
         $history_ad = FormPengajuan::all();
 
         return view('admin.history_survey_admin', ['history_ad' => $history_ad]);
-    }
-    public function urut_data(Request $request)
-    {
-    $sort = $request->query('sort');
-    
-    // Lakukan validasi jika perlu
-    
-    $data_urut = FormPengajuan::orderBy($sort)->get();
-    
-    return view('admin.verifikasi_survey', ['data_urut' => $data_urut]);
     }
     public function approved(FormPengajuan $formpengajuan)
 {

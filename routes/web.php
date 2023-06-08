@@ -120,8 +120,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
-Route::post('/password.action', [LoginController::class, 'password_action'])->name('password.action');
-
+Route::post('/ubah-password', [LoginController::class, 'changePassword'])->name('password.update');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/form_pengajuan/create', [FormPengajuanController::class, 'create'])->name('form_pengajuan.create');

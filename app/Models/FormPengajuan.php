@@ -20,6 +20,6 @@ class FormPengajuan extends Model
 
     protected $table = 'form_pengajuan';
 
-    protected $fillable = ['nim', 'name', 'ditujukan', 'alamat', 'tugas_matkul','keperluan','status'];
+    protected $fillable = ['nim', 'ditujukan', 'alamat', 'tugas_matkul','keperluan','status'];
 
 }

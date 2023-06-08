@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Session;
 
 class LoginController extends Controller
@@ -29,7 +30,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (auth()->check() && auth()->user()->name === 'Eben Ezer Hikaru Hutabarat') {
+            if (auth()->check() && auth()->user()->name === 'Eben Hikaru') {
                 return redirect('dashboard-admin');
             }
                 return redirect('dashboard');
@@ -41,18 +42,24 @@ class LoginController extends Controller
         }
     }
 
-    public function password_action(Request $request)
-    {
-        $request->validate([
-            'old_password' => 'required|current_password',
-            'new_password' => 'required|confirmed',
-        ]);
-        $user = User::find(Auth::id());
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-        $request->session()->regenerate();
-        return back()->with('success', 'Password changed!');
+    public function changePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|confirmed',
+    ]);
+
+    $user = Auth::user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return redirect()->back()->withErrors(['current_password' => 'Password saat ini salah.']);
     }
+
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return redirect()->back()->with('success', 'Password berhasil diubah.');
+}
 
     public function logout(Request $request)
     {

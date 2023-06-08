@@ -14,18 +14,12 @@
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
-                @endif 
-                <form action="" method="GET">
-                    <div class="input-group mb-3">
-                        <input type="search" name="search" class="form-control" placeholder="Cari data..." value="{{ old('search') }}">
-                        <button class="btn btn-primary" type="submit">Cari</button>
-                    </div>
-                </form>                                                      
+                @endif                                          
                 <div class="table-responsive">
                     <table class="table table-hover datatab">
                         <thead class="table-secondary">
                             <tr style="text-align: center;">
-                                <th scope="col">ID Surat</th>
+                                <th scope="col">Id Surat Survey</th>
                                 <th scope="col">NIM</th>
                                 <th scope="col">Ditujukan Ke</th>
                                 <th scope="col">Tugas Mata Kuliah</th>
@@ -38,8 +32,7 @@
                             @foreach ($survey_ad as $index_ad => $data_ad)
                                 @if ($data_ad->status != 'Disetujui' && $data_ad->status != 'Ditolak')
                                     <tr style="text-align: center;">
-                                        <td>{{ $index_ad + 1 }}</td>
-                                        <th hidden>{{ $data_ad->id }}</th>
+                                        <th>{{ $data_ad->id }}</th>
                                         <td>{{ $data_ad->nim }}</td>
                                         <td>{{ $data_ad->ditujukan }}</td>
                                         <td>{{ $data_ad->tugas_matkul }}</td>
@@ -52,7 +45,7 @@
                                                 <form action="{{ route('formpengajuan.rejected', $data_ad->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger">Tolak</button>
-                                                </form> &nbsp;&nbsp;
+                                                </form> &nbsp;
                                                 <form action="{{ route('formpengajuan.approved', $data_ad->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-success">Terima</button>
@@ -81,30 +74,30 @@
                                                     <p class="text-center"><b>Identitas:</b></p>
                                                     <div class="form-group">
                                                         <label for="nama">Nama Lengkap</label>
-                                                        <input type="text" class="form-control" id="name" name="name" value="{{ $data_ad->name }}" disabled>
+                                                        <input type="text" class="form-control" id="name" name="name" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="nim">NIM</label>
-                                                        <input type="text" class="form-control" id="nim" name="nim" value="{{ $data_ad->nim }}" disabled>
+                                                        <input type="text" class="form-control" id="nim" name="nim" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <p class="text-center"><b>Tujuan Surat:</b></p>
                                                     <div class="form-group">
                                                         <label for="ditujukan">Ditujukan Ke</label>
-                                                        <input type="text" class="form-control" id="ditujukan" name="ditujukan" value="{{ $data_ad->ditujukan }}" disabled>
+                                                        <input type="text" class="form-control" id="ditujukan" name="ditujukan" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="alamat">Alamat Lengkap</label>
-                                                        <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $data_ad->alamat }}" disabled>
+                                                        <input type="text" class="form-control" id="alamat" name="alamat" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="matkul">Tugas Mata Kuliah</label>
-                                                        <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" value="{{ $data_ad->tugas_matkul }}" disabled>
+                                                        <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="keperluan">Keperluan</label>
-                                                        <input type="text" class="form-control" id="keperluan" name="keperluan" value="{{ $data_ad->keperluan }}" disabled>
+                                                        <input type="text" class="form-control" id="keperluan" name="keperluan" disabled>
                                                     </div>
                                                 </div>
                                             </div>

@@ -7,7 +7,7 @@
             </button>
 
             @auth
-            <h2>Welcome Admin, <b>{{ Auth::user()->name }}</b></h2>
+            <h2>Selamat Datang Admin, <b>{{ Auth::user()->name }}</b></h2>
             @else
             <p></br>Nothing User/Admin are identify..</p>
             @endauth
@@ -61,12 +61,12 @@
                         aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="{{ route('profile_admin') }}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
+                            Profil
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
+                            Keluar
                         </a>
                     </div>
                 </li>

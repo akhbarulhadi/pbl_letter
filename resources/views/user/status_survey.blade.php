@@ -14,7 +14,7 @@
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
                                                                 <tr style="text-align: center;">
-                                                                  <th scope="col">No</th>
+                                                                  <th scope="col">Id Surat Survey</th>
                                                                   <th scope="col">Ditujukan Ke</th>
                                                                   <th scope="col">Alamat</th>
                                                                   <th scope="col">Tugas Mata Kuliah</th>
@@ -23,17 +23,16 @@
                                                                   <th scope="col">Status</th>
                                                                 </tr>
                                                               </thead>
+                                                              <tbody>
                                                               @foreach ($survey as $index => $data1)
                                                               @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
-                                                              <tbody>
                                                                 <tr style="text-align: center;">
-                                                                  <th>{{ $index+1 }}</th>
-                                                                  <th hidden>{{ $data1->id }}</th>
+                                                                  <th>{{ $data1->id }}</th>
                                                                   <td>{{ $data1->ditujukan}}</td>
                                                                   <td>{{ $data1->alamat}}</td>
                                                                   <td>{{ $data1->tugas_matkul}}</td>
                                                                   <!-- button modal -->
-                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey{{ $data1->id }}" data-id="{{ $data1->id }}">Detail</button></td>
+                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data1->id }}">Detail</button></td>
                                                                   <td>
                                                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                                                       <button id="btn-f" type="button" class="btn btn-danger">Del</button>
@@ -50,7 +49,7 @@
 
 
                                                                 <!-- Modal detail -->
-                                                                <div class="modal fade" id="detail-survey{{ $data1->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal fade" id="detail-survey" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                                     <div class="modal-content">
                                                                       <div class="modal-header">
@@ -66,7 +65,7 @@
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="nama" name="nama" value="{{ $data1->name }}" disabled>
+                                                                                  <input type="text" class="form-control" id="name" name="name" value="{{ $data1->name }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
@@ -85,7 +84,7 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="matkul">Tugas Mata Kuliah</label>
-                                                                                  <input type="text" class="form-control" id="matkul" name="matkul" value="{{ $data1->tugas_matkul }}" disabled>
+                                                                                  <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" value="{{ $data1->tugas_matkul }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="keperluan">Keperluan</label>
@@ -161,31 +160,42 @@
                                                      </div>
                                                 </div>
                                            </div>
-@endsection
-<script>
-  $(document).ready(function() {
-    $('.btn-detail').click(function() {
-      var id = $(this).data('id');
-      // Lakukan permintaan AJAX atau ambil data detail menggunakan ID yang diterima
-      $.ajax({
-        url: '/data/' + id, // Ganti dengan URL atau rute yang sesuai untuk mendapatkan data detail
-        type: 'GET',
-        success: function(response) {
-          // Tampilkan data detail dalam modal
-          $('#detail-survey').find('#nama').val(response.name);
-          $('#detail-survey').find('#nim').val(response.nim);
-          $('#detail-survey').find('#ditujukan').val(response.ditujukan);
-          $('#detail-survey').find('#alamat').val(response.alamat);
-          $('#detail-survey').find('#matkul').val(response.matkul);
-          $('#detail-survey').find('#keperluan').val(response.keperluan);
-          $('#detail-survey'+id).modal('show');
-        },
-        error: function(xhr, status, error) {
-          // Tangani kesalahan jika terjadi
-          console.log(error);
-        }
-      });
-    });
-  });
-</script>
+                                           <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ambil semua tombol detail
+        var detailButtons = document.querySelectorAll(".btn-detail");
 
+        // Tambahkan event listener ke setiap tombol detail
+        detailButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                var id = button.getAttribute("data-id");
+
+                // Ambil data dari API atau sumber data lainnya
+                fetch("/data/detail/" + id)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        // Tampilkan data dalam modal
+                        var name = document.getElementById("name");
+                        var nim = document.getElementById("nim");
+                        var ditujukan = document.getElementById("ditujukan");
+                        var alamat = document.getElementById("alamat");
+                        var tugas_matkul = document.getElementById("tugas_matkul");
+                        var keperluan = document.getElementById("keperluan");
+
+                        name.value = data.name;
+                        nim.value = data.nim;
+                        ditujukan.value = data.ditujukan;
+                        alamat.value = data.alamat;
+                        tugas_matkul.value = data.tugas_matkul;
+                        keperluan.value = data.keperluan;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            });
+        });
+    });
+</script>
+@endsection

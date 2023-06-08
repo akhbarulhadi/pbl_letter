@@ -16,7 +16,7 @@
                                <div class="col-sm-6 mb-3 mb-sm-0">
                                  <div class="card">
                                    <div class="card-body">
-                                     <h5 class="card-title">Pengajuan Survey</h5>
+                                     <h5 class="card-title">Pengajuan Surat Survey</h5>
                                        <!--button modal-->
                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#form-survey">
                                            <i class="fa fa-plus" id="logo-button" aria-hidden="true"></i>
@@ -26,7 +26,7 @@
                                               <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                 <div class="modal-content">
                                                   <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Formulir Pengajuan Survey</h1>
+                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Formulir Pengajuan Surat Survey</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                   </div>
                                                               <div class="modal-body">
