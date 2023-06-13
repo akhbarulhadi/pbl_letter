@@ -10,6 +10,8 @@
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Status Pengajuan Survey</h5>
+                                                        @foreach ($survey as $index => $data1)
+                                                              @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
@@ -24,8 +26,7 @@
                                                                 </tr>
                                                               </thead>
                                                               <tbody>
-                                                              @foreach ($survey as $index => $data1)
-                                                              @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
+                                                              
                                                                 <tr style="text-align: center;">
                                                                   <th>{{ $data1->id }}</th>
                                                                   <td>{{ $data1->ditujukan}}</td>
@@ -44,7 +45,6 @@
                                                                 
                                                                 @endif
                                                                 @endforeach
-                                                                
                                                               </tbody>
                                                             </table>
                                                         </div>
@@ -104,6 +104,10 @@
                                                                     </div>
                                                                   </div>
                                                                 </div>
+                                                                @endforeach
+                                                                @if ($survey->isEmpty())
+                                                                    <p>Tidak ada data</p>
+                                                                @endif
 
                                                                 <!-- Modal Edit -->
                                                                 <div class="modal fade" id="edit-survey" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -156,6 +160,7 @@
                                                                         <button id="btn-f" type="submit" class="btn btn-primary">Ubah</button>
                                                                       </div>
                                                                         </form>
+                                                                        
                                                                     </div>
                                                                   </div>
                                                                 </div>

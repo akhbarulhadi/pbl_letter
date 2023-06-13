@@ -28,6 +28,7 @@
                                                                 <tr>
                                                                   <th scope="row">{{ $data_izin->id }}</th>
                                                                   <td>{{ $data_izin->jenis_izin }}</td>
+                                                                  <td>{{ $data_izin->bukti_waldos }}</td>
                                                                   <td>{{ $data_izin->tanggal_mulai }}</td>
                                                                   <td>{{ $data_izin->tanggal_selesai }}</td>
                                                                   <!-- button modal -->
@@ -99,7 +100,7 @@
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                                 <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
-                                                                                                <img class="img-fluid" src="{{ asset('storage/' . $data_izin->bukti_waldos) }}" alt="Bukti Wali Dosen">
+                                                                                                <img id="bukti_waldos" src="" alt="Bukti Waldos">
                                                                                                <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Preview File</a> 
                                                                                                <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
@@ -252,7 +253,7 @@
                     nama_dosen.value = data.nama_dosen;
                     nama_ortu.value = data.nama_ortu;
                     nomor_hp_ortu.value = data.nomor_hp_ortu;
-                    bukti_waldos.src = data.bukti_waldos;
+                    bukti_waldos.src = "http://example.com/" + data.bukti_waldos;
                     bukti_izin.src = data.bukti_izin;
                     format_surat_izin.src = data.format_surat_izin;
                   
