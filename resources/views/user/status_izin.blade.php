@@ -99,11 +99,11 @@
                                                                                               <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
-                                                                                                <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
-                                                                                                <img id="bukti_waldos" src="" alt="Bukti Waldos">
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Preview File</a> 
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
-                                                                                            </div>
+    <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
+    <img id="bukti_waldos" src="{{ asset('storage/' . $data_izin->bukti_waldos) }}" alt="Bukti Waldos">
+    <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Preview File</a>
+    <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
+</div>
                                                                                             <div class="form-group">
                                                                                                <label for="bukti_izin">Surat Bukti Izin/Sakit/Kerja/DLL</label>
                                                                                                <img class="img-fluid" src="{{ asset('storage/' . $data_izin->bukti_izin) }}" alt="Bukti Izin">
@@ -253,7 +253,7 @@
                     nama_dosen.value = data.nama_dosen;
                     nama_ortu.value = data.nama_ortu;
                     nomor_hp_ortu.value = data.nomor_hp_ortu;
-                    bukti_waldos.src = "http://example.com/" + data.bukti_waldos;
+                    bukti_waldos.src = "{{ asset('storage/images/') }}" + encodeURIComponent(data.bukti_waldos);
                     bukti_izin.src = data.bukti_izin;
                     format_surat_izin.src = data.format_surat_izin;
                   
