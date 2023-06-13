@@ -41,8 +41,10 @@
                                                                   </td>
                                                                   <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); color: <?php echo ($data1->status == 'Disetujui') ? 'blue; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;' ); ?>">{{ $data1->status}}</td>
                                                                 </tr>
+                                                                
                                                                 @endif
                                                                 @endforeach
+                                                                
                                                               </tbody>
                                                             </table>
                                                         </div>
