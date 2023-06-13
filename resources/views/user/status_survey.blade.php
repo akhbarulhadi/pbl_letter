@@ -27,12 +27,7 @@
                                                               @foreach ($survey as $index => $data1)
                                                               @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
                                                                 <tr style="text-align: center;">
-<<<<<<< HEAD
                                                                   <th>{{ $data1->id }}</th>
-=======
-                                                                  <th>{{ $index+1 }}</th>
-                                                                  <td hidden>{{ $data1->id }}</td>
->>>>>>> 6b8a3a0986d98ef764a5ab7a853023c6401839d7
                                                                   <td>{{ $data1->ditujukan}}</td>
                                                                   <td>{{ $data1->alamat}}</td>
                                                                   <td>{{ $data1->tugas_matkul}}</td>
@@ -93,7 +88,7 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="keperluan">Keperluan</label>
-                                                                                  <textarea class="form-control" id="keperluan" name="keperluan" value="{{ $data1->keperluan }}" disabled></textarea>
+                                                                                  <input class="form-control" id="keperluan" name="keperluan" value="{{ $data1->keperluan }}" disabled>
                                                                                 </div>
                                                                               </div>
                                                                             </div>
@@ -123,7 +118,7 @@
                                                                               <div class="col-md-6">
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
-                                                                                  <label for="nama">Nama Lengkap</label>
+                                                                                  <label for="name">Nama Lengkap</label>
                                                                                   <input type="text" class="form-control" id="nama" name="nama" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
@@ -182,6 +177,8 @@
                     })
                     .then(function (data) {
                         // Tampilkan data dalam modal
+                        var id = document.getElementById("id");
+                        var user_id = document.getElementById("user_id");
                         var name = document.getElementById("name");
                         var nim = document.getElementById("nim");
                         var ditujukan = document.getElementById("ditujukan");
@@ -189,6 +186,8 @@
                         var tugas_matkul = document.getElementById("tugas_matkul");
                         var keperluan = document.getElementById("keperluan");
 
+                        id.value = data.id;
+                        user_id.value = data.user_id;
                         name.value = data.name;
                         nim.value = data.nim;
                         ditujukan.value = data.ditujukan;

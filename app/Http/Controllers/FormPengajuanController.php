@@ -15,7 +15,7 @@ class FormPengajuanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nim' => 'required',
+            'user_id' => 'required',
             'ditujukan' => 'required',
             'alamat' => 'required',
             'tugas_matkul' => 'required',
@@ -24,7 +24,7 @@ class FormPengajuanController extends Controller
         ]);
 
         $form = new FormPengajuan;
-        $form->nim = $request->nim;
+        $form->user_id = $request->user_id;
         $form->ditujukan = $request->ditujukan;
         $form->alamat = $request->alamat;
         $form->tugas_matkul = $request->tugas_matkul;
@@ -38,7 +38,7 @@ class FormPengajuanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $survey = FormPengajuan::where('name', $user->name)->orderBy('id', 'desc')->get();
+        $survey = FormPengajuan::where('user_id', $user->user_id)->orderBy('user_id', 'desc')->get();
 
         return view('user.status_survey', ['survey' => $survey]);
     }
@@ -94,25 +94,43 @@ public function getDataDetail_2($id)
     }
     public function approved(FormPengajuan $formpengajuan)
 {
+    $existingStatus = $formpengajuan->status;
+
+    if ($existingStatus == 'Sedang Diproses') {
     $formpengajuan->status = 'Disetujui';
     $formpengajuan->save();
-
     return redirect('verifikasi-survey-admin')->with('success', 'Survey berhasil disetujui.');
+    }
+    else{
+        return redirect('verifikasi-survey-admin')->with('error', 'Lihat Detail Survey Terlebih Dahulu.');
+    }
 }
 
 public function rejected(FormPengajuan $formpengajuan)
 {
+    $existingStatus = $formpengajuan->status;
+
+    if ($existingStatus == 'Sedang Diproses') {
     $formpengajuan->status = 'Ditolak';
     $formpengajuan->save();
-
     return redirect('verifikasi-survey-admin')->with('success', 'Survey berhasil ditolak.');
+    }
+    else{
+        return redirect('verifikasi-survey-admin')->with('error', 'Lihat Detail Survey Terlebih Dahulu.');  
+    }
 }
 public function inprogress(FormPengajuan $formpengajuan)
 {
-    $formpengajuan->status = 'Sedang Diprogres';
-    $formpengajuan->save();
+    $existingStatus = $formpengajuan->status;
 
-    return redirect('verifikasi-survey-admin')->with('success', 'Survey berhasil ditolak.');
+    if ($existingStatus !== 'Sedang Diproses') {
+        $formpengajuan->status = 'Sedang Diproses';
+        $formpengajuan->save();
+        return redirect('verifikasi-survey-admin')->with('success2', 'Survey Berhasil Diproses.')->with('modalId', $formpengajuan->id);
+    }
+    else{
+        return redirect('verifikasi-survey-admin')->with('success2', 'Survey Sudah Diproses.')->with('modalId', $formpengajuan->id);
+    }
 }
 
 

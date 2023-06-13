@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormPengajuanController;
+use App\Http\Controllers\FormPerizinanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +127,10 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/form_pengajuan/create', [FormPengajuanController::class, 'create'])->name('form_pengajuan.create');
 Route::post('/form_pengajuan', [FormPengajuanController::class, 'store'])->name('form_pengajuan');
 
+Route::get('/form-perizinan', [FormPerizinanController::class, 'create'])->name('perizinan.create');
+Route::post('/form-perizinan', [FormPerizinanController::class, 'store'])->name('perizinan.store');
+Route::get('/status-izin', [FormPerizinanController::class, 'index'])->name('status_izin');
+
 Route::get('/status-survey', [FormPengajuanController::class, 'index'])->name('status_survey');
 Route::get('/history-survey', [FormPengajuanController::class, 'history'])->name('history_survey');
 Route::get('/verifikasi-survey-admin', [FormPengajuanController::class, 'index_admin'])->name('verifikasi_survey');
@@ -137,6 +142,10 @@ Route::get('/verifikasi-survey-admin/{id}', [FormPengajuanController::class, 'sh
 Route::get('/data/detail/{id}', [FormPengajuanController::class, 'getDataDetail'])->name('data.detail');
 
 Route::get('/data/detail/{id}', [FormPengajuanController::class, 'getDataDetail_2'])->name('data.detail');
+
+Route::get('/data/detail/{id}', [FormPerizinanController::class, 'detailData'])->name('data.detail');
+Route::get('/ambil_gambar/{id}', [FormPerizinanController::class, 'ambilGambar'])->name('ambil_gambar');
+
 
 Route::put('/update-status/{id}', 'PengajuanController@updateStatus')->name('update.status');
 

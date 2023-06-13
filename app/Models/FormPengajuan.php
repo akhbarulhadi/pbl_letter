@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\User;
 
 
 class FormPengajuan extends Model
@@ -20,6 +21,11 @@ class FormPengajuan extends Model
 
     protected $table = 'form_pengajuan';
 
-    protected $fillable = ['nim', 'ditujukan', 'alamat', 'tugas_matkul','keperluan','status'];
+    protected $fillable = ['user_id', 'ditujukan', 'alamat', 'tugas_matkul','keperluan','status'];
 
+    public function user()
+{
+    return $this->belongsTo(FormPengajuan::class, 'user_id');
+    
+}
 }

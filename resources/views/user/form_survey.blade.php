@@ -30,6 +30,12 @@
                                                               
                                                               </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                                                             @endauth
+                                                            <div class="form-group">
+                                                              @auth
+                                                              <input type="hidden" class="form-control" value="{{ Auth::user()->user_id }}" id="user_id" name="user_id" readonly>
+                                                              
+                                                              </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                                                            @endauth
                                                           </div>
                                                           <div class="col-md-6">
                                                             <p class="text-center"><b>Tujuan Surat:</b></p>

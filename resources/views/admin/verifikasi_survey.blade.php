@@ -14,6 +14,11 @@
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
                 @endif                                          
                 <div class="table-responsive">
                     <table class="table table-hover datatab">
@@ -38,7 +43,11 @@
                                         <td>{{ $data_ad->tugas_matkul }}</td>
                                         <!-- button modal -->
                                         <td>
-                                            <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}" data-status="{{ $data_ad->status }}">Detail</button>
+                                            <form action="{{ route('formpengajuan.inprogress', $data_ad->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <button id="btn-f" type="submit" class="btn btn-outline-primary">Detail</button>
+                                            </form>
+                                            <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" style="display: none;" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}" data-status="{{ $data_ad->status }}">Detail</button>
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -66,6 +75,11 @@
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Pengajuan Survey</h1>
                                 </div>
+                                @if (session('success2'))
+                                    <div class="alert alert-success">
+                                        {{ session('success2') }}
+                                    </div>
+                                @endif
                                 <div class="modal-body">
                                     <form>
                                         <div class="container-fluid">
@@ -114,7 +128,7 @@
             </div>
         </div>
     </div>
-    <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         // Ambil semua tombol detail
         var detailButtons = document.querySelectorAll(".btn-detail");
@@ -123,6 +137,7 @@
         detailButtons.forEach(function (button) {
             button.addEventListener("click", function () {
                 var id = button.getAttribute("data-id");
+                var status = button.getAttribute("data-status");
 
                 // Ambil data dari API atau sumber data lainnya
                 fetch("/data/detail/" + id)
@@ -149,6 +164,13 @@
                         console.log(error);
                     });
             });
+
+            // Periksa apakah status pada tombol sudah diperbarui
+            var modalId = "{{ session('modalId') }}";
+            if (modalId && button.getAttribute("data-id") === modalId) {
+                // Klik tombol detail secara otomatis
+                button.click();
+            }
         });
     });
 </script>
