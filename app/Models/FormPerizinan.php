@@ -18,6 +18,7 @@ class FormPerizinan extends Model
      * @var array<int, string>
      */
 
+    protected $primaryKey = 'id';
     protected $table = 'form_perizinan';
 
     protected $fillable = [
