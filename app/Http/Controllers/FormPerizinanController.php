@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\FormPerizinan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Crypt;
 
 class FormPerizinanController extends Controller
 {
@@ -16,7 +16,7 @@ class FormPerizinanController extends Controller
     }
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required',
             'nim' => 'required',
             'kelas' => 'required',
@@ -63,12 +63,14 @@ class FormPerizinanController extends Controller
         $perizinan->jenis_izin = $request->jenis_izin;
         $perizinan->nama_ortu = $request->nama_ortu;
         $perizinan->nomor_hp_ortu = $request->nomor_hp_ortu;
+        $perizinan->status = 'Sedang Diajukan';
 
         $perizinan->bukti_waldos = $bukti_waldos ? 'bukti_waldos/' . $bukti_waldos : null;
         $perizinan->bukti_izin = $bukti_izin ? 'bukti_izin/' . $bukti_izin : null;
         $perizinan->format_surat_izin = $format_surat_izin ? 'format_surat_izin/' . $format_surat_izin : null;
         
         $perizinan->save();
+        
         return redirect('form-izin')->with('Success', 'Form perizinan berhasil disimpan.');
     }
 
@@ -78,6 +80,28 @@ class FormPerizinanController extends Controller
         $izin = FormPerizinan::where('nim', $user->nim)->get();
 
         return view('user.status_izin', ['izin' => $izin]);
+    }
+
+    public function index_admin()
+    {
+        $izin = FormPerizinan::all();
+
+        return view('admin.verifikasi_izin', ['izin' => $izin]);
+    }
+
+    public function history_admin()
+    {
+        $izin = FormPerizinan::all();
+
+        return view('admin.history_izin_admin', ['izin' => $izin]);
+    }
+
+    public function historyz()
+    {
+        $user = Auth::user();
+        $history_ad = FormPerizinan::where('nim', $user->nim)->get();
+
+        return view('user.history_izin', ['history_ad' => $history_ad]);
     }
 
     public function detailData($id)
@@ -91,15 +115,66 @@ class FormPerizinanController extends Controller
     return response()->json($survey);
 }
 
-public function ambilGambar($id)
-    {
-        $gambar = FormPerizinan::find($id); // Ganti dengan logika query yang sesuai
-        if ($gambar) {
-            $imageUrl = $gambar->gambar;
-            return response()->json($imageUrl);
-        } else {
-            return response()->json(['error' => 'Gambar tidak ditemukan'], 404);
-        }
+public function showImage($id)
+{
+    $image = FormPerizinan::find($id);
+    
+    if (!$image) {
+        abort(404);
     }
+    
+    $filename = Crypt::decrypt($image->encrypted_filename);
+    $path = storage_path('app/public/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    $file = file_get_contents($path);
+    $type = mime_content_type($path);
+    
+    return response($file)->header('Content-Type', $type);
+}
+
+public function approved(FormPerizinan $formperizinan)
+{
+    $existingStatus = $formperizinan->status;
+
+    if ($existingStatus == 'Sedang Diproses') {
+    $formperizinan->status = 'Disetujui';
+    $formperizinan->save();
+    return redirect('verifikasi-izin-admin')->with('success', 'Survey berhasil disetujui.');
+    }
+    else{
+        return redirect('verifikasi-izin-admin')->with('error', 'Lihat Detail Survey Terlebih Dahulu.');
+    }
+}
+
+public function rejected(FormPerizinan $formperizinan)
+{
+    $existingStatus = $formperizinan->status;
+
+    if ($existingStatus == 'Sedang Diproses') {
+    $formperizinan->status = 'Ditolak';
+    $formperizinan->save();
+    return redirect('verifikasi-izin-admin')->with('success', 'Survey berhasil ditolak.');
+    }
+    else{
+        return redirect('verifikasi-izin-admin')->with('error', 'Lihat Detail Survey Terlebih Dahulu.');  
+    }
+}
+public function inprogress(FormPerizinan $formperizinan)
+{
+    $existingStatus = $formperizinan->status;
+
+    if ($existingStatus !== 'Sedang Diproses') {
+        $formperizinan->status = 'Sedang Diproses';
+        $formperizinan->save();
+        return redirect('verifikasi-izin-admin')->with('success2', 'Survey Berhasil Diproses.')->with('modalId', $formperizinan->id);
+    }
+    else{
+        return redirect('verifikasi-izin-admin')->with('success2', 'Survey Sudah Diproses.')->with('modalId', $formperizinan->id);
+    }
+}
 
 }

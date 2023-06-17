@@ -34,6 +34,7 @@ class FormPerizinan extends Model
         'bukti_waldos',
         'bukti_izin',
         'format_surat_izin',
+        'status',
     ];
 
 }

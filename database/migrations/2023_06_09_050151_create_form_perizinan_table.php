@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('bukti_waldos');
             $table->string('bukti_izin');
             $table->string('format_surat_izin');
+            $table->enum('status', ['Sedang Diajukan', 'Sedang Diproses', 'Disetujui', 'Ditolak'])->default('Sedang Diajukan');
             $table->timestamps();
         });
     }

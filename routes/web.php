@@ -112,6 +112,7 @@ Route::get('/profile-admin', function () {
     return view('admin.profile_admin');
 })->name('profile_admin');
 
+
 Route::get('/', [RegisterController::class, 'index'])->middleware('guest');
 Route::POST('/register', [RegisterController::class, 'store']);
 
@@ -132,24 +133,41 @@ Route::post('/form-perizinan', [FormPerizinanController::class, 'store'])->name(
 Route::get('/status-izin', [FormPerizinanController::class, 'index'])->name('status_izin');
 
 Route::get('/status-survey', [FormPengajuanController::class, 'index'])->name('status_survey');
+Route::get('/dashboard-admin', [FormPengajuanController::class, 'dashboard_admin'])->name('dashboard_admin');
+
+Route::get('/history-izin', [FormPerizinanController::class, 'historyz'])->name('history_izin');
+Route::get('/history-izin-admin', [FormPerizinanController::class, 'history_admin'])->name('history_izin_admin');
+
 Route::get('/history-survey', [FormPengajuanController::class, 'history'])->name('history_survey');
-Route::get('/verifikasi-survey-admin', [FormPengajuanController::class, 'index_admin'])->name('verifikasi_survey');
 Route::get('/history-survey-admin', [FormPengajuanController::class, 'history_admin'])->name('history_survey_admin');
+
+Route::get('/verifikasi-survey-admin', [FormPengajuanController::class, 'index_admin'])->name('verifikasi_survey');
+
 
 Route::get('/data_urut', [FormPengajuanController::class, 'data_urut'])->name('data_urut');
 
 Route::get('/verifikasi-survey-admin/{id}', [FormPengajuanController::class, 'show_admin'])->name('data_show_admin');
+
 Route::get('/data/detail/{id}', [FormPengajuanController::class, 'getDataDetail'])->name('data.detail');
 
-Route::get('/data/detail/{id}', [FormPengajuanController::class, 'getDataDetail_2'])->name('data.detail');
+Route::get('/data/detail/hs/{id}', [FormPengajuanController::class, 'getDataDetail_2'])->name('data.detail2');
 
-Route::get('/data/detail/{id}', [FormPerizinanController::class, 'detailData'])->name('data.detail');
-Route::get('/ambil_gambar/{id}', [FormPerizinanController::class, 'ambilGambar'])->name('ambil_gambar');
+Route::get('/data/detail/ad/{id}', [FormPerizinanController::class, 'detailData'])->name('data.detail');
+
+Route::get('/data/detail/ver/{id}', [FormPengajuanController::class, 'getDataDetail'])->name('data.detail');
+
+Route::get('images/{id}', [FormPerizinanController::class, 'showImage'])->name('image.show');
 
 
 Route::put('/update-status/{id}', 'PengajuanController@updateStatus')->name('update.status');
+
+Route::get('/verifikasi-izin-admin', [FormPerizinanController::class, 'index_admin'])->name('verifikasi_izin');
 
 
 Route::post('/survey/admin/{formpengajuan}/approved', [FormPengajuanController::class, 'approved'])->name('formpengajuan.approved');
 Route::post('/survey/admin/{formpengajuan}/rejected', [FormPengajuanController::class, 'rejected'])->name('formpengajuan.rejected');
 Route::post('/survey/admin/{formpengajuan}/inprogress', [FormPengajuanController::class, 'inprogress'])->name('formpengajuan.inprogress');
+
+Route::post('/izin/admin/{formperizinan}/approved', [FormPerizinanController::class, 'approved'])->name('formperizinan.approved');
+Route::post('/izin/admin/{formperizinan}/rejected', [FormPerizinanController::class, 'rejected'])->name('formperizinan.rejected');
+Route::post('/izin/admin/{formperizinan}/inprogress', [FormPerizinanController::class, 'inprogress'])->name('formperizinan.inprogress');

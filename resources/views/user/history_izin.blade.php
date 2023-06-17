@@ -23,23 +23,19 @@
                                                                 </tr>
                                                               </thead>
                                                               <tbody>
+                                                              @foreach ($history_ad as $index => $history_izin)
+                                                              @if($history_izin['status'] != 'Sedang Diproses' && $history_izin['status'] != 'Sedang Diajukan')
                                                                 <tr>
-                                                                  <th scope="row">1</th>
-                                                                  <td>Lembur</td>
-                                                                  <td>11-12-2023</td>
-                                                                  <td>12-12-2023</td>
+                                                                <th scope="row">{{ $history_izin->id }}</th>
+                                                                  <td>{{ $history_izin->jenis_izin }}</td>
+                                                                  <td>{{ $history_izin->tanggal_mulai }}</td>
+                                                                  <td>{{ $history_izin->tanggal_selesai }}</td>
                                                                   <!-- button modal -->
                                                                   <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-surat-izin">Detail</button></td>
-                                                                  <td class="text-success">Diterima</td>
+                                                                  <td style=" color: <?php echo ($history_izin->status == 'Disetujui') ? '#00FF00; font-weight: bold;' : (($history_izin->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;'); ?>">{{ $history_izin->status}}</td>
                                                                 </tr>
-                                                                <tr>
-                                                                  <th scope="row">2</th>
-                                                                  <td>Sakit</td>
-                                                                  <td>15-12-2023</td>
-                                                                  <td>16-12-2023</td>
-                                                                  <td><button id="btn-f" class="btn btn-outline-primary">Detail</button></td>
-                                                                  <td class="text-danger">Ditolak</td>
-                                                                </tr>
+                                                              @endif
+                                                              @endforeach
                                                               </tbody>
                                                             </table>
                                                         </div>

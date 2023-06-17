@@ -43,7 +43,7 @@
                                                                 </tr>
                                                                 <?php endif; ?>
                                                                 <?php endif; ?>
-                                                                @endforeach
+                                                                      @endforeach
                                                               </tbody>
                                                             </table>
                                                         </div>

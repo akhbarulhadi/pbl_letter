@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FormPengajuan;
+use App\Models\Student;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class FormPengajuanController extends Controller
@@ -42,11 +44,12 @@ class FormPengajuanController extends Controller
 
         return view('user.status_survey', ['survey' => $survey]);
     }
+    
 
     public function history()
     {
         $user = Auth::user();
-        $history = FormPengajuan::where('name', $user->name)->get();
+        $history = FormPengajuan::where('user_id', $user->user_id)->get();
 
         return view('user.history_survey', ['history' => $history]);
     }
@@ -58,9 +61,11 @@ class FormPengajuanController extends Controller
     return view('admin.history_survey_admin', compact('data_show'));
 }
 
-    public function getDataDetail($id)
+public function getDataDetail($id)
 {
-    $survey = FormPengajuan::find($id); // Ganti dengan logika pengambilan data dari sumber data Anda
+    $survey = FormPengajuan::join('students', 'form_pengajuan.user_id', '=', 'students.user_id')
+        ->select('form_pengajuan.*', 'students.name', 'students.nim')
+        ->find($id);
 
     if (!$survey) {
         return response()->json(['message' => 'Data not found'], 404);
@@ -68,6 +73,7 @@ class FormPengajuanController extends Controller
 
     return response()->json($survey);
 }
+
 public function getDataDetail_2($id)
 {
     $survey = FormPengajuan::find($id); // Ganti dengan logika pengambilan data dari sumber data Anda
@@ -79,11 +85,21 @@ public function getDataDetail_2($id)
     return response()->json($survey);
 }
 
-    public function index_admin()
+public function index_admin()
+{
+    $survey_ad = FormPengajuan::join('students', 'form_pengajuan.user_id', '=', 'students.user_id')
+        ->orderBy('form_pengajuan.id', 'desc')
+        ->select('form_pengajuan.*', 'students.name', 'students.nim')
+        ->get();
+
+    return view('admin.verifikasi_survey', ['survey_ad' =>$survey_ad]);
+}
+
+    public function dashboard_admin()
     {
         $survey_ad = FormPengajuan::orderBy('id','desc')->get();
 
-        return view('admin.verifikasi_survey', ['survey_ad' => $survey_ad]);
+        return view('admin.dashboard_admin', ['survey_ad' => $survey_ad]);
     }
 
     public function history_admin()

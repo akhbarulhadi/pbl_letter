@@ -10,10 +10,20 @@
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Verifikasi Pengajuan Izin</h5>
+                                                        @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif          
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
-                                                                <tr>
+                                                                <tr style="text-align: center;">
                                                                   <th scope="col">No</th>
                                                                   <th scope="col">NIM</th>
                                                                   <th scope="col">Jenis Perizinan</th>
@@ -23,37 +33,40 @@
                                                                   <th scope="col">Status</th>
                                                                 </tr>
                                                               </thead>
+                                                              @foreach ($izin as $index => $data_izin)
+                                                              @if ($data_izin->status != 'Disetujui' && $data_izin->status != 'Ditolak')
                                                               <tbody>
-                                                                <tr>
-                                                                  <th scope="row">1</th>
-                                                                  <td>4342211023</td>
-                                                                  <td>Lembur</td>
-                                                                  <td>11-12-2023</td>
+                                                                <tr tr style="text-align: center;">
+                                                                <th scope="row">{{ $data_izin->id }}</th>
+                                                                  <td>{{ $data_izin->jenis_izin }}</td>
+                                                                  <td>{{ $data_izin->tanggal_mulai }}</td>
+                                                                  <td>{{ $data_izin->tanggal_selesai }}</td>
                                                                   <!-- button modal -->
-                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-surat-izin">Detail</button></td>
                                                                   <td>
-                                                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                                      <button id="btn-f" type="button" class="btn btn-danger">Tolak</button>
-                                                                      <button id="btn-f" type="button" class="btn btn-success">Terima</button>
-                                                                    </div>
+                                                                  <form action="{{ route('formperizinan.inprogress', $data_izin->id) }}" method="POST" style="display: inline;">
+                                                                  @csrf
+                                                 
+                                                                  <button id="btn-f" type="submit" class="btn btn-outline-primary">Detail</button>
+                                                                  </form>
+                                                                  <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" style="display: none;" data-bs-toggle="modal" data-bs-target="#detail-surat-izin" data-id="{{ $data_izin->id }}" data-status="{{ $data_izin->status }}">Detail</button>
                                                                   </td>
-                                                                  <td class="text-warning">Sedang Diproses</td>
-                                                                </tr>
-                                                                <tr>
-                                                                  <th scope="row">2</th>
-                                                                  <td>4342211021</td>
-                                                                  <td>Sakit</td>
-                                                                  <td>15-12-2023</td>
-                                                                  <td><button id="btn-f" class="btn btn-outline-primary">Detail</button></td>
                                                                   <td>
-                                                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                                      <button id="btn-f" type="button" class="btn btn-danger">Tolak</button>
-                                                                      <button id="btn-f" type="button" class="btn btn-success">Terima</button>
-                                                                    </div>
+                                                                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                                  <form action="{{ route('formperizinan.rejected', $data_izin->id) }}" method="POST" style="display: inline;">
+                                                                  @csrf
+                                                                  <button type="submit" class="btn btn-danger">Tolak</button>
+                                                                  </form> &nbsp;
+                                                                  <form action="{{ route('formperizinan.approved', $data_izin->id) }}" method="POST" style="display: inline;">
+                                                                  @csrf
+                                                                  <button type="submit" class="btn btn-success">Terima</button>
+                                                                  </form>
+                                                                  </div>
                                                                   </td>
-                                                                  <td class="text-warning">Sedang Diproses</td>
+                                                                  <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data_izin->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data_izin->status == 'Disetujui') ? 'color: blue; font-weight: bold;' : (($data_izin->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{$data_izin->status}}</td>
                                                                 </tr>
                                                               </tbody>
+                                                              @endif
+                                                              @endforeach
                                                             </table>
                                                         </div>
 
@@ -66,14 +79,19 @@
                                                                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Pengajuan Surat Izin</h1>
                                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                        </div>
+                                                                       @if (session('success2'))
+                                    <div class="alert alert-success">
+                                        {{ session('success2') }}
+                                    </div>
+                                @endif
                                                                        <div class="modal-body">
                                                                           <form>
                                                                               <div class="container-fluid">
                                                                                   <div class="row">
                                                                                       <div class="col-md-6">
                                                                                           <div class="form-group">
-                                                                                              <label for="nama">Nama Lengkap</label>
-                                                                                              <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                                              <label for="name">Nama Lengkap</label>
+                                                                                              <input type="text" class="form-control" id="name" name="name" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nim">NIM</label>
@@ -98,28 +116,34 @@
                                                                                       </div>
                                                                                       <div class="col-md-6">
                                                                                           <div class="form-group">
-                                                                                              <label for="nama_wali_dosen">Nama Wali Dosen</label>
-                                                                                              <input type="text" class="form-control" id="nama_wali_dosen" name="nama_wali_dosen" disabled>
+                                                                                              <label for="nama_dosen">Nama Wali Dosen</label>
+                                                                                              <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
-                                                                                              <label for="nama_orang_tua">Nama Orang Tua</label>
-                                                                                              <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" disabled>
+                                                                                              <label for="nama_ortu">Nama Orang Tua</label>
+                                                                                              <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
-                                                                                              <label for="no_hp_orang_tua">Nomor HP Orang Tua</label>
-                                                                                              <input type="text" class="form-control" id="no_hp_orang_tua" name="no_hp_orang_tua" disabled>
+                                                                                              <label for="nomor_hp_ortu">Nomor HP Orang Tua</label>
+                                                                                              <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
-                                                                                                <label for="bukti_persetujuan">Bukti Persetujuan Walidosen</label>
-                                                                                                <button id="btn-f" class="btn btn-light">Download File</button>
+                                                                                                <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
+                                                                                                <img class="img-fluid" id="bukti_waldos" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Waldos">
+                                                                                                <button class="btn btn-light" id="bukti_waldos" onclick="previewImage('bukti_waldos')">Preview File</button>
+                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
                                                                                             <div class="form-group">
-                                                                                                <label for="bukti_izin">Surat Bukti Izin/Sakit/Kerja/DLL</label>
-                                                                                                <button id="btn-f" class="btn btn-light">Download File</button>
-                                                                                            </div>
+                                                                                               <label for="bukti_izin">Surat Bukti Izin/Sakit/Kerja/DLL</label>
+                                                                                               <img class="img-fluid" id="bukti_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Izin">
+                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                               </div>
                                                                                             <div class="form-group">
-                                                                                                <label for="surat-izin">Format Surat Izin</label><br>
-                                                                                                <button id="btn-f" class="btn btn-light">Download File</button>
+                                                                                                <label for="format_surat_izin">Format Surat Izin</label><br>
+                                                                                                <img class="img-fluid" id="format_surat_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Format Surat Izin">
+                                                                                               <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
                                                                                       </div>
                                                                                   </div>
@@ -135,4 +159,74 @@
                                                      </div>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                            document.addEventListener("DOMContentLoaded", function () {
+    // Ambil semua tombol detail
+    var detailButtons = document.querySelectorAll(".btn-detail");
+
+    // Tambahkan event listener ke setiap tombol detail
+    detailButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var id = button.getAttribute("data-id");
+            var status = button.getAttribute("data-status");
+
+            // Ambil data dari API atau sumber data lainnya
+            fetch("/data/detail/" + id)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    // Tampilkan data dalam modal
+                    var name = document.getElementById("name");
+                    var nim = document.getElementById("nim");
+                    var kelas = document.getElementById("kelas");
+                    var jenis_izin = document.getElementById("jenis_izin");
+                    var tanggal_mulai = document.getElementById("tanggal_mulai");
+                    var tanggal_selesai = document.getElementById("tanggal_selesai");
+                    var nama_dosen = document.getElementById("nama_dosen");
+                    var nama_ortu = document.getElementById("nama_ortu");
+                    var nomor_hp_ortu = document.getElementById("nomor_hp_ortu");
+                    var bukti_waldos = document.getElementById("bukti_waldos");
+                    var bukti_izin = document.getElementById("bukti_izin");
+                    var format_surat_izin = document.getElementById("format_surat_izin");
+
+                    name.value = data.name;
+                    nim.value = data.nim;
+                    kelas.value = data.kelas;
+                    jenis_izin.value = data.jenis_izin;
+                    tanggal_mulai.value = data.tanggal_mulai;
+                    tanggal_selesai.value = data.tanggal_selesai;
+                    nama_dosen.value = data.nama_dosen;
+                    nama_ortu.value = data.nama_ortu;
+                    nomor_hp_ortu.value = data.nomor_hp_ortu;
+                    bukti_waldos.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.bukti_waldos);
+                    bukti_izin.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.bukti_izin);
+                    format_surat_izin.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.format_surat_izin);
+                  
+                    var detailModal = document.getElementById("detail-surat-izin");
+                    var bootstrapModal = bootstrap.Modal.getInstance(detailModal);
+                    bootstrapModal.show();
+                
+                  })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        });
+        var modalId = "{{ session('modalId') }}";
+            if (modalId && button.getAttribute("data-id") === modalId) {
+                // Klik tombol detail secara otomatis
+                button.click();
+            }
+    });
+});
+</script>
+<script>
+function previewImage(imageId) {
+    var image = document.getElementById(imageId);
+    var imageUrl = image.getAttribute('src');
+    var newWindow = window.open("", "_blank");
+    newWindow.document.write("<img src='" + imageUrl + "' alt='Preview Image' style=' max-width: 100%; display:block; height: auto; margin-left: auto; margin-right: auto;'>");
+}
+</script>
 @endsection

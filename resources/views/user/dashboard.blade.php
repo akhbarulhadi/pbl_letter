@@ -37,14 +37,26 @@
                                                                       <div class="col-md-6">
                                                                         <p class="text-center"><b>Identitas:</b></p>
                                                                         <div class="form-group">
-                                                                          <label for="nama">Nama Lengkap</label>
-                                                                          <input type="text" class="form-control" value="{{ Auth::user()->name }}" id="nama" name="name" readonly>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                          <label for="nim">NIM</label>
-                                                                          <input type="text" class="form-control" value="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
-                                                                        </div>
-                                                                      </div>
+                                                              <label for="nama">Nama Lengkap</label>
+                                                              @auth
+                                                              <input type="text" class="form-control" value="{{ Auth::user()->name }}" id="name" name="name" readonly>
+                                                              
+                                                            </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                                                            @endauth
+                                                            <div class="form-group">
+                                                              <label for="nim">NIM</label>
+                                                              @auth
+                                                              <input type="text" class="form-control" value="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
+                                                              
+                                                              </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                                                            @endauth
+                                                            <div class="form-group">
+                                                              @auth
+                                                              <input type="hidden" class="form-control" value="{{ Auth::user()->user_id }}" id="user_id" name="user_id" readonly>
+                                                              
+                                                              </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                                                            @endauth
+                                                          </div>
                                                                       <div class="col-md-6">
                                                                         <p class="text-center"><b>Tujuan Surat:</b></p>
                                                                         <div class="form-group">
@@ -158,7 +170,7 @@
                                                                               </div><br>
                                                                               <div class="form-group">
                                                                                   <label for="bukti_persetujuan">Upload Format Surat Izin</label><br>
-                                                                                  <a href="#">Download Format</a>
+                                                                                  <a href="https://drive.google.com/uc?export=download&id=1hd-ciWI-GU0cWPPEIgsTO9ZEKrsLCLQA">Download Format</a>                                                                                  
                                                                                   <input type="file" class="form-control-file" id="format-izin" name="format-izin" required>
                                                                               </div>
                                                                           </div>

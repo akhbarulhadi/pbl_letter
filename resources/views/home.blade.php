@@ -237,15 +237,20 @@
           <div class="col-lg-4 col-md-6">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-laptop"></i></div>
-              <h4 class="title"><a href="">Pengajuan Survey</a></h4>
-              <p class="description">Detail</p>
+              <h4 class="title">Pengajuan Survey</h4>
+              <p class="description" style="text-align: justify;">Surat survei adalah sebuah surat yang dibuat 
+              untuk tujuan mengumpulkan data atau informasi dari responden yang terkait dengan suatu topik atau 
+              penelitian tertentu. Surat ini biasanya digunakan oleh lembaga penelitian, institusi akademik, atau perusahaan untuk mengumpulkan data 
+              secara sistematis dari sejumlah responden yang dipilih.</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-card-checklist"></i></div>
-              <h4 class="title"><a href="">Pengajuan Surat izin</a></h4>
-              <p class="description">Detail</p>
+              <h4 class="title">Pengajuan Surat izin</h4>
+              <p class="description" style="text-align: justify;">Surat izin mahasiswa adalah dokumen resmi yang dikeluarkan oleh institusi pendidikan kepada mahasiswa yang memberikan izin untuk melaksanakan 
+                kegiatan atau tindakan tertentu di luar lingkungan kampus atau program studi yang sedang diikuti. Surat izin ini memberikan legitimasi kepada mahasiswa untuk menjalankan 
+                kegiatan di luar kampus yang mungkin melibatkan perjalanan, penelitian, kegiatan sosial, atau partisipasi dalam acara-acara tertentu.</p>
             </div>
           </div>
           
@@ -264,10 +269,10 @@
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 content">
             <h3>Information</h3>
-            <p>
+            <p style="text-align: justify;">
               Aplikasi permintaan surat menyurat (LetteR) adalah sebuah aplikasi yang bertujuan untuk memudahkan mahasiswa dalam mengajukan permintaan pembuatan surat menyurat kepada pihak yang berwenang (Tata Usaha). Dalam aplikasi ini, pengguna dapat mengisi formulir permintaan surat menyurat secara online dan mengirimkannya kepada pihak yang dituju.
             </p>
-            <p>
+            <p style="text-align: justify;">
               Keuntungan menggunakan aplikasi permintaan surat menyurat (LetteR) adalah memudahkan mahasiswa dalam mengajukan permintaan tanpa harus datang ke kantor Tata Usaha. Selain itu, aplikasi ini juga dapat mempercepat proses pembuatan surat menyurat dan mengurangi kesalahan pengisian data yang mungkin terjadi.
           </div>
         </div>

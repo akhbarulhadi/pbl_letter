@@ -25,10 +25,10 @@
                                                               </thead>
                                                               <tbody>
                                                               @foreach ($izin as $index => $data_izin)
+                                                              @if ($data_izin->status != 'Disetujui' && $data_izin->status != 'Ditolak')
                                                                 <tr>
                                                                   <th scope="row">{{ $data_izin->id }}</th>
                                                                   <td>{{ $data_izin->jenis_izin }}</td>
-                                                                  <td>{{ $data_izin->bukti_waldos }}</td>
                                                                   <td>{{ $data_izin->tanggal_mulai }}</td>
                                                                   <td>{{ $data_izin->tanggal_selesai }}</td>
                                                                   <!-- button modal -->
@@ -39,8 +39,9 @@
                                                                       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-surat-izin">Edit</button>
                                                                     </div>
                                                                   </td>
-                                                                  <td>Sedang Diajukan</td>
+                                                                  <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data_izin->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data_izin->status == 'Disetujui') ? 'color: #7CFC00; font-weight: bold;' : (($data_izin->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{ $data_izin->status}}</td>
                                                                 </tr>
+                                                                @endif
                                                                 @endforeach
                                                               </tbody>
                                                             </table>
@@ -99,20 +100,20 @@
                                                                                               <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
-    <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
-    <img id="bukti_waldos" src="{{ asset('storage/' . $data_izin->bukti_waldos) }}" alt="Bukti Waldos">
-    <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Preview File</a>
-    <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
-</div>
+                                                                                                <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
+                                                                                                <img class="img-fluid" id="bukti_waldos" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Waldos">
+                                                                                                <button class="btn btn-light" id="bukti_waldos" onclick="previewImage('bukti_waldos')">Preview File</button>
+                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                            </div>
                                                                                             <div class="form-group">
                                                                                                <label for="bukti_izin">Surat Bukti Izin/Sakit/Kerja/DLL</label>
-                                                                                               <img class="img-fluid" src="{{ asset('storage/' . $data_izin->bukti_izin) }}" alt="Bukti Izin">
+                                                                                               <img class="img-fluid" id="bukti_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Izin">
                                                                                                <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
                                                                                                <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Download File</a>
                                                                                                </div>
                                                                                             <div class="form-group">
                                                                                                 <label for="format_surat_izin">Format Surat Izin</label><br>
-                                                                                                <img class="img-fluid" src="{{ asset('storage/' . $data_izin->format_surat_izin) }}" alt="Format Surat Izin">
+                                                                                                <img class="img-fluid" id="format_surat_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Format Surat Izin">
                                                                                                <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
                                                                                                <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
@@ -209,6 +210,7 @@
                                                                                     </div>
                                                                                 </form>
                                                                      </div>
+                                                                     
                                                                    </div>
                                                                </div>
                                                      </div>
@@ -225,7 +227,7 @@
             var id = button.getAttribute("data-id");
 
             // Ambil data dari API atau sumber data lainnya
-            fetch("/data/detail/" + id)
+            fetch("/data/detail/ad/" + id)
                 .then(function (response) {
                     return response.json();
                 })
@@ -253,9 +255,9 @@
                     nama_dosen.value = data.nama_dosen;
                     nama_ortu.value = data.nama_ortu;
                     nomor_hp_ortu.value = data.nomor_hp_ortu;
-                    bukti_waldos.src = "{{ asset('storage/images/') }}" + encodeURIComponent(data.bukti_waldos);
-                    bukti_izin.src = data.bukti_izin;
-                    format_surat_izin.src = data.format_surat_izin;
+                    bukti_waldos.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.bukti_waldos);
+                    bukti_izin.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.bukti_izin);
+                    format_surat_izin.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.format_surat_izin);
                   
                     var detailModal = document.getElementById("detail-surat-izin");
                     var bootstrapModal = bootstrap.Modal.getInstance(detailModal);
@@ -268,6 +270,14 @@
         });
     });
 });
+</script>
+<script>
+function previewImage(imageId) {
+    var image = document.getElementById(imageId);
+    var imageUrl = image.getAttribute('src');
+    var newWindow = window.open("", "_blank");
+    newWindow.document.write("<img src='" + imageUrl + "' alt='Preview Image' style=' max-width: 100%; display:block; height: auto; margin-left: auto; margin-right: auto;'>");
+}
 </script>
                                            
 @endsection

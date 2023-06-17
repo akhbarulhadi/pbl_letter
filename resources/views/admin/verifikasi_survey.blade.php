@@ -45,7 +45,9 @@
                                         <td>
                                             <form action="{{ route('formpengajuan.inprogress', $data_ad->id) }}" method="POST" style="display: inline;">
                                                 @csrf
+                                            
                                                 <button id="btn-f" type="submit" class="btn btn-outline-primary">Detail</button>
+                                                
                                             </form>
                                             <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" style="display: none;" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}" data-status="{{ $data_ad->status }}">Detail</button>
                                         </td>
@@ -61,7 +63,11 @@
                                                 </form>
                                             </div>
                                         </td>
-                                        <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); color: {{ $data_ad->status == 'Disetujui' ? 'blue; font-weight: bold;' : ($data_ad->status == 'Ditolak' ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;') }}">{{ $data_ad->status }}</td>
+                                        <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo 
+                                        ($data_ad->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : 
+                                        (($data_ad->status == 'Disetujui') ? 'color: #7CFC00; font-weight: bold;' : 
+                                        (($data_ad->status == 'Ditolak') ? 'color: red; font-weight: bold;' 
+                                        : 'color: yellow; font-weight: bold;')); ?>">{{ $data_ad->status}}</td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -87,7 +93,7 @@
                                                 <div class="col-md-6">
                                                     <p class="text-center"><b>Identitas:</b></p>
                                                     <div class="form-group">
-                                                        <label for="nama">Nama Lengkap</label>
+                                                        <label for="name">Nama Lengkap</label>
                                                         <input type="text" class="form-control" id="name" name="name" disabled>
                                                     </div>
                                                     <div class="form-group">
@@ -106,7 +112,7 @@
                                                         <input type="text" class="form-control" id="alamat" name="alamat" disabled>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="matkul">Tugas Mata Kuliah</label>
+                                                        <label for="tugas_matkul">Tugas Mata Kuliah</label>
                                                         <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" disabled>
                                                     </div>
                                                     <div class="form-group">
@@ -140,7 +146,7 @@
                 var status = button.getAttribute("data-status");
 
                 // Ambil data dari API atau sumber data lainnya
-                fetch("/data/detail/" + id)
+                fetch("/data/detail/ver/" + id)
                     .then(function (response) {
                         return response.json();
                     })

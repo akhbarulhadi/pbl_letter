@@ -23,24 +23,20 @@
                                                                 </tr>
                                                               </thead>
                                                               <tbody>
-                                                                <tr>
-                                                                  <th scope="row">1</th>
-                                                                  <td>4342211023</td>
-                                                                  <td>Lembur</td>
-                                                                  <td>11-12-2023</td>
+                                                              @foreach ($izin as $index => $data_izin)
+                                                              @if($data_izin['status'] != 'Sedang Diproses' && $data_izin['status'] != 'Sedang Diajukan')
+                                                              <tr tr style="text-align: center;">
+                                                                <th scope="row">{{ $data_izin->id }}</th>
+                                                                  <td>{{ $data_izin->jenis_izin }}</td>
+                                                                  <td>{{ $data_izin->tanggal_mulai }}</td>
+                                                                  <td>{{ $data_izin->tanggal_selesai }}</td>
                                                                   
                                                                   <!-- button modal -->
                                                                   <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-surat-izin">Detail</button></td>
-                                                                  <td class="text-success">Diterima</td>
+                                                                  <td style="background-color: #D3D3D3; text-shadow: 0px 0px 1px rgba(0, 0, 0, 5); color: <?php echo ($data_izin->status == 'Disetujui') ? '#00FF00; font-weight: bold;' : (($data_izin->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;'); ?>">{{ $data_izin->status}}</td>
                                                                 </tr>
-                                                                <tr>
-                                                                  <th scope="row">2</th>
-                                                                  <td>4342211023</td>
-                                                                  <td>Sakit</td>
-                                                                  <td>15-12-2023</td>
-                                                                  <td><button id="btn-f" class="btn btn-outline-primary">Detail</button></td>
-                                                                  <td class="text-danger">Ditolak</td>
-                                                                </tr>
+                                                                @endif
+                                                                @endforeach
                                                               </tbody>
                                                             </table>
                                                         </div>

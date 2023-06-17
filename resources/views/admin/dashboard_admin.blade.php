@@ -24,11 +24,21 @@
                                                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Verifikasi Pengajuan Survey</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                   </div>
+                                                  @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif           
                                                   <div class="modal-body">
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
-                                                                <tr>
+                                                                <tr style="text-align: center;">
                                                                   <th scope="col">No</th>
                                                                   <th scope="col">Ditujukan Ke</th>
                                                                   <th scope="col">Alamat</th>
@@ -39,37 +49,38 @@
                                                                 </tr>
                                                               </thead>
                                                               <tbody>
-                                                                <tr>
-                                                                  <th scope="row">1</th>
-                                                                  <td>Contoh 1</td>
-                                                                  <td>Alamat</td>
-                                                                  <td>Matkul 1</td>
-                                                                  <!-- button modal -->
-                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#detail-survey">Detail</button></td>
-                                                                  <td>
-                                                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                                      <button id="btn-f" type="button" class="btn btn-danger">Tolak</button>
-                                                                      <button id="btn-f" type="button" class="btn btn-success">Terima</button>
-                                                                    </div>
-                                                                  </td>
-                                                                  <td class="text-warning">Sedang Diproses</td>
-                                                                </tr>
-                                                                <tr>
-                                                                  <th scope="row">2</th>
-                                                                  <td>Contoh 2</td>
-                                                                  <td>Alamat</td>
-                                                                  <td>Matkul</td>
-                                                                  <td><button id="btn-f" class="btn btn-outline-primary">Detail</button></td>
-                                                                  <td>
-                                                                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                                      <button id="btn-f" type="button" class="btn btn-danger">Tolak</button>
-                                                                      <button id="btn-f" type="button" class="btn btn-success">Terima</button>
-                                                                    </div>
-                                                                  </td>
-                                                                  <td class="text-warning">Sedang Diproses</td>
-                                                                </tr>
-                                                                
-                                                              </tbody>
+                            @foreach ($survey_ad as $index_ad => $data_ad)
+                                @if ($data_ad->status != 'Disetujui' && $data_ad->status != 'Ditolak')
+                                    <tr style="text-align: center;">
+                                        <th>{{ $data_ad->id }}</th>
+                                        <td>{{ $data_ad->ditujukan }}</td>
+                                        <td>{{ $data_ad->alamat }}</td>
+                                        <td>{{ $data_ad->tugas_matkul }}</td>
+                                        <!-- button modal -->
+                                        <td>
+                                            <form action="{{ route('formpengajuan.inprogress', $data_ad->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <button id="btn-f" type="submit" class="btn btn-outline-primary">Detail</button>
+                                            </form>
+                                            <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" style="display: none;" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}" data-status="{{ $data_ad->status }}">Detail</button>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <form action="{{ route('formpengajuan.rejected', $data_ad->id) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger">Tolak</button>
+                                                </form> &nbsp;
+                                                <form action="{{ route('formpengajuan.approved', $data_ad->id) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success">Terima</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data_ad->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data_ad->status == 'Disetujui') ? 'color: blue; font-weight: bold;' : (($data_ad->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{ $data_ad->status}}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
                                                             </table>
                                                         </div>
 

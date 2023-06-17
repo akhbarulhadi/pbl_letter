@@ -60,8 +60,8 @@
                                     <label for="jenis_izin">Jenis Izin</label>
                                     <select class="form-select" id="jenis_izin" name="jenis_izin" onchange="toggleInputText()" required>
                                         <option value="">Pilih Jenis Izin</option>
-                                        <option value="sakit">Sakit</option>
-                                        <option value="keluarga">Keluarga</option>
+                                        <option value="Sakit">Sakit</option>
+                                        <option value="Keluarga">Keluarga</option>
                                         <option value="lainnya">Lainnya</option>
                                     </select>
                                 </div>
@@ -86,6 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="format_surat_izin">Upload Format Surat Izin</label><br>
+                                    <a href="https://drive.google.com/uc?export=download&id=1hd-ciWI-GU0cWPPEIgsTO9ZEKrsLCLQA">Download Format</a>                                                                                  
                                     <input type="file" accept="image/png, image/jpg, img/jpeg" class="form-control-file" id="format_surat_izin" name="format_surat_izin" required>
                                 </div>
                             </div>

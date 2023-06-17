@@ -31,7 +31,7 @@
                                                                   <td>{{ $data_ad->ditujukan}}</td>
                                                                   <td>{{ $data_ad->tugas_matkul}}</td>
                                                                   <!-- button modal -->
-                                                                  <td><button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}">Detail</button></td>
+                                                                  <td><button type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}">Detail</button></td>
                                                                   <td style="background-color: #D3D3D3; text-shadow: 0px 0px 1px rgba(0, 0, 0, 5); color: <?php echo ($data_ad->status == 'Disetujui') ? '#00FF00; font-weight: bold;' : (($data_ad->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;'); ?>">{{ $data_ad->status}}</td>
                                                                 </tr>
                                                               @endif
@@ -57,7 +57,7 @@
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="name" name="name" disabled>
+                                                                                  <input type="text" class="form-control" id="name" name="name" value="{{ $data_ad->name }}" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
@@ -68,7 +68,7 @@
                                                                                 <p class="text-center"><b>Tujuan Surat:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="ditujukan">Ditujukan Ke</label>
-                                                                                  <input type="text" class="form-control" id="ditujukan" name="ditujukan" disabled>
+                                                                                  <input type="text" class="form-control" id="ditujukan" name="ditujukan" valiue="{{ $data_ad->ditujukan }}"  disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="alamat">Alamat Lengkap</label>

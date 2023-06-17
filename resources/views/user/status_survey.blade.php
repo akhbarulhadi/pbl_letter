@@ -10,8 +10,6 @@
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Status Pengajuan Survey</h5>
-                                                        @foreach ($survey as $index => $data1)
-                                                              @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
@@ -26,7 +24,8 @@
                                                                 </tr>
                                                               </thead>
                                                               <tbody>
-                                                              
+                                                              @foreach ($survey as $index => $data1)
+                                                              @if ($data1->status != 'Disetujui' && $data1->status != 'Ditolak')
                                                                 <tr style="text-align: center;">
                                                                   <th>{{ $data1->id }}</th>
                                                                   <td>{{ $data1->ditujukan}}</td>
@@ -40,10 +39,14 @@
                                                                       <button id="btn-f" type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-survey">Edit</button>
                                                                     </div>
                                                                   </td>
-                                                                  <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); color: <?php echo ($data1->status == 'Disetujui') ? 'blue; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;' ); ?>">{{ $data1->status}}</td>
+                                                                  <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data1->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data1->status == 'Disetujui') ? 'color: blue; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{ $data1->status}}</td>
                                                                 </tr>
                                                                 @endif
                                                                 
+                                                                @endforeach
+                                                                @if ($survey->isEmpty())
+                                                                    <p>Tidak ada data</p>
+                                                                @endif
                                                               </tbody>
                                                             </table>
                                                         </div>
@@ -65,31 +68,31 @@
                                                                               <div class="col-md-6">
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
-                                                                                  <label for="nama">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="name" name="name" value="{{ $data1->name }}" disabled>
+                                                                                  <label for="name">Nama Lengkap</label>
+                                                                                  <input type="text" class="form-control" id="name" name="name" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
-                                                                                  <input type="text" class="form-control" id="nim" name="nim" value="{{ $data1->nim }}" disabled>
+                                                                                  <input type="text" class="form-control" id="nim" name="nim" disabled>
                                                                                 </div>
                                                                               </div>
                                                                               <div class="col-md-6">
                                                                                 <p class="text-center"><b>Tujuan Surat:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="ditujukan">Ditujukan Ke</label>
-                                                                                  <input type="text" class="form-control" id="ditujukan" name="ditujukan" value="{{ $data1->ditujukan }}" disabled>
+                                                                                  <input type="text" class="form-control" id="ditujukan" name="ditujukan" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="alamat">Alamat Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $data1->alamat }}" disabled>
+                                                                                  <input type="text" class="form-control" id="alamat" name="alamat" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                  <label for="matkul">Tugas Mata Kuliah</label>
-                                                                                  <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" value="{{ $data1->tugas_matkul }}" disabled>
+                                                                                  <label for="tugas_matkul">Tugas Mata Kuliah</label>
+                                                                                  <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="keperluan">Keperluan</label>
-                                                                                  <input class="form-control" id="keperluan" name="keperluan" value="{{ $data1->keperluan }}" disabled>
+                                                                                  <input type="text" class="form-control" id="keperluan" name="keperluan" disabled>
                                                                                 </div>
                                                                               </div>
                                                                             </div>
@@ -103,10 +106,6 @@
                                                                     </div>
                                                                   </div>
                                                                 </div>
-                                                                @endforeach
-                                                                @if ($survey->isEmpty())
-                                                                    <p>Tidak ada data</p>
-                                                                @endif
 
                                                                 <!-- Modal Edit -->
                                                                 <div class="modal fade" id="edit-survey" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -124,7 +123,7 @@
                                                                                 <p class="text-center"><b>Identitas:</b></p>
                                                                                 <div class="form-group">
                                                                                   <label for="name">Nama Lengkap</label>
-                                                                                  <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                                  <input type="text" class="form-control" id="name" name="name" disabled>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="nim">NIM</label>
@@ -143,7 +142,7 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="matkul">Tugas Mata Kuliah</label>
-                                                                                  <input type="text" class="form-control" id="matkul" name="matkul" required>
+                                                                                  <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" required>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                   <label for="keperluan">Keperluan</label>
@@ -167,45 +166,30 @@
                                                 </div>
                                            </div>
                                            <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Ambil semua tombol detail
-        var detailButtons = document.querySelectorAll(".btn-detail");
+  document.addEventListener('DOMContentLoaded', function () {
+    // Event listener for the Detail button
+    const detailButtons = document.getElementsByClassName('btn-detail');
+    Array.from(detailButtons).forEach(function (button) {
+      button.addEventListener('click', function () {
+        const surveyId = this.getAttribute('data-id');
 
-        // Tambahkan event listener ke setiap tombol detail
-        detailButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                var id = button.getAttribute("data-id");
-
-                // Ambil data dari API atau sumber data lainnya
-                fetch("/data/detail/" + id)
-                    .then(function (response) {
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        // Tampilkan data dalam modal
-                        var id = document.getElementById("id");
-                        var user_id = document.getElementById("user_id");
-                        var name = document.getElementById("name");
-                        var nim = document.getElementById("nim");
-                        var ditujukan = document.getElementById("ditujukan");
-                        var alamat = document.getElementById("alamat");
-                        var tugas_matkul = document.getElementById("tugas_matkul");
-                        var keperluan = document.getElementById("keperluan");
-
-                        id.value = data.id;
-                        user_id.value = data.user_id;
-                        name.value = data.name;
-                        nim.value = data.nim;
-                        ditujukan.value = data.ditujukan;
-                        alamat.value = data.alamat;
-                        tugas_matkul.value = data.tugas_matkul;
-                        keperluan.value = data.keperluan;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            });
-        });
+        // Make an AJAX request to fetch the data
+        fetch(`/data/detail/${surveyId}`)
+          .then(response => response.json())
+          .then(data => {
+            // Update the modal content with the retrieved data
+            document.getElementById('name').value = data.name;
+            document.getElementById('nim').value = data.nim;
+            document.getElementById('ditujukan').value = data.ditujukan;
+            document.getElementById('alamat').value = data.alamat;
+            document.getElementById('tugas_matkul').value = data.tugas_matkul;
+            document.getElementById('keperluan').value = data.keperluan;
+          })
+          .catch(error => console.log(error));
+      });
     });
+  });
 </script>
+
+
 @endsection
