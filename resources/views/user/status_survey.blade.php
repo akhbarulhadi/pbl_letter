@@ -42,11 +42,7 @@
                                                                   <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data1->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data1->status == 'Disetujui') ? 'color: blue; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{ $data1->status}}</td>
                                                                 </tr>
                                                                 @endif
-                                                                
                                                                 @endforeach
-                                                                @if ($survey->isEmpty())
-                                                                    <p>Tidak ada data</p>
-                                                                @endif
                                                               </tbody>
                                                             </table>
                                                         </div>
