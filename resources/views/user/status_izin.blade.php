@@ -10,11 +10,22 @@
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <h5 class="card-title">Status Pengajuan Izin</h5>
+                                                        
+@if (session('EditSuccess'))
+    <div class="alert alert-success">
+        {{ session('EditSuccess') }}
+    </div>
+@endif
+@if (session('IzinSuccess'))
+    <div class="alert alert-success">
+        {{ session('IzinSuccess') }}
+    </div>
+@endif
                                                         <div class="table-responsive">
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
-                                                                <tr>
-                                                                  <th scope="col">No</th>
+                                                                <tr style="text-align: center;">
+                                                                  <th scope="col">ID Surat Izin</th>
                                                                   <th scope="col">Jenis Perizinan</th>
                                                                   <th scope="col">Tanggal mulai</th>
                                                                   <th scope="col">Tanggal Selesai</th>
@@ -26,17 +37,25 @@
                                                               <tbody>
                                                               @foreach ($izin as $index => $data_izin)
                                                               @if ($data_izin->status != 'Disetujui' && $data_izin->status != 'Ditolak')
-                                                                <tr>
-                                                                  <th scope="row">{{ $data_izin->id }}</th>
+                                                                <tr style="text-align: center;">
+                                                                  <th>{{ $data_izin->id }}</th>
                                                                   <td>{{ $data_izin->jenis_izin }}</td>
                                                                   <td>{{ $data_izin->tanggal_mulai }}</td>
                                                                   <td>{{ $data_izin->tanggal_selesai }}</td>
                                                                   <!-- button modal -->
-                                                                  <td><button type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-surat-izin" data-id="{{ $data_izin->id }}">Detail</button></td>
+                                                                  <td><button type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-surat-izin-{{ $data_izin->id }}" data-id="{{ $data_izin->id }}">Detail</button></td>
                                                                   <td>
                                                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                                      <button type="button" class="btn btn-danger">Del</button>
-                                                                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-surat-izin">Edit</button>
+                                                                    @if ($data_izin->status != 'Disetujui' && $data_izin->status != 'Ditolak' && $data_izin->status != 'Sedang Diproses')
+                                                                    <form action="{{ route('data.destroy', $data_izin->id) }}" method="POST" style="display: inline;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data tersebut?')">Del</button>
+                                                                    </form> &nbsp;
+                                                                    <form>
+                                                                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit-surat-izin-{{ $data_izin->id }}" data-id="{{ $data_izin->id }}" >Edit</button>
+                                                                      </form>
+                                                                      @endif
                                                                     </div>
                                                                   </td>
                                                                   <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data_izin->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data_izin->status == 'Disetujui') ? 'color: #7CFC00; font-weight: bold;' : (($data_izin->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{ $data_izin->status}}</td>
@@ -49,7 +68,8 @@
 
 
                                                                 <!-- Modal detail -->
-                                                                <div class="modal fade" id="detail-surat-izin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                @foreach ($izin as $index => $detail_izin)
+                                                                <div class="modal fade" id="detail-surat-izin-{{ $detail_izin->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                                      <div class="modal-content">
                                                                        <div class="modal-header">
@@ -63,59 +83,59 @@
                                                                                       <div class="col-md-6">
                                                                                           <div class="form-group">
                                                                                               <label for="name">Nama Lengkap</label>
-                                                                                              <input type="text" class="form-control" id="name" name="name" disabled>
+                                                                                              <input type="text" class="form-control" id="name" name="name" value="{{ $detail_izin->name }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nim">NIM</label>
-                                                                                              <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                                                              <input type="text" class="form-control" id="nim" name="nim" value="{{ $detail_izin->nim }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="kelas">Kelas</label>
-                                                                                              <input type="text" class="form-control" id="kelas" name="kelas" disabled>
+                                                                                              <input type="text" class="form-control" id="kelas" name="kelas" value="{{ $detail_izin->kelas }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="jenis_izin">Jenis Izin</label>
-                                                                                              <input type="text" class="form-control" id="jenis_izin" name="jenis_izin" disabled value="{{ $data_izin->jenis_izin }}">
+                                                                                              <input type="text" class="form-control" id="jenis_izin" name="jenis_izin" value="{{ $detail_izin->jenis_izin }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                                       <label for="tanggal_mulai">Tanggal Mulai</label>
-                                                                                                      <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" disabled>
+                                                                                                      <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ $detail_izin->tanggal_mulai }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                             <label for="tanggal_selesai">Tanggal Selesai</label>
-                                                                                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" disabled>
+                                                                                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="{{ $detail_izin->tanggal_selesai }}" disabled>
                                                                                           </div>
                                                                                       </div>
                                                                                       <div class="col-md-6">
                                                                                           <div class="form-group">
                                                                                               <label for="nama_dosen">Nama Wali Dosen</label>
-                                                                                              <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" disabled>
+                                                                                              <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" value="{{ $detail_izin->nama_dosen }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nama_ortu">Nama Orang Tua</label>
-                                                                                              <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" disabled>
+                                                                                              <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" value="{{ $detail_izin->nama_ortu }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nomor_hp_ortu">Nomor HP Orang Tua</label>
-                                                                                              <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" disabled>
+                                                                                              <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" value="{{ $detail_izin->nomor_hp_ortu }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                                 <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
-                                                                                                <img class="img-fluid" id="bukti_waldos" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Waldos">
-                                                                                                <button class="btn btn-light" id="bukti_waldos" onclick="previewImage('bukti_waldos')">Preview File</button>
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                                <img class="img-fluid" id="bukti_waldos" src="{{ asset('storage/' . $detail_izin->bukti_waldos) }}" alt="Bukti Waldos">
+                                                                                                <a href="{{ asset('storage/' . $detail_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->bukti_waldos) }}" download target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
                                                                                             <div class="form-group">
                                                                                                <label for="bukti_izin">Surat Bukti Izin/Sakit/Kerja/DLL</label>
-                                                                                               <img class="img-fluid" id="bukti_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Izin">
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                               <img class="img-fluid" id="bukti_izin" src="{{ asset('storage/' . $detail_izin->bukti_izin) }}" alt="Bukti Izin">
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->bukti_izin) }}" download target="_blank" class="btn btn-light">Download File</a>
                                                                                                </div>
                                                                                             <div class="form-group">
                                                                                                 <label for="format_surat_izin">Format Surat Izin</label><br>
-                                                                                                <img class="img-fluid" id="format_surat_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Format Surat Izin">
-                                                                                               <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
-                                                                                               <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                                <iframe id="format_surat_izin" src="{{ asset('storage/' . $detail_izin->format_surat_izin) }}" width="100%" height="500px"></iframe>
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->format_surat_izin) }}" download target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
                                                                                       </div>
                                                                                   </div>
@@ -126,11 +146,15 @@
                                                                          <button id="btn-f" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                        </div>
                                                                      </div>
-                                                                   </div>
                                                                </div> 
+                                                               </div> @endforeach
+                                                               
+                                                               
+
 
                                                                 <!-- Modal Edit -->
-                                                                <div class="modal fade" id="edit-surat-izin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                                @foreach ($izin as $index => $detail_edit)
+                                                                <div class="modal fade" id="edit-surat-izin-{{ $detail_edit->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                                      <div class="modal-content">
                                                                        <div class="modal-header">
@@ -138,66 +162,68 @@
                                                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                        </div>
                                                                        <div class="modal-body">
-                                                                                <form>
+                                                                       <form method="POST" action="{{ route('surat-izin.update', $detail_edit->id) }}" enctype="multipart/form-data">
+                                                                       @method('PUT')
+                                                                       @csrf
                                                                                     <div class="container-fluid">
                                                                                         <div class="row">
                                                                                             <div class="col-md-6">
                                                                                                 <div class="form-group">
-                                                                                                    <label for="nama">Nama Lengkap</label>
-                                                                                                    <input type="text" class="form-control" id="nama" name="nama" disabled>
+                                                                                                    <label for="name">Nama Lengkap</label>
+                                                                                                    <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name}}" readonly>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label for="nim">NIM</label>
-                                                                                                    <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                                                                    <input type="text" class="form-control" id="nim" name="nim" value="{{ Auth::user()->nim}}" readonly>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label for="kelas">Kelas</label>
-                                                                                                    <input type="text" class="form-control" id="kelas" name="kelas" disabled>
+                                                                                                    <input type="text" class="form-control" id="kelas" name="kelas" value="{{ Auth::user()->kelas}}" readonly>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label for="jenis_izin">Jenis Izin</label>
-                                                                                                    <select class="form-select" id="jenis_izin1" name="jenis_izin" onchange="toggleInputText()" required>
+                                                                                                    <select class="form-select" id="jenis_izin" name="jenis_izin" onchange="toggleInputText()" required>
                                                                                                         <option value="">Pilih Jenis Izin</option>
-                                                                                                        <option value="sakit">Sakit</option>
-                                                                                                        <option value="keluarga">Keluarga</option>
-                                                                                                        <option value="lainnya">Lainnya</option>
+                                                                                                        <option value="Sakit">Sakit</option>
+                                                                                                        <option value="Keluarga">Keluarga</option>
+                                                                                                        <option value="Lainnya">Lainnya</option>
                                                                                                     </select>
-                                                                                                        <input type="text" class="form-control d-none" id="jenis_izin_lainnya" name="jenis_izin_lainnya" placeholder="Jenis Izin Lainnya" required>
+                                                                                                        <input type="text" class="form-control d-none" id="jenis_izin_lainnya" name="jenis_izin_lainnya" placeholder="Jenis Izin Lainnya">
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                             <label for="tanggal_mulai">Tanggal Mulai</label>
-                                                                                                            <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" required>
+                                                                                                            <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ $detail_edit->tanggal_mulai }}" required>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                   <label for="tanggal_selesai">Tanggal Selesai</label>
-                                                                                                  <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
+                                                                                                  <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="{{ $detail_edit->tanggal_selesai }}" required>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="col-md-6">
                                                                                                 <div class="form-group">
-                                                                                                    <label for="nama_waldos">Nama Wali Dosen</label>
-                                                                                                    <input type="text" class="form-control" id="nama_waldos" name="nama_waldos" required>
+                                                                                                    <label for="nama_dosen">Nama Wali Dosen</label>
+                                                                                                    <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" value="{{ Auth::user()->nama_dosen}}" readonly>
                                                                                                 </div>
                                                                                                 <div class="form-group">
-                                                                                                    <label for="nama_orang_tua">Nama Orang Tua</label>
-                                                                                                    <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" required>
+                                                                                                    <label for="nama_ortu">Nama Orang Tua</label>
+                                                                                                    <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" value="{{ $detail_edit->nama_ortu }}" required>
                                                                                                 </div>
                                                                                                 <div class="form-group">
-                                                                                                    <label for="no_hp_orang_tua">Nomor HP Orang Tua</label>
-                                                                                                    <input type="text" class="form-control" id="no_hp_orang_tua" name="no_hp_orang_tua" required>
+                                                                                                    <label for="nomor_hp_ortu">Nomor HP Orang Tua</label>
+                                                                                                    <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" value="{{ $detail_edit->nomor_hp_ortu }}" required>
                                                                                                 </div>
                                                                                                 <div class="form-group">
-                                                                                                    <label for="bukti_persetujuan">Edit Bukti Persetujuan Walidosen</label>
-                                                                                                    <input type="file" class="form-control-file" id="bukti-persetujuan" name="bukti-persetujuan" required>
+                                                                                                    <label for="bukti_waldos">Edit Bukti Persetujuan Walidosen</label>
+                                                                                                    <input type="file" accept="image/png, image/jpg, img/jpeg" class="form-control-file" id="bukti_waldos" name="bukti_waldos">
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label for="bukti_izin">Edit Surat Bukti Izin/Sakit/Kerja/DLL</label>
-                                                                                                    <input type="file" class="form-control-file" id="bukti-izin" name="bukti-izin" required>
+                                                                                                    <input type="file" accept="image/png, image/jpg, img/jpeg" class="form-control-file" id="bukti_izin" name="bukti_izin">
                                                                                                 </div>
                                                                                                 <div class="form-group">
-                                                                                                    <label for="bukti_persetujuan">Upload Format Surat Izin</label><br>
-                                                                                                    <a href="#">Download Format</a>
-                                                                                                    <input type="file" class="form-control-file" id="format-izin" name="format-izin" required>
+                                                                                                    <label for="format_surat_izin">Upload Format Surat Izin</label><br>
+                                                                                                    <a href="https://drive.google.com/uc?export=download&id=1hd-ciWI-GU0cWPPEIgsTO9ZEKrsLCLQA">Download Format</a> 
+                                                                                                    <input type="file" accept="application/pdf" class="form-control-file" id="format_surat_izin" name="format_surat_izin">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -209,75 +235,11 @@
                                                                                       <button id="btn-f" type="submit" class="btn btn-primary">Ubah</button>
                                                                                     </div>
                                                                                 </form>
+                                                                                </div>@endforeach
                                                                      </div>
-                                                                     
-                                                                   </div>
-                                                               </div>
-                                                     </div>
-                                                </div>
-                                            </div>
-                                            <script>
-                                            document.addEventListener("DOMContentLoaded", function () {
-    // Ambil semua tombol detail
-    var detailButtons = document.querySelectorAll(".btn-detail");
+                                                               </div> 
+                                                               
 
-    // Tambahkan event listener ke setiap tombol detail
-    detailButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            var id = button.getAttribute("data-id");
-
-            // Ambil data dari API atau sumber data lainnya
-            fetch("/data/detail/ad/" + id)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    // Tampilkan data dalam modal
-                    var name = document.getElementById("name");
-                    var nim = document.getElementById("nim");
-                    var kelas = document.getElementById("kelas");
-                    var jenis_izin = document.getElementById("jenis_izin");
-                    var tanggal_mulai = document.getElementById("tanggal_mulai");
-                    var tanggal_selesai = document.getElementById("tanggal_selesai");
-                    var nama_dosen = document.getElementById("nama_dosen");
-                    var nama_ortu = document.getElementById("nama_ortu");
-                    var nomor_hp_ortu = document.getElementById("nomor_hp_ortu");
-                    var bukti_waldos = document.getElementById("bukti_waldos");
-                    var bukti_izin = document.getElementById("bukti_izin");
-                    var format_surat_izin = document.getElementById("format_surat_izin");
-
-                    name.value = data.name;
-                    nim.value = data.nim;
-                    kelas.value = data.kelas;
-                    jenis_izin.value = data.jenis_izin;
-                    tanggal_mulai.value = data.tanggal_mulai;
-                    tanggal_selesai.value = data.tanggal_selesai;
-                    nama_dosen.value = data.nama_dosen;
-                    nama_ortu.value = data.nama_ortu;
-                    nomor_hp_ortu.value = data.nomor_hp_ortu;
-                    bukti_waldos.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.bukti_waldos);
-                    bukti_izin.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.bukti_izin);
-                    format_surat_izin.src = "{{ asset('storage/') }}/" + encodeURIComponent(data.format_surat_izin);
-                  
-                    var detailModal = document.getElementById("detail-surat-izin");
-                    var bootstrapModal = bootstrap.Modal.getInstance(detailModal);
-                    bootstrapModal.show();
-                
-                  })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        });
-    });
-});
-</script>
-<script>
-function previewImage(imageId) {
-    var image = document.getElementById(imageId);
-    var imageUrl = image.getAttribute('src');
-    var newWindow = window.open("", "_blank");
-    newWindow.document.write("<img src='" + imageUrl + "' alt='Preview Image' style=' max-width: 100%; display:block; height: auto; margin-left: auto; margin-right: auto;'>");
-}
-</script>
+                                            
                                            
 @endsection

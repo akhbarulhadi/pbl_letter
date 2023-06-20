@@ -36,7 +36,7 @@
                                                                   <td style=" color: <?php echo ($data1->status == 'Disetujui') ? '#00FF00; font-weight: bold;' : (($data1->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;'); ?>">{{ $data1->status}}</td>
                                                                   <td>
                                                                   <?php if($data1['status'] != 'Ditolak'):?>  
-                                                                  <a href="{{ route('cetak_survey') }}" target="_blank" id="btn-f" class="btn btn-outline-success">Cetak</a></td>
+                                                                  <a href="{{ route('cetak_survey', $data1->id ) }}" target="_blank" id="btn-f" class="btn btn-outline-success">Cetak</a></td>
                                                                   <?php endif; ?>
                                                                   <?php if($data1['status'] != 'Disetujui'):?> 
                                                                   <h6>Tidak Tersedia</h6> 
@@ -83,7 +83,7 @@
                                                                                   <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $data1->alamat }}" readonly>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                  <label for="matkul">Tugas Mata Kuliah</label>
+                                                                                  <label for="tugas_matkul">Tugas Mata Kuliah</label>
                                                                                   <input type="text" class="form-control" id="tugas_matkul" name="tugas_matkul" value="{{ $data1->tugas_matkul }}" readonly>
                                                                                 </div>
                                                                                 <div class="form-group">

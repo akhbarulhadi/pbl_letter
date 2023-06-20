@@ -24,7 +24,7 @@
                                                             <table class="table table-hover datatab">
                                                               <thead class="table-secondary">
                                                                 <tr style="text-align: center;">
-                                                                  <th scope="col">No</th>
+                                                                  <th scope="col">ID Surat Izin</th>
                                                                   <th scope="col">NIM</th>
                                                                   <th scope="col">Jenis Perizinan</th>
                                                                   <th scope="col">Tanggal mulai</th>
@@ -33,9 +33,9 @@
                                                                   <th scope="col">Status</th>
                                                                 </tr>
                                                               </thead>
+                                                              <tbody>
                                                               @foreach ($izin as $index => $data_izin)
                                                               @if ($data_izin->status != 'Disetujui' && $data_izin->status != 'Ditolak')
-                                                              <tbody>
                                                                 <tr tr style="text-align: center;">
                                                                 <th scope="row">{{ $data_izin->id }}</th>
                                                                   <td>{{ $data_izin->jenis_izin }}</td>
@@ -48,7 +48,7 @@
                                                  
                                                                   <button id="btn-f" type="submit" class="btn btn-outline-primary">Detail</button>
                                                                   </form>
-                                                                  <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" style="display: none;" data-bs-toggle="modal" data-bs-target="#detail-surat-izin" data-id="{{ $data_izin->id }}" data-status="{{ $data_izin->status }}">Detail</button>
+                                                                  <button id="btn-f" type="button" class="btn btn-outline-primary btn-detail" style="display: none;" data-bs-toggle="modal" data-bs-target="#detail-surat-izin-{{ $data_izin->id }}" data-id="{{ $data_izin->id }}" data-status="{{ $data_izin->status }}">Detail</button>
                                                                   </td>
                                                                   <td>
                                                                   <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -64,15 +64,16 @@
                                                                   </td>
                                                                   <td style="background-color: #D3D3D3; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); <?php echo ($data_izin->status == 'Sedang Diproses') ? 'color: blue; font-weight: bold;' : (($data_izin->status == 'Disetujui') ? 'color: blue; font-weight: bold;' : (($data_izin->status == 'Ditolak') ? 'color: red; font-weight: bold;' : 'color: yellow; font-weight: bold;')); ?>">{{$data_izin->status}}</td>
                                                                 </tr>
-                                                              </tbody>
                                                               @endif
                                                               @endforeach
+                                                              </tbody>
                                                             </table>
                                                         </div>
 
 
                                                                 <!-- Modal detail -->
-                                                                <div class="modal fade" id="detail-surat-izin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                @foreach ($izin as $index => $detail_izin)
+                                                                <div class="modal fade" id="detail-surat-izin-{{ $detail_izin->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                                                      <div class="modal-content">
                                                                        <div class="modal-header">
@@ -91,59 +92,59 @@
                                                                                       <div class="col-md-6">
                                                                                           <div class="form-group">
                                                                                               <label for="name">Nama Lengkap</label>
-                                                                                              <input type="text" class="form-control" id="name" name="name" disabled>
+                                                                                              <input type="text" class="form-control" id="name" name="name" value="{{ $detail_izin->name }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nim">NIM</label>
-                                                                                              <input type="text" class="form-control" id="nim" name="nim" disabled>
+                                                                                              <input type="text" class="form-control" id="nim" name="nim" value="{{ $detail_izin->nim }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="kelas">Kelas</label>
-                                                                                              <input type="text" class="form-control" id="kelas" name="kelas" disabled>
+                                                                                              <input type="text" class="form-control" id="kelas" name="kelas" value="{{ $detail_izin->kelas }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="jenis_izin">Jenis Izin</label>
-                                                                                              <input type="text" class="form-control" id="jenis_izin" name="jenis_izin" disabled>
+                                                                                              <input type="text" class="form-control" id="jenis_izin" name="jenis_izin" value="{{ $detail_izin->jenis_izin }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                                       <label for="tanggal_mulai">Tanggal Mulai</label>
-                                                                                                      <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" disabled>
+                                                                                                      <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ $detail_izin->tanggal_mulai }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                             <label for="tanggal_selesai">Tanggal Selesai</label>
-                                                                                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" disabled>
+                                                                                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="{{ $detail_izin->tanggal_selesai }}" disabled>
                                                                                           </div>
                                                                                       </div>
                                                                                       <div class="col-md-6">
                                                                                           <div class="form-group">
                                                                                               <label for="nama_dosen">Nama Wali Dosen</label>
-                                                                                              <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" disabled>
+                                                                                              <input type="text" class="form-control" id="nama_dosen" name="nama_dosen" value="{{ $detail_izin->nama_dosen }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nama_ortu">Nama Orang Tua</label>
-                                                                                              <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" disabled>
+                                                                                              <input type="text" class="form-control" id="nama_ortu" name="nama_ortu" value="{{ $detail_izin->nama_ortu }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                               <label for="nomor_hp_ortu">Nomor HP Orang Tua</label>
-                                                                                              <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" disabled>
+                                                                                              <input type="text" class="form-control" id="nomor_hp_ortu" name="nomor_hp_ortu" value="{{ $detail_izin->nomor_hp_ortu }}" disabled>
                                                                                           </div>
                                                                                           <div class="form-group">
                                                                                                 <label for="bukti_waldos">Bukti Persetujuan Walidosen</label>
-                                                                                                <img class="img-fluid" id="bukti_waldos" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Waldos">
-                                                                                                <button class="btn btn-light" id="bukti_waldos" onclick="previewImage('bukti_waldos')">Preview File</button>
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                                <img class="img-fluid" id="bukti_waldos" src="{{ asset('storage/' . $detail_izin->bukti_waldos) }}" alt="Bukti Waldos">
+                                                                                                <a href="{{ asset('storage/' . $detail_izin->bukti_waldos) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->bukti_waldos) }}" download target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
                                                                                             <div class="form-group">
                                                                                                <label for="bukti_izin">Surat Bukti Izin/Sakit/Kerja/DLL</label>
-                                                                                               <img class="img-fluid" id="bukti_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Bukti Izin">
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
-                                                                                               <a href="{{ asset('storage/' . $data_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                               <img class="img-fluid" id="bukti_izin" src="{{ asset('storage/' . $detail_izin->bukti_izin) }}" alt="Bukti Izin">
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->bukti_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->bukti_izin) }}" download target="_blank" class="btn btn-light">Download File</a>
                                                                                                </div>
                                                                                             <div class="form-group">
                                                                                                 <label for="format_surat_izin">Format Surat Izin</label><br>
-                                                                                                <img class="img-fluid" id="format_surat_izin" src="{{ route('image.show', ['id' => $data_izin->id]) }}" alt="Format Surat Izin">
-                                                                                               <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
-                                                                                               <a href="{{ asset('storage/' . $data_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Download File</a>
+                                                                                                <iframe id="format_surat_izin" src="{{ asset('storage/' . $detail_izin->format_surat_izin) }}" width="100%" height="500px"></iframe>
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->format_surat_izin) }}" target="_blank" class="btn btn-light">Preview File</a> 
+                                                                                               <a href="{{ asset('storage/' . $detail_izin->format_surat_izin) }}" download target="_blank" class="btn btn-light">Download File</a>
                                                                                             </div>
                                                                                       </div>
                                                                                   </div>
@@ -156,9 +157,7 @@
                                                                      </div>
                                                                    </div>
                                                                </div> 
-                                                     </div>
-                                                </div>
-                                            </div>
+                                                               @endforeach
 
                                             <script>
                                             document.addEventListener("DOMContentLoaded", function () {
@@ -172,7 +171,7 @@
             var status = button.getAttribute("data-status");
 
             // Ambil data dari API atau sumber data lainnya
-            fetch("/data/detail/" + id)
+            fetch("/data/detail/ad/" + id)
                 .then(function (response) {
                     return response.json();
                 })

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Surat Survey</title>
 	<style>
@@ -41,44 +42,52 @@
 			padding: 0;
 			line-height: 1.5;
 		}
-    .informasi {
-      overflow: hidden;
-    }
-    .tanggal {
-      float: right;
-      text-align: justify;
-    }
-    .nomor {
-      float: left;
-      text-align: justify;
-    }
+
+		.informasi {
+			overflow: hidden;
+		}
+
+		.tanggal {
+			float: right;
+			text-align: justify;
+		}
+
+		.nomor {
+			float: left;
+			text-align: justify;
+		}
 	</style>
 </head>
+
 <body>
-<div class="container">
+	@foreach ($cetak_survey as $index => $data1)
+	<div class="container">
 		<div class="header">
 			<h1>Surat Pengantar Survey</h1>
 		</div>
-    <div class="informasi">
-      <p class="tanggal">Batam, 24 Maret 2023</p>
-      <p class="nomor">No : xxxxxx<br>Perihal : Permohonan Survey</p>
-    </div>
-		<p>Kepada Yth.<br><b>(ditujukan ke)</b>,</p>
-		<p>Alamat Penerima : <b>contoh</b></p>
-    <p>Tugas Mata Kuliah : <b>contoh</b></p>
-    <p>Keperluan :</p>    <p>(Dalam rangka pencarian data untuk mata kuliah Basis Data, Mahasiswa diwajibkan untuk mendapatkan data maka kami sebagai Ketua Program Studi Rekayasa Perangkat Lunak mengajukan pemohonan kepada Bapak/Ibu untuk dapat membantu mahasiswa kami)</p>
-		<p>Demikian surat ini kami sampaikan, atas perhatian dan kerjasama yang diberikan kami ucapkan terima kasih.</p>
+		<div class="informasi">
+			<p class="tanggal">Batam, {{ $data1->created_at }}</p>
+			<p class="nomor">No : <b>{{ $data1->id }}</b><br>Perihal : Permohonan Survey</p>
+		</div>
+		<p>Kepada Yth.<br><b>{{ $data1->ditujukan }}</b>,</p>
+		<p>Alamat Penerima : <b>{{ $data1->alamat }}</b></p>
+		<p>Tugas Mata Kuliah : <b>{{ $data1->tugas_matkul }}</b></p>
+		<p>Keperluan :</br>
+			{{ $data1->keperluan }}
+		</p>
 
 		<div class="sender-info">
 			<p>Hormat kami,</p>
-			<p>(Nama Pengirim)</p>
-      <p>(NIM)</p>
+			<p>{{ $data1->name }}</p>
+			<p>({{ $data1->nim }})</p>
 		</div>
 
 		<div class="signature">
 			<p>Ttd,</p>
 			<p>Supardianto</p>
 		</div>
-</div>
+	</div>
+	@endforeach
 </body>
+
 </html>

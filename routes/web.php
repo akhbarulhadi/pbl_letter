@@ -24,6 +24,7 @@ use App\Http\Controllers\FormPerizinanController;
 /*dashboard user*/
 
 /*formulir*/
+
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -134,9 +135,12 @@ Route::get('/status-izin', [FormPerizinanController::class, 'index'])->name('sta
 
 Route::get('/status-survey', [FormPengajuanController::class, 'index'])->name('status_survey');
 Route::get('/dashboard-admin', [FormPengajuanController::class, 'dashboard_admin'])->name('dashboard_admin');
+Route::get('/dashboard-admin', [FormPerizinanController::class, 'dashboard_admin'])->name('dashboard_admin');
 
 Route::get('/history-izin', [FormPerizinanController::class, 'historyz'])->name('history_izin');
 Route::get('/history-izin-admin', [FormPerizinanController::class, 'history_admin'])->name('history_izin_admin');
+
+Route::get('/history-survey/cetak-survey{id}', [FormPengajuanController::class, 'cetak_survey'])->name('cetak_survey');
 
 Route::get('/history-survey', [FormPengajuanController::class, 'history'])->name('history_survey');
 Route::get('/history-survey-admin', [FormPengajuanController::class, 'history_admin'])->name('history_survey_admin');
@@ -150,19 +154,24 @@ Route::get('/verifikasi-survey-admin/{id}', [FormPengajuanController::class, 'sh
 
 Route::get('/data/detail/{id}', [FormPengajuanController::class, 'getDataDetail'])->name('data.detail');
 
+Route::get('/data/edit/{id}', [FormPengajuanController::class, 'getEditDetail'])->name('data.detail');
+
+Route::delete('/survey/{id}', [FormPengajuanController::class, 'destroy'])->name('survey.destroy');
+
 Route::get('/data/detail/hs/{id}', [FormPengajuanController::class, 'getDataDetail_2'])->name('data.detail2');
 
 Route::get('/data/detail/ad/{id}', [FormPerizinanController::class, 'detailData'])->name('data.detail');
 
 Route::get('/data/detail/ver/{id}', [FormPengajuanController::class, 'getDataDetail'])->name('data.detail');
 
-Route::get('images/{id}', [FormPerizinanController::class, 'showImage'])->name('image.show');
+Route::get('/image/show/{id}', [FormPerizinanController::class, 'showImage'])->name('image.show');
 
 
 Route::put('/update-status/{id}', 'PengajuanController@updateStatus')->name('update.status');
 
 Route::get('/verifikasi-izin-admin', [FormPerizinanController::class, 'index_admin'])->name('verifikasi_izin');
 
+Route::post('/survey/update', [FormPengajuanControllerController::class, 'update'])->name('update_survey');
 
 Route::post('/survey/admin/{formpengajuan}/approved', [FormPengajuanController::class, 'approved'])->name('formpengajuan.approved');
 Route::post('/survey/admin/{formpengajuan}/rejected', [FormPengajuanController::class, 'rejected'])->name('formpengajuan.rejected');
@@ -171,3 +180,10 @@ Route::post('/survey/admin/{formpengajuan}/inprogress', [FormPengajuanController
 Route::post('/izin/admin/{formperizinan}/approved', [FormPerizinanController::class, 'approved'])->name('formperizinan.approved');
 Route::post('/izin/admin/{formperizinan}/rejected', [FormPerizinanController::class, 'rejected'])->name('formperizinan.rejected');
 Route::post('/izin/admin/{formperizinan}/inprogress', [FormPerizinanController::class, 'inprogress'])->name('formperizinan.inprogress');
+
+// Route to show the edit form
+Route::put('surat-izin/{id}', [FormPerizinanController::class, 'update'])->name('surat-izin.update');
+
+Route::delete('/data/{id}', [FormPerizinanController::class, 'delete'])->name('data.destroy');
+// Route to handle the edit form submission
+Route::put('/surveys/{id}', [FormPengajuanController::class, 'update'])->name('survey.update');
