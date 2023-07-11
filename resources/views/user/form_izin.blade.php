@@ -11,6 +11,12 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Formulir Pengajuan Izin</h5>
+            @if(session()->has('Success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('Success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             <form action="/perizinan.store" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="container-fluid">
@@ -28,6 +34,12 @@
                                     <label for="nim">NIM</label>
                                     @auth
                                     <input type="text" class="form-control" value="{{ Auth::user()->nim }}" id="nim" name="nim" readonly>
+
+                                </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                                @endauth
+                                <div class="form-group">
+                                    @auth
+                                    <input type="hidden" class="form-control" value="{{ Auth::user()->id_mahasiswa }}" id="id_mahasiswa" name="id_mahasiswa" readonly>
 
                                 </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                                 @endauth
@@ -52,14 +64,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="jenis_izin">Jenis Izin</label>
-                                <select class="form-select" id="jenis_izin" name="jenis_izin" onchange="toggleInputText()" required>
+                                <select class="form-select" id="jenis_izin1" name="jenis_izin" onchange="toggleInputText()" required>
                                     <option value="">Pilih Jenis Izin</option>
                                     <option value="Sakit">Sakit</option>
                                     <option value="Keluarga">Keluarga</option>
+                                    <option value="Kerja">Kerja</option>
                                     <option value="lainnya">Lainnya</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
                                 <input type="text" class="form-control d-none" id="jenis_izin_lainnya" name="jenis_izin_lainnya" placeholder="Jenis Izin Lainnya">
                             </div>
                             <div class="form-group">
@@ -79,8 +90,8 @@
                                 <input type="file" accept="image/png, image/jpg, img/jpeg" class="form-control-file" id="bukti_izin" name="bukti_izin" required>
                             </div>
                             <div class="form-group">
+                                <a href="https://drive.google.com/uc?export=download&id=1hd-ciWI-GU0cWPPEIgsTO9ZEKrsLCLQA">Download Format Surat Izin</a></br>
                                 <label for="format_surat_izin">Upload Format Surat Izin</label><br>
-                                <a href="https://drive.google.com/uc?export=download&id=1hd-ciWI-GU0cWPPEIgsTO9ZEKrsLCLQA">Download Format</a>
                                 <input type="file" accept="application/pdf" class="form-control-file" id="format_surat_izin" name="format_surat_izin" required>
                             </div>
                         </div>

@@ -1,25 +1,26 @@
 @extends('layouts.main_admin')
 
 @section('isi_admin')
-                        <div class="container-fluid"> 
-                            <!-- Begin Page Content -->
-                            <h1 id="judul">Cetak Laporan<a href="{{ route('laporan_survey') }}"> Survey /</a><a href="{{ route('laporan_izin') }}"> Izin</a></h1>    
-                            <br>
-                        </div>
-                                           <div class="container">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Laporan Survey</h5>
-                                                            <form>
-                                                              <label for="start-date">Start date:</label>
-                                                              <input type="date" id="start-date" name="start-date">
+<div class="container-fluid">
+    <!-- Begin Page Content -->
+    <h1 id="judul">Cetak Laporan<a href="{{ route('laporan_survey') }}"> Survey /</a><a href="{{ route('laporan_izin') }}"> Izin</a></h1>
+    <br>
+</div>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Laporan Survey</h5>
+            <form id="filter-form" action="{{ route('cetak_survey_admin') }}" method="GET">
+                <label for="start_date">Start date:</label>
+                <input type="date" id="start_date" name="start_date">
 
-                                                              <label for="end-date">End date:</label>
-                                                              <input type="date" id="end-date" name="end-date">
+                <label for="end_date">End date:</label>
+                <input type="date" id="end_date" name="end_date">
 
-                                                              <a id="btn-f" class="btn-light" href="{{ route('cetak_survey_admin') }}" target="_blank">Filter</a>
-                                                            </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+                <button id="filter-btn" type="submit" class="btn btn-light">Filter</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection

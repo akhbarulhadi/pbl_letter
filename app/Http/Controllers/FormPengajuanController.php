@@ -18,7 +18,7 @@ class FormPengajuanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required',
+            'id_mahasiswa' => 'required',
             'ditujukan' => 'required',
             'alamat' => 'required',
             'tugas_matkul' => 'required',
@@ -27,7 +27,7 @@ class FormPengajuanController extends Controller
         ]);
 
         $form = new FormPengajuan;
-        $form->user_id = $request->user_id;
+        $form->id_mahasiswa = $request->id_mahasiswa;
         $form->ditujukan = $request->ditujukan;
         $form->alamat = $request->alamat;
         $form->tugas_matkul = $request->tugas_matkul;
@@ -35,13 +35,13 @@ class FormPengajuanController extends Controller
         $form->status = $request->status;
 
         FormPengajuan::create($validatedData);
-        return redirect('dashboard')->with('FormSuccess', 'Form pengajuan berhasil diajukan.');
+        return redirect()->back()->with('FormSuccess', 'Form pengajuan berhasil diajukan.');
     }
 
     public function index()
     {
         $user = Auth::user();
-        $survey = FormPengajuan::where('user_id', $user->user_id)->orderBy('user_id', 'desc')->get();
+        $survey = FormPengajuan::where('id_mahasiswa', $user->id_mahasiswa)->orderBy('id_mahasiswa', 'desc')->get();
 
         return view('user.status_survey', ['survey' => $survey]);
     }
@@ -50,16 +50,19 @@ class FormPengajuanController extends Controller
     public function history()
     {
         $user = Auth::user();
-        $history = FormPengajuan::where('user_id', $user->user_id)->get();
+        $history = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
+            ->where('mahasiswa.id_mahasiswa', $user->id_mahasiswa)
+            ->get();
 
         return view('user.history_survey', ['history' => $history]);
     }
 
     public function cetak_survey($id)
     {
-        $cetak_survey = FormPengajuan::join('students', 'form_pengajuan.user_id', '=', 'students.user_id')
-            ->select('form_pengajuan.*', 'students.name', 'students.nim')
-            ->where('form_pengajuan.id', $id)
+        $cetak_survey = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
+            ->where('pengajuan_surat_survei.id_surat_survei', $id)
             ->get();
 
         // Mengubah waktu "created_at" menjadi waktu Indonesia dengan menggunakan Carbon
@@ -93,8 +96,8 @@ class FormPengajuanController extends Controller
 
     public function getDataDetail($id)
     {
-        $survey = FormPengajuan::join('students', 'form_pengajuan.user_id', '=', 'students.user_id')
-            ->select('form_pengajuan.*', 'students.name', 'students.nim')
+        $survey = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
             ->find($id);
 
         if (!$survey) {
@@ -106,7 +109,9 @@ class FormPengajuanController extends Controller
 
     public function getDataDetail_2($id)
     {
-        $survey = FormPengajuan::find($id); // Ganti dengan logika pengambilan data dari sumber data Anda
+        $survey = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
+            ->find($id);
 
         if (!$survey) {
             return response()->json(['message' => 'Data not found'], 404);
@@ -117,9 +122,9 @@ class FormPengajuanController extends Controller
 
     public function index_admin()
     {
-        $survey_ad = FormPengajuan::join('students', 'form_pengajuan.user_id', '=', 'students.user_id')
-            ->orderBy('form_pengajuan.id', 'desc')
-            ->select('form_pengajuan.*', 'students.name', 'students.nim')
+        $survey_ad = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->orderBy('pengajuan_surat_survei.id_surat_survei', 'desc')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
             ->get();
 
         return view('admin.verifikasi_survey', ['survey_ad' => $survey_ad]);
@@ -127,16 +132,16 @@ class FormPengajuanController extends Controller
 
     public function dashboard_admin()
     {
-        $survey_ad2 = FormPengajuan::orderBy('id', 'desc')->get();
+        $survey_ad2 = FormPengajuan::orderBy('id_surat_survei ', 'desc')->get();
 
         return view('admin.dashboard_admin', ['survey_ad2' => $survey_ad2]);
     }
 
     public function history_admin()
     {
-        $survey_ad = FormPengajuan::join('students', 'form_pengajuan.user_id', '=', 'students.user_id')
-            ->orderBy('form_pengajuan.id', 'desc')
-            ->select('form_pengajuan.*', 'students.name', 'students.nim')
+        $survey_ad = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->orderBy('pengajuan_surat_survei.id_surat_survei', 'desc')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
             ->get();
 
         return view('admin.history_survey_admin', ['survey_ad' => $survey_ad]);
@@ -174,9 +179,9 @@ class FormPengajuanController extends Controller
         if ($existingStatus !== 'Sedang Diproses') {
             $formpengajuan->status = 'Sedang Diproses';
             $formpengajuan->save();
-            return redirect('verifikasi-survey-admin')->with('success2', 'Survey Berhasil Diproses.')->with('modalId', $formpengajuan->id);
+            return redirect('verifikasi-survey-admin')->with('success2', 'Survey Berhasil Diproses.')->with('modalId', $formpengajuan->id_surat_survei);
         } else {
-            return redirect('verifikasi-survey-admin')->with('success2', 'Survey Sudah Diproses.')->with('modalId', $formpengajuan->id);
+            return redirect('verifikasi-survey-admin')->with('success2', 'Survey Sudah Diproses.')->with('modalId', $formpengajuan->id_surat_survei);
         }
     }
 
@@ -192,5 +197,23 @@ class FormPengajuanController extends Controller
             // Tampilkan notifikasi error atau lakukan tindakan lain yang diinginkan
             return redirect()->back()->with('error', 'Survey tidak ditemukan.');
         }
+    }
+
+    public function getDataByDateRange(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Mengubah tanggal menjadi format yang sesuai dengan kolom 'updated_at' dalam database
+        $startDateTime = Carbon::parse($startDate)->startOfDay();
+        $endDateTime = Carbon::parse($endDate)->endOfDay();
+
+        $data = FormPengajuan::join('mahasiswa', 'pengajuan_surat_survei.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->whereBetween('pengajuan_surat_survei.updated_at', [$startDateTime, $endDateTime])
+            ->orderBy('pengajuan_surat_survei.id_surat_survei', 'asc')
+            ->select('pengajuan_surat_survei.*', 'mahasiswa.name', 'mahasiswa.nim')
+            ->get();
+
+        return view('admin.cetak_survey_admin', ['data' => $data]);
     }
 }

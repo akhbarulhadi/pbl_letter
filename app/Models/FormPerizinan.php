@@ -18,13 +18,10 @@ class FormPerizinan extends Model
      * @var array<int, string>
      */
 
-    protected $primaryKey = 'id';
-    protected $table = 'form_perizinan';
-
+    protected $table = 'pengajuan_surat_izin';
+    protected $primaryKey = 'id_surat_izin';
     protected $fillable = [
-        'name',
-        'nim',
-        'kelas',
+        'id_mahasiswa',
         'nama_dosen',
         'tanggal_mulai',
         'tanggal_selesai',
@@ -36,5 +33,4 @@ class FormPerizinan extends Model
         'format_surat_izin',
         'status',
     ];
-
 }

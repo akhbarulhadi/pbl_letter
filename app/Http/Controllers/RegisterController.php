@@ -25,7 +25,7 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view('/');
+        return view('home');
     }
 
     /**
@@ -34,13 +34,14 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nim' => 'required|unique:students,nim',
+            'nim' => 'required|unique:mahasiswa,nim',
             'name' => 'required',
             'prodi' => 'required',
             'kelas' => 'required',
             'nama_dosen' => 'required',
             'nomor_hp' => 'required',
-            'email' => 'required|email:dns|unique:students',
+            'alamat' => 'required',
+            'email' => 'required|email:dns|unique:mahasiswa',
             'password' => 'required',
         ], [
             'nim.required' => 'NIM harus diisi.',
@@ -53,17 +54,19 @@ class RegisterController extends Controller
             'email.unique' => 'email sudah digunakan.',
             'password.required' => 'Password harus diisi.',
         ]);
-        $students = new Student();
-        $students->nim = $request->nim;
-        $students->name = $request->name;
-        $students->prodi = $request->prodi;
-        $students->kelas = $request->kelas;
-        $students->nama_dosen = $request->nama_dosen;
-        $students->email = $request->email;
-        $students->password = $request->password;
+        $user = new User();
+        $user->nim = $request->nim;
+        $user->name = $request->name;
+        $user->prodi = $request->prodi;
+        $user->kelas = $request->kelas;
+        $user->nama_dosen = $request->nama_dosen;
+        $user->nomor_hp = $request->nomor_hp;
+        $user->alamat = $request->alamat;
+        $user->email = $request->email;
+        $user->password = $request->password;
 
         $validatedData['password'] = Hash::make($validatedData['password']);
- 
+
         User::create($validatedData);
         return redirect('/')->with('success', 'Registration Succesfull!');
     }

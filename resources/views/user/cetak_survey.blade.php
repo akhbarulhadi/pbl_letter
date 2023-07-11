@@ -67,7 +67,7 @@
 		</div>
 		<div class="informasi">
 			<p class="tanggal">Batam, {{ $data1->created_at }}</p>
-			<p class="nomor">No : <b>{{ $data1->id }}</b><br>Perihal : Permohonan Survey</p>
+			<p class="nomor">No : <b>{{ $data1->id_surat_survei }}</b><br>Perihal : Permohonan Survey</p>
 		</div>
 		<p>Kepada Yth.<br><b>{{ $data1->ditujukan }}</b>,</p>
 		<p>Alamat Penerima : <b>{{ $data1->alamat }}</b></p>

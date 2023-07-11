@@ -6,8 +6,8 @@
                 <i class="fa fa-bars"></i>
             </button>
 
-            @auth
-            <h2>Selamat Datang Admin, <b>{{ Auth::user()->name }}</b></h2>
+            @auth('admin')
+            <h2>Selamat Datang Admin, <b>{{ Auth::guard('admin')->user()->name }}</b></h2>
             @else
             <p></br>Nothing User/Admin are identify..</p>
             @endauth
@@ -17,15 +17,13 @@
 
                 <!-- Nav Item - Alerts -->
                 <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
                         <span class="badge badge-danger badge-counter"></span>
                     </a>
                     <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
                             Notifikasi
                         </h6><!--
@@ -50,15 +48,17 @@
 
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin, @auth<b>{{ Auth::user()->name }}</b> @else <b>Unknown</b></span>@endauth
-                        <img class="img-profile rounded-circle"
-                            src="img/user.png">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin, 
+                            @auth('admin')
+                            <b>{{ Auth::guard('admin')->user()->name }}</b>
+                            @else
+                            <b>{{ Auth::user()->name }}</b>
+                            @endauth
+                        <img class="img-profile rounded-circle" src="img/user.png">
                     </a>
                     <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="userDropdown">
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="{{ route('profile_admin') }}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profil
@@ -74,4 +74,4 @@
             </ul>
 
         </nav>
-    <!-- End of Topbar -->
+        <!-- End of Topbar -->

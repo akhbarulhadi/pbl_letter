@@ -26,12 +26,12 @@
             @foreach ($survey_ad as $index => $data_ad)
             @if($data_ad['status'] != 'Sedang Diproses' && $data_ad['status'] != 'Sedang Diajukan')
             <tr style="text-align: center;">
-              <th>{{ $data_ad->id }}</th>
+              <th>{{ $data_ad->id_surat_survei }}</th>
               <td>{{ $data_ad->nim}}</td>
               <td>{{ $data_ad->ditujukan}}</td>
               <td>{{ $data_ad->tugas_matkul}}</td>
               <!-- button modal -->
-              <td><button type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id }}">Detail</button></td>
+              <td><button type="button" class="btn btn-outline-primary btn-detail" data-bs-toggle="modal" data-bs-target="#detail-survey" data-id="{{ $data_ad->id_surat_survei }}">Detail</button></td>
               <td style="background-color: #D3D3D3; text-shadow: 0px 0px 1px rgba(0, 0, 0, 5); color: <?php echo ($data_ad->status == 'Disetujui') ? '#00FF00; font-weight: bold;' : (($data_ad->status == 'Ditolak') ? 'red; font-weight: bold;' : 'yellow; font-weight: bold;'); ?>">{{ $data_ad->status}}</td>
             </tr>
             @endif

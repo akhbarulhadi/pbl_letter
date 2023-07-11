@@ -19,13 +19,13 @@ class FormPengajuan extends Model
      * @var array<int, string>
      */
 
-    protected $table = 'form_pengajuan';
+    protected $table = 'pengajuan_surat_survei';
+    protected $primaryKey = 'id_surat_survei';
 
-    protected $fillable = ['user_id', 'ditujukan', 'alamat', 'tugas_matkul','keperluan','status'];
+    protected $fillable = ['id_mahasiswa', 'ditujukan', 'alamat', 'tugas_matkul', 'keperluan', 'status'];
 
     public function user()
-{
-    return $this->belongsTo(FormPengajuan::class, 'user_id');
-    
-}
+    {
+        return $this->belongsTo(FormPengajuan::class, 'id_mahasiswa');
+    }
 }

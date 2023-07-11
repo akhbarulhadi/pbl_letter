@@ -7,6 +7,7 @@ use App\Models\FormPerizinan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 
 class FormPerizinanController extends Controller
 {
@@ -17,13 +18,12 @@ class FormPerizinanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'nim' => 'required',
-            'kelas' => 'required',
+            'id_mahasiswa' => 'required',
             'nama_dosen' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'jenis_izin' => 'required',
+            'jenis_izin_lainnya' => 'required_if:jenis_izin,lainnya',
             'nama_ortu' => 'required',
             'nomor_hp_ortu' => 'required',
             'bukti_waldos' => 'required|image|mimes:jpeg,jpg,png|max:2048',
@@ -54,13 +54,16 @@ class FormPerizinanController extends Controller
 
         // Membuat instance model Perizinan dan menyimpan data
         $perizinan = new FormPerizinan;
-        $perizinan->name = $request->name;
-        $perizinan->nim = $request->nim;
-        $perizinan->kelas = $request->kelas;
+        $perizinan->id_mahasiswa = $request->id_mahasiswa;
         $perizinan->nama_dosen = $request->nama_dosen;
         $perizinan->tanggal_mulai = $request->tanggal_mulai;
         $perizinan->tanggal_selesai = $request->tanggal_selesai;
         $perizinan->jenis_izin = $request->jenis_izin;
+        if ($request->jenis_izin == 'lainnya') {
+            $perizinan->jenis_izin = $request->jenis_izin_lainnya;
+        } else {
+            $perizinan->jenis_izin = $request->jenis_izin;
+        }
         $perizinan->nama_ortu = $request->nama_ortu;
         $perizinan->nomor_hp_ortu = $request->nomor_hp_ortu;
         $perizinan->status = 'Sedang Diajukan';
@@ -78,27 +81,35 @@ class FormPerizinanController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $izin = FormPerizinan::where('nim', $user->nim)->get();
+        $izin = FormPerizinan::join('mahasiswa', 'pengajuan_surat_izin.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_izin.*', 'mahasiswa.name', 'mahasiswa.nim', 'mahasiswa.kelas')
+            ->where('pengajuan_surat_izin.id_mahasiswa', $user->id_mahasiswa)
+            ->get();
 
         return view('user.status_izin', ['izin' => $izin]);
     }
 
     public function index_admin()
     {
-        $izin = FormPerizinan::all();
+        $izin = FormPerizinan::join('mahasiswa', 'pengajuan_surat_izin.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_izin.*', 'mahasiswa.name', 'mahasiswa.nim', 'mahasiswa.kelas')
+            ->get();
 
         return view('admin.verifikasi_izin', ['izin' => $izin]);
     }
     public function dashboard_admin()
     {
-        $survey_ad = FormPerizinan::orderBy('id', 'desc')->get();
+        $survey_ad = FormPerizinan::orderBy('id_surat_izin', 'desc')->get();
 
         return view('admin.dashboard_admin', ['survey_ad' => $survey_ad]);
     }
 
     public function history_admin()
     {
-        $izin = FormPerizinan::all();
+        $izin = FormPerizinan::join('mahasiswa', 'pengajuan_surat_izin.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_izin.*', 'mahasiswa.name', 'mahasiswa.nim', 'mahasiswa.kelas')
+            ->get();
+
 
         return view('admin.history_izin_admin', ['izin' => $izin]);
     }
@@ -106,14 +117,19 @@ class FormPerizinanController extends Controller
     public function historyz()
     {
         $user = Auth::user();
-        $history_ad = FormPerizinan::where('nim', $user->nim)->get();
+        $history_ad = FormPerizinan::join('mahasiswa', 'pengajuan_surat_izin.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_izin.*', 'mahasiswa.name', 'mahasiswa.nim', 'mahasiswa.kelas')
+            ->where('mahasiswa.id_mahasiswa', $user->id_mahasiswa)
+            ->get();
 
         return view('user.history_izin', ['history_ad' => $history_ad]);
     }
 
     public function detailData($id)
     {
-        $survey = FormPerizinan::find($id); // Ganti dengan logika pengambilan data dari sumber data Anda
+        $survey = FormPerizinan::join('mahasiswa', 'pengajuan_surat_izin.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->select('pengajuan_surat_izin.*', 'mahasiswa.name', 'mahasiswa.nim', 'mahasiswa.kelas') // Tambahkan kolom yang ingin Anda ambil dari tabel users
+            ->find($id);
 
         if (!$survey) {
             return response()->json(['message' => 'Data not found'], 404);
@@ -175,9 +191,9 @@ class FormPerizinanController extends Controller
         if ($existingStatus !== 'Sedang Diproses') {
             $formperizinan->status = 'Sedang Diproses';
             $formperizinan->save();
-            return redirect('verifikasi-izin-admin')->with('success2', 'Survey Berhasil Diproses.')->with('modalId', $formperizinan->id);
+            return redirect('verifikasi-izin-admin')->with('success2', 'Survey Berhasil Diproses.')->with('modalId', $formperizinan->id_surat_izin);
         } else {
-            return redirect('verifikasi-izin-admin')->with('success2', 'Survey Sudah Diproses.')->with('modalId', $formperizinan->id);
+            return redirect('verifikasi-izin-admin')->with('success2', 'Survey Sudah Diproses.')->with('modalId', $formperizinan->id_surat_izin);
         }
     }
 
@@ -185,9 +201,7 @@ class FormPerizinanController extends Controller
     {
         $surat_izin = FormPerizinan::findOrFail($id);
 
-        $surat_izin->name = $request->input('name');
-        $surat_izin->nim = $request->input('nim');
-        $surat_izin->kelas = $request->input('kelas');
+        $surat_izin->id_mahasiswa = $request->input('id_mahasiswa');
         $surat_izin->jenis_izin = $request->input('jenis_izin');
         $surat_izin->tanggal_mulai = $request->input('tanggal_mulai');
         $surat_izin->tanggal_selesai = $request->input('tanggal_selesai');
@@ -226,5 +240,21 @@ class FormPerizinanController extends Controller
 
         // Redirect atau response sesuai kebutuhan
         return redirect()->back()->with('IzinSuccess', 'Data berhasil dihapus');
+    }
+
+    public function getDataByDateRange(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Mengubah tanggal menjadi format yang sesuai dengan kolom 'updated_at' dalam database
+        $startDateTime = Carbon::parse($startDate)->startOfDay();
+        $endDateTime = Carbon::parse($endDate)->endOfDay();
+
+        $data2 = FormPerizinan::join('mahasiswa', 'pengajuan_surat_izin.id_mahasiswa', '=', 'mahasiswa.id_mahasiswa')
+            ->whereBetween('pengajuan_surat_izin.updated_at', [$startDateTime, $endDateTime])
+            ->get(['pengajuan_surat_izin.*', 'mahasiswa.name', 'mahasiswa.nim', 'mahasiswa.kelas']);
+
+        return view('admin.cetak_izin_admin', ['data2' => $data2]);
     }
 }

@@ -32,46 +32,53 @@
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 
-.form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-.form button {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #4a4e58;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-.form button:hover,.form button:active,.form button:focus {
-  background: #206bfb;
-}
-.form .message {
-  margin: 15px 0 0;
-  color: #b3b3b3;
-  font-size: 12px;
-}
-.form .message a {
-  color: #206bfb;
-  text-decoration: none;
-}
-.form .register-form {
-  display: none;
-}
+    .form input {
+      font-family: "Roboto", sans-serif;
+      outline: 0;
+      background: #f2f2f2;
+      width: 100%;
+      border: 0;
+      margin: 0 0 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .form button {
+      font-family: "Roboto", sans-serif;
+      text-transform: uppercase;
+      outline: 0;
+      background: #4a4e58;
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      color: #FFFFFF;
+      font-size: 14px;
+      -webkit-transition: all 0.3 ease;
+      transition: all 0.3 ease;
+      cursor: pointer;
+    }
+
+    .form button:hover,
+    .form button:active,
+    .form button:focus {
+      background: #206bfb;
+    }
+
+    .form .message {
+      margin: 15px 0 0;
+      color: #b3b3b3;
+      font-size: 12px;
+    }
+
+    .form .message a {
+      color: #206bfb;
+      text-decoration: none;
+    }
+
+    .form .register-form {
+      display: none;
+    }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -84,7 +91,7 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Dashboard</a></li>
+          <li><a class="nav-link scrollto" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Dashboard</a></li>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">Information</a></li>
           <li><a class="nav-link scrollto " href="#contact">Contact</a></li>
@@ -99,26 +106,26 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-        @if(session()->has('success'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ session('success') }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+          @if(session()->has('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @endif
 
-@if(session()->has('LoginError'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{ session('LoginError') }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+          @if(session()->has('LoginError'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('LoginError') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @endif
 
-@if(session()->has('Failed'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{ session('Failed') }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+          @if(session()->has('Failed'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('Failed') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @endif
           <h1>LetteR</h1>
           <h2>Permintaan Surat Menyurat</h2>
           <div class="d-flex">
@@ -135,84 +142,82 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-          
-                  <div class="modal-body">
-                      <div class="form">
-                        <form class="login-form" action="/login" method="POST">
-                          @csrf
-                          <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" placeholder="Email" id="email" required value="{{ old('email') }}"/>
-                          @error('email')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="password" name="password" placeholder="Password" id="password" required />
-                          <button type="submit">login</button>
-                          <p class="message">Not registered? <a href="#">Create an account</a></p>
-                        </form>
-                        <form class="register-form" action="/register" method="POST">
-                        @csrf
-                          <input type="text" name="nim" class="form-control rounded-top @error('nim') is-invalid @enderror" 
-                          id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}"/>
-                          @error('nim')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" 
-                          id="name"placeholder="Nama Lengkap" required value="{{ old('name') }}"/>
-                          @error('name')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="text" name="prodi" class="form-control rounded-top @error('prodi') is-invalid @enderror"  
-                          id="prodi" placeholder="Program Studi" required value="{{ old('prodi') }}"/>
-                          @error('prodi')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="text" name="kelas" class="form-control rounded-top @error('kelas') is-invalid @enderror" 
-                          id="kelas" placeholder="Kelas" required value="{{ old('kelas') }}"/>
-                          @error('kelas')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="text" name="nama_dosen" class="form-control rounded-top @error('nama_dosen') is-invalid @enderror" 
-                          id="nama_dosen" placeholder="Wali Dosen" required value="{{ old('nama_dosen') }}"/>
-                          @error('nama_dosen')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="text" name="nomor_hp" class="form-control rounded-top @error('nomor_hp') is-invalid @enderror" 
-                          id="nomor_hp" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required value="{{ old('nomor_hp') }}"/>
-                          @error('nomor_hp')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" 
-                          id="email" placeholder="Email" required value="{{ old('email') }}"/>
-                          @error('email')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                          <input type="password" name="password" class="form-control rounded-top @error('password') is-invalid @enderror" 
-                          id="password" placeholder="Password" required/>
-                          @error('password')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
 
-                          <button type="submit">create</button>
-                          <p class="message">Already registered? <a href="#">Sign In</a></p>
-</form>
-                      </div>
+                  <div class="modal-body">
+                    <div class="form">
+                      <form class="login-form" action="/login" method="POST">
+                        @csrf
+                        <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" placeholder="Email" id="email" required value="{{ old('email') }}" />
+                        @error('email')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="password" name="password" placeholder="Password" id="password" required />
+                        <button type="submit">login</button>
+                        <p class="message">Not registered? <a href="#">Create an account</a></p>
+                      </form>
+                      <form class="register-form" action="/register" method="POST">
+                        @csrf
+                        <input type="text" name="nim" class="form-control rounded-top @error('nim') is-invalid @enderror" id="nim" placeholder="NIM" onkeypress="return hanyaAngka(event)" required value="{{ old('nim') }}" />
+                        @error('nim')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" id="name" placeholder="Nama Lengkap" required value="{{ old('name') }}" />
+                        @error('name')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="text" name="prodi" class="form-control rounded-top @error('prodi') is-invalid @enderror" id="prodi" placeholder="Program Studi" required value="{{ old('prodi') }}" />
+                        @error('prodi')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="text" name="kelas" class="form-control rounded-top @error('kelas') is-invalid @enderror" id="kelas" placeholder="Kelas" required value="{{ old('kelas') }}" />
+                        @error('kelas')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="text" name="nama_dosen" class="form-control rounded-top @error('nama_dosen') is-invalid @enderror" id="nama_dosen" placeholder="Wali Dosen" required value="{{ old('nama_dosen') }}" />
+                        @error('nama_dosen')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="text" name="nomor_hp" class="form-control rounded-top @error('nomor_hp') is-invalid @enderror" id="nomor_hp" placeholder="Nomor HP" onkeypress="return hanyaAngka(event)" required value="{{ old('nomor_hp') }}" />
+                        @error('nomor_hp')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="text" name="alamat" class="form-control rounded-top @error('alamat') is-invalid @enderror" id="alamat" placeholder="Alamat" required value="{{ old('alamat') }}" />
+                        @error('alamat')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="email" name="email" class="form-control rounded-top @error('email') is-invalid @enderror" id="email" placeholder="Email" required value="{{ old('email') }}" />
+                        @error('email')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+                        <input type="password" name="password" class="form-control rounded-top @error('password') is-invalid @enderror" id="password" placeholder="Password" required />
+                        @error('password')
+                        <div class="invalid-feedback">
+                          {{ $message }}
+                        </div>
+                        @enderror
+
+                        <button type="submit">create</button>
+                        <p class="message">Already registered? <a href="#">Sign In</a></p>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -238,22 +243,22 @@
             <div class="icon-box">
               <div class="icon"><i class="bi bi-laptop"></i></div>
               <h4 class="title">Pengajuan Survey</h4>
-              <p class="description" style="text-align: justify;">Surat survei adalah sebuah surat yang dibuat 
-              untuk tujuan mengumpulkan data atau informasi dari responden yang terkait dengan suatu topik atau 
-              penelitian tertentu. Surat ini biasanya digunakan oleh lembaga penelitian, institusi akademik, atau perusahaan untuk mengumpulkan data 
-              secara sistematis dari sejumlah responden yang dipilih.</p>
+              <p class="description" style="text-align: justify;">Surat survei adalah sebuah surat yang dibuat
+                untuk tujuan mengumpulkan data atau informasi dari responden yang terkait dengan suatu topik atau
+                penelitian tertentu. Surat ini biasanya digunakan oleh lembaga penelitian, institusi akademik, atau perusahaan untuk mengumpulkan data
+                secara sistematis dari sejumlah responden yang dipilih.</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
             <div class="icon-box">
               <div class="icon"><i class="bi bi-card-checklist"></i></div>
               <h4 class="title">Pengajuan Surat izin</h4>
-              <p class="description" style="text-align: justify;">Surat izin mahasiswa adalah dokumen resmi yang dikeluarkan oleh institusi pendidikan kepada mahasiswa yang memberikan izin untuk melaksanakan 
-                kegiatan atau tindakan tertentu di luar lingkungan kampus atau program studi yang sedang diikuti. Surat izin ini memberikan legitimasi kepada mahasiswa untuk menjalankan 
+              <p class="description" style="text-align: justify;">Surat izin mahasiswa adalah dokumen resmi yang dikeluarkan oleh institusi pendidikan kepada mahasiswa yang memberikan izin untuk melaksanakan
+                kegiatan atau tindakan tertentu di luar lingkungan kampus atau program studi yang sedang diikuti. Surat izin ini memberikan legitimasi kepada mahasiswa untuk menjalankan
                 kegiatan di luar kampus yang mungkin melibatkan perjalanan, penelitian, kegiatan sosial, atau partisipasi dalam acara-acara tertentu.</p>
             </div>
           </div>
-          
+
         </div>
 
       </div>
@@ -359,108 +364,112 @@
 
   <!-- Template Main JS File -->
   <script src="assets_home/js/main.js"></script>
-<script>
-  function copyEmail() {
-  // Mendapatkan teks yang ada di dalam div
-  var text = document.getElementById("copy-email").innerText;
+  <script>
+    function copyEmail() {
+      // Mendapatkan teks yang ada di dalam div
+      var text = document.getElementById("copy-email").innerText;
 
-  // Membuat sebuah textarea sementara
-  var temp = document.createElement("textarea");
-  temp.value = text;
+      // Membuat sebuah textarea sementara
+      var temp = document.createElement("textarea");
+      temp.value = text;
 
-  // Menambahkan textarea ke dalam dokumen
-  document.body.appendChild(temp);
+      // Menambahkan textarea ke dalam dokumen
+      document.body.appendChild(temp);
 
-  // Memilih teks di dalam textarea
-  temp.select();
+      // Memilih teks di dalam textarea
+      temp.select();
 
-  // Menyalin teks yang sudah dipilih
-  document.execCommand("copy");
+      // Menyalin teks yang sudah dipilih
+      document.execCommand("copy");
 
-  // Menghapus textarea sementara
-  document.body.removeChild(temp);
+      // Menghapus textarea sementara
+      document.body.removeChild(temp);
 
-  // Menampilkan pesan bahwa teks berhasil disalin
-  alert("Teks berhasil disalin: " + text);
-}
+      // Menampilkan pesan bahwa teks berhasil disalin
+      alert("Teks berhasil disalin: " + text);
+    }
 
-function copyCall() {
-  // Mendapatkan teks yang ada di dalam div
-  var text = document.getElementById("copy-call").innerText;
+    function copyCall() {
+      // Mendapatkan teks yang ada di dalam div
+      var text = document.getElementById("copy-call").innerText;
 
-  // Membuat sebuah textarea sementara
-  var temp = document.createElement("textarea");
-  temp.value = text;
+      // Membuat sebuah textarea sementara
+      var temp = document.createElement("textarea");
+      temp.value = text;
 
-  // Menambahkan textarea ke dalam dokumen
-  document.body.appendChild(temp);
+      // Menambahkan textarea ke dalam dokumen
+      document.body.appendChild(temp);
 
-  // Memilih teks di dalam textarea
-  temp.select();
+      // Memilih teks di dalam textarea
+      temp.select();
 
-  // Menyalin teks yang sudah dipilih
-  document.execCommand("copy");
+      // Menyalin teks yang sudah dipilih
+      document.execCommand("copy");
 
-  // Menghapus textarea sementara
-  document.body.removeChild(temp);
+      // Menghapus textarea sementara
+      document.body.removeChild(temp);
 
-  // Menampilkan pesan bahwa teks berhasil disalin
-  alert("Teks berhasil disalin: " + text);
-}
+      // Menampilkan pesan bahwa teks berhasil disalin
+      alert("Teks berhasil disalin: " + text);
+    }
 
-function copyLocation() {
-  // Mendapatkan teks yang ada di dalam div
-  var text = document.getElementById("copy-location").innerText;
+    function copyLocation() {
+      // Mendapatkan teks yang ada di dalam div
+      var text = document.getElementById("copy-location").innerText;
 
-  // Membuat sebuah textarea sementara
-  var temp = document.createElement("textarea");
-  temp.value = text;
+      // Membuat sebuah textarea sementara
+      var temp = document.createElement("textarea");
+      temp.value = text;
 
-  // Menambahkan textarea ke dalam dokumen
-  document.body.appendChild(temp);
+      // Menambahkan textarea ke dalam dokumen
+      document.body.appendChild(temp);
 
-  // Memilih teks di dalam textarea
-  temp.select();
+      // Memilih teks di dalam textarea
+      temp.select();
 
-  // Menyalin teks yang sudah dipilih
-  document.execCommand("copy");
+      // Menyalin teks yang sudah dipilih
+      document.execCommand("copy");
 
-  // Menghapus textarea sementara
-  document.body.removeChild(temp);
+      // Menghapus textarea sementara
+      document.body.removeChild(temp);
 
-  // Menampilkan pesan bahwa teks berhasil disalin
-  alert("Teks berhasil disalin: " + text);
-}
-</script>
-<script>
-    $('.message a').click(function(){
-      $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+      // Menampilkan pesan bahwa teks berhasil disalin
+      alert("Teks berhasil disalin: " + text);
+    }
+  </script>
+  <script>
+    $('.message a').click(function() {
+      $('form').animate({
+        height: "toggle",
+        opacity: "toggle"
+      }, "slow");
     });
   </script>
 
-<script>
-  function hanyaAngka(event) {
-  var angka = (event.which) ? event.which : event.keyCode;
-  if (angka > 31 && (angka < 48 || angka > 57)) {
-    return false;
-  }
-  return true;
-}
-</script>
+  <script>
+    function hanyaAngka(event) {
+      var angka = (event.which) ? event.which : event.keyCode;
+      if (angka > 31 && (angka < 48 || angka > 57)) {
+        return false;
+      }
+      return true;
+    }
+  </script>
 
-<script>
-  var password = document.getElementById("password");
-  var konfirmasi_password = document.getElementById("konfirmasi_password");
-function validatePassword(){
-  if(password.value != konfirmasi_password.value) {
-    konfirmasi_password.setCustomValidity("Password tidak sesuai");
-  } else {
-    konfirmasi_password.setCustomValidity('');
-  }
-}
-password.onchange = validatePassword;
-konfirmasi_password.onkeyup = validatePassword;
-</script>
+  <script>
+    var password = document.getElementById("password");
+    var konfirmasi_password = document.getElementById("konfirmasi_password");
+
+    function validatePassword() {
+      if (password.value != konfirmasi_password.value) {
+        konfirmasi_password.setCustomValidity("Password tidak sesuai");
+      } else {
+        konfirmasi_password.setCustomValidity('');
+      }
+    }
+    password.onchange = validatePassword;
+    konfirmasi_password.onkeyup = validatePassword;
+  </script>
 
 </body>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormPengajuanController;
 use App\Http\Controllers\FormPerizinanController;
+use App\Models\FormPengajuan;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,12 +102,12 @@ Route::get('/laporan-izin-admin', function () {
 })->name('laporan_izin');
 
 /*cetak di laporan page*/
-Route::get('/laporan/cetak_survey', function () {
-    return view('admin.cetak_survey_admin');
-})->name('cetak_survey_admin');
-Route::get('/laporan/cetak_izin', function () {
-    return view('admin.cetak_izin_admin');
-})->name('cetak_izin_admin');
+//Route::get('/laporan/cetak_survey', function () {
+ //   return view('admin.cetak_survey_admin');
+//})->name('cetak_survey_admin');
+//Route::get('/laporan/cetak_izin', function () {
+//    return view('admin.cetak_izin_admin');
+//})->name('cetak_izin_admin');
 
 /*profile admin*/
 Route::get('/profile-admin', function () {
@@ -181,9 +182,15 @@ Route::post('/izin/admin/{formperizinan}/approved', [FormPerizinanController::cl
 Route::post('/izin/admin/{formperizinan}/rejected', [FormPerizinanController::class, 'rejected'])->name('formperizinan.rejected');
 Route::post('/izin/admin/{formperizinan}/inprogress', [FormPerizinanController::class, 'inprogress'])->name('formperizinan.inprogress');
 
+Route::post('/profile', [LoginController::class, 'updateProfile'])->name('update.profile');
+
 // Route to show the edit form
 Route::put('surat-izin/{id}', [FormPerizinanController::class, 'update'])->name('surat-izin.update');
 
 Route::delete('/data/{id}', [FormPerizinanController::class, 'delete'])->name('data.destroy');
 // Route to handle the edit form submission
 Route::put('/surveys/{id}', [FormPengajuanController::class, 'update'])->name('survey.update');
+
+Route::get('/laporan/cetak_survey', [FormPengajuanController::class, 'getDataByDateRange'])->name('cetak_survey_admin');
+
+Route::get('/laporan/cetak_izin', [FormPerizinanController::class, 'getDataByDateRange'])->name('cetak_izin_admin');   

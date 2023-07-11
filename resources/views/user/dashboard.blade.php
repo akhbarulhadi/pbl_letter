@@ -10,11 +10,11 @@
   </div>
   @endif
   @if(session()->has('Success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{ session('Success') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+  </div>
+  @endif
   <br><br>
   <div class="container-fluid">
     <!--card dashboard-->
@@ -58,7 +58,7 @@
                             @endauth
                             <div class="form-group">
                               @auth
-                              <input type="hidden" class="form-control" value="{{ Auth::user()->user_id }}" id="user_id" name="user_id" readonly>
+                              <input type="hidden" class="form-control" value="{{ Auth::user()->id_mahasiswa }}" id="id_mahasiswa" name="id_mahasiswa" readonly>
 
                             </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
                             @endauth
@@ -132,6 +132,12 @@
                               <label for="kelas">Kelas</label>
                               <input type="text" class="form-control" value="{{ Auth::user()->kelas }}" id="kelas" name="kelas" readonly>
                             </div>
+                            <div>
+                              @auth
+                              <input type="hidden" class="form-control" value="{{ Auth::user()->id_mahasiswa }}" id="id_mahasiswa" name="id_mahasiswa" readonly>
+
+                            </div>@else <input type="text" class="form-control" placeholder="NIM tidak terdeteksi, Silahkan Login Terlebih Dahulu!!" id="nim" name="nim" disabled>
+                            @endauth
                             <div class="form-group">
                               <label for="nama_dosen">Nama Wali Dosen</label>
                               @auth
@@ -150,7 +156,7 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="jenis_izin">Keperluan</label>
-                              <select class="form-select" id="jenis_izin" name="jenis_izin" onchange="toggleInputText()" required>
+                              <select class="form-select" id="jenis_izin1" name="jenis_izin" onchange="toggleInputText()" required>
                                 <option value="">Pilih Izin</option>
                                 <option value="Sakit">Sakit</option>
                                 <option value="Keluarga">Keluarga</option>
@@ -183,11 +189,11 @@
                           </div>
                         </div>
                       </div>
-
                   </div>
+
                   <div class="modal-footer">
                     <button id="btn-f" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" formaction="{{ route('perizinan.store') }}" class="btn btn-outline-primary">Ajukan</button>
+                    <button type="submit" formaction="{{ route('perizinan.store') }}" class="btn btn-primary">Ajukan</button>
                   </div>
                   </form>
                 </div>
